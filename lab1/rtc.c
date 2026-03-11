@@ -29,9 +29,9 @@ int rtc_read_date(rtc_date *date) {
     } while (regA & RTC_UIP_MSK);          //fica preso no ciclo enquanto o bit 7 for 1
 
     //ler os valores do Dia, Mês e Ano dos respetivos registos
-    sys_outb(RTC_ADDR_REG, RTC_REG_DAY);   sys_inb(RTC_DATA_REG, &day);
-    sys_outb(RTC_ADDR_REG, RTC_REG_MONTH); sys_inb(RTC_DATA_REG, &month);
-    sys_outb(RTC_ADDR_REG, RTC_REG_YEAR);  sys_inb(RTC_DATA_REG, &year);
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_DAY)  == 0) sys_inb(RTC_DATA_REG, &day);
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_MONTH) == 0) sys_inb(RTC_DATA_REG, &month);
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_YEAR) == 0) sys_inb(RTC_DATA_REG, &year);
 
     //ler o Registo B para verificar se os dados estão em BCD
     sys_outb(RTC_ADDR_REG, RTC_REG_B);
