@@ -6,10 +6,67 @@
 #include "i8254.h"
 
 int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
 
-  return 1;
+  // check if timer and frequency are valid
+  if (timer > 2 || freq == 0 || freq > TIMER_FREQ) return 1;
+
+  uint8_t st;
+
+  // read current timer configuration
+  if (timer_get_conf(timer, &st) != 0) {
+    return 1;
+  }
+
+  // preserve the 4 least significant bits
+  uint8_t control_word = st & 0x0F;
+
+  // set initialization mode to LSB followed by MSB
+  control_word |= TIMER_LSB_MSB;
+
+  // select the correct timer
+  switch (timer) {
+    case 0:
+      control_word |= TIMER_SEL0;
+      break;
+    case 1:
+      control_word |= TIMER_SEL1;
+      break;
+    case 2:
+      control_word |= TIMER_SEL2;
+      break;
+    default:
+      return 1;
+  }
+
+  // write control word to control register
+  if (sys_outb(TIMER_CTRL, control_word) != 0) {
+    return 1;
+  }
+
+  // calculate divider
+  uint16_t divider = TIMER_FREQ / freq;
+
+  uint8_t lsb, msb;
+
+  // get LSB and MSB of divider
+  if (util_get_LSB(divider, &lsb) != 0) {
+    return 1;
+  }
+
+  if (util_get_MSB(divider, &msb) != 0) {
+    return 1;
+  }
+
+  // write LSB and then MSB to selected timer
+  if (sys_outb(TIMER_0 + timer, lsb) != 0) {
+    return 1;
+  }
+
+  if (sys_outb(TIMER_0 + timer, msb) != 0) {
+    return 1;
+  }
+
+  return 0;
 }
 
 int (timer_subscribe_int)(uint8_t *bit_no) {
