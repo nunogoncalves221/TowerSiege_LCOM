@@ -1,7 +1,7 @@
 #include "rtc.h"
-#include <minix/syslib.h> //para usar sys_inb e sys_outb
-#define TODO return -1
+#include <minix/syslib.h>
 
+/* Register Addresses and Masks */
 #define RTC_ADDR_REG 0x70
 #define RTC_DATA_REG 0x71
 #define RTC_REG_A 0x0A
@@ -12,42 +12,55 @@
 #define RTC_UIP_MSK (1 << 7)
 #define RTC_DM_MSK (1 << 2)
 
-//função para converter BCD em Binário
-static int bdc_to_bin(uint8_t bcd) { 
+/**
+ * @brief Converts a BCD value to binary.
+ * @param bcd BCD value to convert.
+ * @return Binary representation of the value.
+ */
+static int bcd_to_bin(uint8_t bcd) { 
     return ((bcd >> 4) * 10) + (bcd & 0x0F);
 }
 
-//função principal para ler a data
+/**
+ * @brief Reads the current date from the RTC.
+ * @param date Pointer to rtc_date structure to be filled.
+ * @return 0 on success, 1 on hardware/system call failure.
+ */
 int rtc_read_date(rtc_date *date) { 
     uint32_t regA, regB;
     uint32_t day, month, year;
 
-    //esperar que o RTC não esteja a atualizar (UIP == 0)
+    /* Wait until RTC is not updating (UIP == 0) */
     do {
-        sys_outb(RTC_ADDR_REG, RTC_REG_A); //avisa que queremos ler o Registo A
-        sys_inb(RTC_DATA_REG, &regA);      //lê o valor do Registo A
-    } while (regA & RTC_UIP_MSK);          //fica preso no ciclo enquanto o bit 7 for 1
+        if (sys_outb(RTC_ADDR_REG, RTC_REG_A) != OK) return 1; /* Select Register A */
+        if (sys_inb(RTC_DATA_REG, &regA) != OK) return 1;      /* Read Register A value */
+    } while (regA & RTC_UIP_MSK);                             /* Loop while UIP bit is 1 */
 
-    //ler os valores do Dia, Mês e Ano dos respetivos registos
-    if (sys_outb(RTC_ADDR_REG, RTC_REG_DAY)  == 0) sys_inb(RTC_DATA_REG, &day);
-    if (sys_outb(RTC_ADDR_REG, RTC_REG_MONTH) == 0) sys_inb(RTC_DATA_REG, &month);
-    if (sys_outb(RTC_ADDR_REG, RTC_REG_YEAR) == 0) sys_inb(RTC_DATA_REG, &year);
+    /* Read Register B to check data mode (BCD or Binary) */
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_B) != OK) return 1;
+    if (sys_inb(RTC_DATA_REG, &regB) != OK) return 1;
 
-    //ler o Registo B para verificar se os dados estão em BCD
-    sys_outb(RTC_ADDR_REG, RTC_REG_B);
-    sys_inb(RTC_DATA_REG, &regB);
+    /* Read Day, Month, and Year from their respective registers */
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_DAY) != OK) return 1;
+    if (sys_inb(RTC_DATA_REG, &day) != OK) return 1;
 
-    //se o bit DM (Data Mode) for 0, os dados estão em BCD e temos de converter
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_MONTH) != OK) return 1;
+    if (sys_inb(RTC_DATA_REG, &month) != OK) return 1;
+
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_YEAR) != OK) return 1;
+    if (sys_inb(RTC_DATA_REG, &year) != OK) return 1;
+
+    /* If DM (Data Mode) bit is 0, data is in BCD and must be converted */
     if (!(regB & RTC_DM_MSK)) { 
-        day = bdc_to_bin(day);
-        month = bdc_to_bin(month);
-        year = bdc_to_bin(year);
+        day = bcd_to_bin((uint8_t)day);
+        month = bcd_to_bin((uint8_t)month);
+        year = bcd_to_bin((uint8_t)year);
     }
 
-    //guardar os valores na estrutura usando o ponteiro
+    /* Store values in the structure using the pointer */
     date->day = (uint8_t) day;
     date->month = (uint8_t) month;
     date->year = (uint8_t) year;
 
-    return 0;
- }
+    return 0; /* Success */
+}
