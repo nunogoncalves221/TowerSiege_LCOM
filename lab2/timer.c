@@ -8,7 +8,10 @@
 int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
 
   // check if timer and frequency are valid
-  if (timer > 2 || freq == 0 || freq > TIMER_FREQ) return 1;
+  if (timer > 2 || freq < 19 || freq > TIMER_FREQ) {
+    printf("Timer or frequency invalid");
+    return 1;
+  };
 
   uint8_t st;
 
@@ -141,11 +144,18 @@ int (timer_display_conf)(uint8_t timer, uint8_t st,
       // extract counting mode (bits 3,2,1)
       uint8_t mode = (st >> 1) & 0x07;
 
-      // modes 6 and 7 are aliases of modes 2 and 3
-      if (mode == 6) mode = 2; // ------------------------falar com stor na pratica----------------
-      if (mode == 7) mode = 3;
-      
-      val.count_mode = mode;
+      switch(mode) {
+        case 0: val.count_mode = 0; break;
+        case 1: val.count_mode = 1; break;
+        case 2: val.count_mode = 2; break;
+        case 3: val.count_mode = 3; break;
+        case 4: val.count_mode = 4; break;
+        case 5: val.count_mode = 5; break;
+        case 6: val.count_mode = 2; break; // 110
+        case 7: val.count_mode = 3; break; // 111
+        default:
+          return 1;
+      }
       break;
     }
 
