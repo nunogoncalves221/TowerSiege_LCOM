@@ -35,20 +35,26 @@ int(timer_test_read_config)(uint8_t timer, enum timer_status_field field) {
   uint8_t st; //to save the configuration byte
   //reads the hardware configuration using 
   //a function thats reads the status of a timer
-  if (timer_get_conf(timer, &st) != 0) return 1; //error handling
-
+  if (timer_get_conf(timer, &st) != 0){ //error handling
+    printf("timer_get_conf error.\n");
+    return 1; 
+  }
   //print the configuration using a function that prints the 
   //specified fields of a timer's configuration/status
-  if (timer_display_conf(timer, st, field) != 0) return 1; //error handling
+  if (timer_display_conf(timer, st, field) != 0) { //error handling
+    printf("timer_display_conf error.\n");
+    return 1;
+  } 
 
   return 0; //sucess
 }
 
 int(timer_test_time_base)(uint8_t timer, uint32_t freq) {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  if (timer_set_frequency(timer, freq) != 0) {
+    printf("error calling timer_set_frequency.\n"); return 1;
+  }
 
-  return 1;
+  return 0;
 }
 
 int(timer_test_int)(uint8_t time) {
