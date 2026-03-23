@@ -5,6 +5,9 @@
 
 #include "i8254.h"
 
+int hook_id = 0; //global variable
+int timer_counter = 0; //global counter variable
+
 int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
   //invalid frequency or timer
   if (timer > 2 || freq < 19) {
@@ -81,23 +84,37 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
   return 0; //sucess
 }
 
+//we want to be noticed when Timer call us
 int (timer_subscribe_int)(uint8_t *bit_no) {
-    /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  //error handling
+  if (bit_no == NULL) {
+    printf("bit_no is NULL.\n"); return 1;
+  }
 
-  return 1;
+  //we tell lab2.c that the Timer is bit number 0
+  *bit_no = hook_id;
+
+  if (sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &hook_id) != 0){
+    printf("sys_irqsetpolicy error.\n"); return 1;
+  }
+
+  return 0;
 }
 
+//to be used at the end of the program 
 int (timer_unsubscribe_int)() {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  if (sys_irqrmpolicy(&hook_id) != 0){
+    //we just need to call sys_irqrmpolicy on the hook_id of the policy
+    printf("sys_irqrmpolicy error.\n"); return 1;
+  }
 
-  return 1;
+  return 0;
 }
 
+//rapid action that our program does when he receives a Kernel call telling the Timer called us
 void (timer_int_handler)() {
-  /* To be implemented by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  //always we have an interruption, we sum 1 to the counter
+  timer_counter++;
 }
 
 //read the configuration by going to hardware
