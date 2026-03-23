@@ -27,23 +27,59 @@ static void wait_for_uip_clear() {
 
 // Read the current date from the RTC and store it in the rtc_date structure
 int rtc_read_date(rtc_date *date) {
+
+    if (date == NULL) {
+        printf("rtc_read_date: date pointer is NULL\n");
+        return 1;
+    }
+
     uint32_t regB, day, month, year;
 
     wait_for_uip_clear(); // ensure RTC is not updating
 
     // Read register B to check data mode
-    sys_outb(RTC_ADDR_REG, RTC_REG_B);
-    sys_inb(RTC_DATA_REG, &regB);
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_B) != 0) {
+        printf("rtc_read_date: failed to write RTC_REG_B\n");
+        return 1;
+    }
 
-    // Read day, month, and year from RTC
-    sys_outb(RTC_ADDR_REG, RTC_REG_DAY);
-    sys_inb(RTC_DATA_REG, &day);
+    if (sys_inb(RTC_DATA_REG, &regB) != 0) {
+        printf("rtc_read_date: failed to read regB\n");
+        return 1;
+    }
 
-    sys_outb(RTC_ADDR_REG, RTC_REG_MONTH);
-    sys_inb(RTC_DATA_REG, &month);
+    // Read day
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_DAY) != 0) {
+        printf("rtc_read_date: failed to select DAY register\n");
+        return 1;
+    }
 
-    sys_outb(RTC_ADDR_REG, RTC_REG_YEAR);
-    sys_inb(RTC_DATA_REG, &year);
+    if (sys_inb(RTC_DATA_REG, &day) != 0) {
+        printf("rtc_read_date: failed to read day\n");
+        return 1;
+    }
+
+    // Read month
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_MONTH) != 0) {
+        printf("rtc_read_date: failed to select MONTH register\n");
+        return 1;
+    }
+
+    if (sys_inb(RTC_DATA_REG, &month) != 0) {
+        printf("rtc_read_date: failed to read month\n");
+        return 1;
+    }
+
+    // Read year
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_YEAR) != 0) {
+        printf("rtc_read_date: failed to select YEAR register\n");
+        return 1;
+    }
+
+    if (sys_inb(RTC_DATA_REG, &year) != 0) {
+        printf("rtc_read_date: failed to read year\n");
+        return 1;
+    }
 
     // Convert from BCD to binary if necessary
     if (!(regB & RTC_DM_MSK)) {
@@ -52,7 +88,7 @@ int rtc_read_date(rtc_date *date) {
         year  = bcd_to_bin(year);
     }
 
-    // Store the values in the rtc_date structure
+    // Store the values
     date->day   = (uint8_t)day;
     date->month = (uint8_t)month;
     date->year  = (uint8_t)year;
