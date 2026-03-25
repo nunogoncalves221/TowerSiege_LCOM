@@ -1,10 +1,9 @@
 #include <lcom/lcf.h>
 #include <lcom/lab2.h>
+#include "my_timer.h"
 
 #include <stdbool.h>
 #include <stdint.h>
-
-extern int counter;
 
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
@@ -35,10 +34,12 @@ int(timer_test_read_config)(uint8_t timer, enum timer_status_field field) {
   uint8_t st;
 
   if (timer_get_conf(timer, &st) != 0) {
+    printf("timer_get_conf error.\n");
     return 1;
   }
 
   if (timer_display_conf(timer, st, field) != 0) {
+    printf("timer_display_conf error.\n");
     return 1;
   }
 
@@ -46,7 +47,12 @@ int(timer_test_read_config)(uint8_t timer, enum timer_status_field field) {
 }
 
 int(timer_test_time_base)(uint8_t timer, uint32_t freq) {
-  return timer_set_frequency(timer, freq);
+  if (timer_set_frequency(timer, freq) != 0) {
+    printf("error calling timer_set_frequency.\n");
+    return 1;
+  }
+
+  return 0;
 }
 
 int(timer_test_int)(uint8_t time) {
@@ -87,6 +93,7 @@ int(timer_test_int)(uint8_t time) {
   }
 
   if (timer_unsubscribe_int() != 0) {
+    printf("timer_unsubscribe_int error.\n");
     return 1;
   }
 

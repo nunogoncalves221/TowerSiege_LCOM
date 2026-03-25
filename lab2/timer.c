@@ -1,5 +1,5 @@
 #include <lcom/lcf.h>
-#include <lcom/timer.h>
+#include "my_timer.h"
 
 #include <stdint.h>
 
@@ -20,6 +20,7 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
 
   // read current timer configuration
   if (timer_get_conf(timer, &st) != 0) {
+    printf("timer_get_conf error.\n");
     return 1;
   }
 
@@ -46,6 +47,7 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
 
   // write control word to control register
   if (sys_outb(TIMER_CTRL, control_word) != 0) {
+    printf("error writing control word.\n"); 
     return 1;
   }
 
@@ -56,19 +58,23 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
 
   // get LSB and MSB of divider
   if (util_get_LSB(divider, &lsb) != 0) {
+    printf("error getting LSB from divider.\n");
     return 1;
   }
 
   if (util_get_MSB(divider, &msb) != 0) {
+    printf("error getting MSB from divider.\n");
     return 1;
   }
 
   // write LSB and then MSB to selected timer
   if (sys_outb(TIMER_0 + timer, lsb) != 0) {
+    printf("error writing lsb to port.\n");
     return 1;
   }
 
   if (sys_outb(TIMER_0 + timer, msb) != 0) {
+    printf("error writing msb to port.\n");
     return 1;
   }
 
@@ -76,11 +82,15 @@ int (timer_set_frequency)(uint8_t timer, uint32_t freq) {
 }
 
 int (timer_subscribe_int)(uint8_t *bit_no) {
-  if (bit_no == NULL) return 1;
+  if (bit_no == NULL) {
+    printf("bit_no is NULL.\n");
+    return 1;
+  }
 
   *bit_no = hook_id;
 
   if (sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &hook_id) != 0) {
+    printf("sys_irqsetpolicy error.\n");
     return 1;
   }
 
@@ -89,6 +99,7 @@ int (timer_subscribe_int)(uint8_t *bit_no) {
 
 int (timer_unsubscribe_int)() {
   if (sys_irqrmpolicy(&hook_id) != 0) {
+    printf("sys_irqrmpolicy error.\n");
     return 1;
   }
 
@@ -117,11 +128,13 @@ int (timer_get_conf)(uint8_t timer, uint8_t *st) {
 
   // send read-back command to timer control register
   if (sys_outb(TIMER_CTRL, read_back) != 0) {
+    printf("sys_outb error.\n");
     return 1;
   }
 
   // read the status byte from the selected timer port
   if (util_sys_inb(TIMER_0 + timer, st) != 0) {
+    printf("util_sys_inb error.\n");
     return 1;
   }
 
