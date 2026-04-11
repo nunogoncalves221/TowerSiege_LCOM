@@ -10,6 +10,9 @@
 extern uint8_t scancode;
 extern bool ih_error;
 
+// acess the timer counter from lab2
+extern int timer_counter;
+
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
   lcf_set_language("EN-US");
@@ -131,8 +134,80 @@ int(kbd_test_poll)() {
 }
 
 int(kbd_test_timed_scan)(uint8_t n) {
-  /* To be completed by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  int ipc_status, r;
+  message msg;
+  uint8_t kbd_bit_no, timer_bit_no;
 
-  return 1;
+  // subscribe both hardware devices
+  if (kbd_subscribe_int(&kbd_bit_no) != 0) return 1;
+  if (timer_subscribe_int(&timer_bit_no) != 0) return 1;
+
+  // create the bit masks for both interruptions
+  uint32_t irq_set_kbd = BIT(kbd_bit_no);
+  uint32_t irq_set_timer = BIT(timer_bit_no);
+
+  uint8_t scancodes[2];
+  uint8_t size = 0;
+
+  // we need to track how many seconds have passed without any key presses
+  int idle_seconds = 0; 
+  timer_counter = 0; // reset the global counter from lab2 
+
+  // loop runs until ESC is pressed OR we reach the idle time limit 'n'
+    while (scancode != 0x81 && idle_seconds < n) {
+        
+        if ( (r = driver_receive(ANY, &msg, &ipc_status)) != 0 ) continue;
+        
+        if (is_ipc_notify(ipc_status)) {
+            switch (_ENDPOINT_P(msg.m_source)) {
+                case HARDWARE: 
+                    
+                    // keyboard interrupt zone
+                    if (msg.m_notify.interrupts & irq_set_kbd) {
+                        
+                        kbc_ih();
+
+                        if (ih_error) {
+                            size = 0;
+                            continue;
+                        }
+
+                        scancodes[size] = scancode;
+                        size++;
+
+                        if (scancode == 0xE0 && size == 1) continue; 
+
+                        bool is_make = !(scancodes[size - 1] & BIT(7));
+                        kbd_print_scancode(is_make, size, scancodes);
+                        size = 0;
+
+                        // the user pressed a key,
+                        // so we reset our idle timers back to zero
+                        timer_counter = 0;
+                        idle_seconds = 0;
+                    }
+
+                    // timer interrupt zone
+                    if (msg.m_notify.interrupts & irq_set_timer) {
+                        
+                        // call the handler from lab2 to increment the global counter
+                        timer_int_handler();
+
+                        // since the timer runs at 60Hz, 60 ticks = 1 second
+                        if (timer_counter % 60 == 0) {
+                            idle_seconds++;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    // unsubscribe from everything before we leave
+    if (timer_unsubscribe_int() != 0) return 1;
+    if (kbd_unsubscribe_int() != 0) return 1;
+
+    return 0;
 }
