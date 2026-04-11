@@ -2,7 +2,8 @@
 
 #include <lcom/lab3.h>
 
-#include 
+#include "kbc.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 
