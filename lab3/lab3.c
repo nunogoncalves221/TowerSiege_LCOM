@@ -76,9 +76,8 @@ int (kbd_test_scan)() {
                     size++;
 
                     // if the prefix is 0xE0, we dont print it now, we have to wait for the next byte
-                    if (scancode == 0xE0) {
-                        continue; 
-                    }
+                    if (scancode == 0xE0 && size == 1) continue; 
+                    
 
                     // if we are here, the scancode is complete (of 1 or 2 bytes)
                     bool is_make = !(scancodes[size - 1] & BIT(7));
@@ -101,10 +100,33 @@ int (kbd_test_scan)() {
 }
 
 int(kbd_test_poll)() {
-  /* To be completed by the students */
-  printf("%s is not yet implemented!\n", __func__);
+  uint8_t scancodes[2];
+  uint8_t size = 0;
 
-  return 1;
+   // loop runs until we read breakcode of ESC (0x81)
+  while (scancode != 0x81){
+
+    //call kbd_poll function in kbc.c for  polling
+    if (kbd_poll() == 0){
+
+      // logic to process scancodes of 1 or 2 bytes
+      scancodes[size] = scancode;
+      size++;
+
+      // if the prefix is 0xE0, we dont print it now, we have to wait for the next byte
+      if (scancode == 0XE0 && size == 1) continue;
+
+      // if we are here, the scancode is complete (of 1 or 2 bytes)
+      bool is_make = !(scancodes[size - 1] & BIT(7));
+      kbd_print_scancode(is_make, size, scancodes);
+
+      //reset of the size for the next scancode
+      size = 0;
+    }
+  }
+
+  //reactivate interrupts before leave
+  return kbd_restore_interrupts();
 }
 
 int(kbd_test_timed_scan)(uint8_t n) {
