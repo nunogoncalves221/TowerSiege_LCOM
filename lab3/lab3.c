@@ -1,9 +1,8 @@
 #include <lcom/lcf.h>
 
 #include <lcom/lab3.h>
-#include "kbc.h"
 
-
+#include 
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -77,7 +76,7 @@ int (kbd_test_scan)() {
                     size++;
 
                     // if the prefix is 0xE0, we dont print it now, we have to wait for the next byte
-                    if (scancode == 0xE0 && size == 1) {
+                    if (scancode == 0xE0) {
                         continue; 
                     }
 

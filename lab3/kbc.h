@@ -13,4 +13,6 @@ int (kbd_unsubscribe_int)();
 // our custom interrupt handler for the keyboard
 void (kbc_ih)();
 
+int (kbd_poll)(); 
+
 #endif /* _LCOM_KBC_H_ */

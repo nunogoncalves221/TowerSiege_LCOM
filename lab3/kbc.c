@@ -30,6 +30,7 @@ int (kbd_unsubscribe_int)() {
     return 0;
 }
 
+/* FOR kbd_test_scan() */
 //interrupt handler
 void (kbc_ih)() {
     uint8_t status = 0;
@@ -59,4 +60,32 @@ void (kbc_ih)() {
         //only here 
         ih_error = false;
     }
+}
+
+/* FOR kdb_test_poll */
+int (kbd_poll)() {
+    uint8_t status = 0;
+
+    //loop until MAX_RETRIES defined
+    for (int i = 0; i < MAX_RETRIES; i++){
+
+        //read the status register - port 0X64
+        if (util_sys_inb(KBC_CMD_REG, &status) != 0) return 1;
+
+        //see if the output buffer is full
+        if (status & KBC_OBF){
+
+            //reading the scancode from the output buffer
+            if (util_sys_inb(KBC_OUT_BUF, &scancode) != 0) return 1;
+               
+            //check if exists parity or timeout errors - bits 7 and 6
+            if ((status & KBC_PAR_ERR) || (status & KBC_TO_ERR)) return 1; 
+
+            return 0; //sucess
+        }
+
+        tickdelay(micros_to_ticks(DELAY)); //if buffer was empty, wait DELAY time and try sgain
+    }
+
+    return 1; //failed after MAX_RETRIES
 }
