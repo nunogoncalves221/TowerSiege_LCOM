@@ -14,6 +14,9 @@
 #define TO_ERR  BIT(6)
 #define PAR_ERR BIT(7)
 
+#define ESC_BREAKCODE 0x81
+#define TWO_BYTE_PREFIX 0xE0
+
 #define READ_CMD_BYTE   0x20
 #define WRITE_CMD_BYTE  0x60
 

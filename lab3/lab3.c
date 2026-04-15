@@ -10,51 +10,81 @@
 #include "../lab2/my_timer.h"
 
 int main(int argc, char *argv[]) {
+  // sets the language of LCF messages (can be either EN-US or PT-PT)
   lcf_set_language("EN-US");
+
+  // enables to log function invocations that are being "wrapped" by LCF
+  // [comment this out if you don't want/need it]
   lcf_trace_calls("/home/lcom/labs/lab3/trace.txt");
+
+  // enables to save the output of printf function calls on a file
+  // [comment this out if you don't want/need it]
   lcf_log_output("/home/lcom/labs/lab3/output.txt");
-  if (lcf_start(argc, argv)) return 1;
+
+  // handles control over to LCF
+  // [LCF handles command line arguments and invokes the right function]
+  if (lcf_start(argc, argv))
+    return 1;
+
+  // LCF clean up tasks
+  // [must be the last statement before return]
   lcf_cleanup();
+
   return 0;
 }
 
+
 int (kbd_test_scan)() {
+  // variables for interrupt handling
   uint8_t bit_no;
   uint32_t irq_set;
   int ipc_status, r;
   message msg;
 
+  // buffer to store scancode bytes
   uint8_t bytes[2];
   uint8_t size = 0;
 
+  // subscribe keyboard interrupts
   if (keyboard_subscribe_int(&bit_no) != 0) return 1;
   irq_set = BIT(bit_no);
 
-  while (scancode_byte != 0x81) {
+  // loop until ESC breakcode is received
+  while (scancode_byte != ESC_BREAKCODE) {
+    // receive messages from the system
     if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) {
       printf("driver_receive failed with: %d\n", r);
       continue;
     }
 
+    // check if it is a notification
     if (is_ipc_notify(ipc_status)) {
       switch (_ENDPOINT_P(msg.m_source)) {
         case HARDWARE:
+          // check if it is keyboard interrupt
           if (msg.m_notify.interrupts & irq_set) {
-            kbc_ih();
+            kbc_ih(); // read scancode from keyboard
 
+            // ignore if error occurred
             if (kbc_error) { size = 0; continue; }
 
+            // store byte
             bytes[size] = scancode_byte;
             size++;
 
-            /* wait for the second byte of a two-byte scancode */
-            if (scancode_byte == 0xE0 && size == 1) continue;
+            // wait for second byte if needed
+            if (scancode_byte == TWO_BYTE_PREFIX && size == 1) continue;
 
+            // check if make or break (0-make; 1-break)
             bool make = !(bytes[size - 1] & BIT(7));
+
+            // print scancode
             if (kbd_print_scancode(make, size, bytes) != 0) {
               keyboard_unsubscribe_int();
               return 1;
             }
+
+            // reset buffer
             size = 0;
           }
           break;
@@ -64,32 +94,45 @@ int (kbd_test_scan)() {
     }
   }
 
+  // unsubscribe interrupts
   if (keyboard_unsubscribe_int() != 0) return 1;
   return 0;
 }
 
 int (kbd_test_poll)() {
+  // buffer to store scancode bytes
   uint8_t bytes[2];
   uint8_t size = 0;
 
+  // reset sys_inb counter
   kbd_reset_sys_inb_count();
+
+  // initialize scancode
   scancode_byte = 0;
 
-  while (scancode_byte != 0x81) {
+  // loop until ESC breakcode
+  while (scancode_byte != ESC_BREAKCODE) {
+    // read keyboard using polling
     if (kbd_poll() != 0) continue;
 
+    // store byte
     bytes[size] = scancode_byte;
     size++;
 
-    /* wait for the second byte of a two-byte scancode */
-    if (scancode_byte == 0xE0 && size == 1) continue;
+    // wait for second byte if needed
+    if (scancode_byte == TWO_BYTE_PREFIX && size == 1) continue;
 
+    // check if make or break
     bool make = !(bytes[size - 1] & BIT(7));
+
+    // print scancode
     if (kbd_print_scancode(make, size, bytes) != 0) return 1;
+
+    // reset buffer
     size = 0;
   }
 
-  /* re-enable interrupts and print the total number of sys_inb calls */
+  // re-enable interrupts and print sys_inb count
   if (kbd_enable_interrupts() != 0) return 1;
   if (kbd_print_no_sysinb(kbd_get_sys_inb_count()) != 0) return 1;
 
@@ -97,16 +140,20 @@ int (kbd_test_poll)() {
 }
 
 int (kbd_test_timed_scan)(uint8_t n) {
+  // variables for keyboard and timer interrupts
   uint8_t kbd_bit_no, timer_bit_no;
   int ipc_status, r;
   message msg;
 
+  // subscribe keyboard and timer interrupts
   if (keyboard_subscribe_int(&kbd_bit_no) != 0) return 1;
   if (timer_subscribe_int(&timer_bit_no)  != 0) { keyboard_unsubscribe_int(); return 1; }
 
+  // create interrupt masks
   uint32_t irq_set_kbd   = BIT(kbd_bit_no);
   uint32_t irq_set_timer = BIT(timer_bit_no);
 
+  // buffer for scancodes
   uint8_t bytes[2];
   uint8_t size         = 0;
   int     tick_count   = 0;
@@ -114,39 +161,51 @@ int (kbd_test_timed_scan)(uint8_t n) {
 
   scancode_byte = 0;
 
-  while (scancode_byte != 0x81 && idle_seconds < n) {
+  // loop until ESC or timeout
+  while (scancode_byte != ESC_BREAKCODE && idle_seconds < n) {
     if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) continue;
 
     if (is_ipc_notify(ipc_status)) {
       switch (_ENDPOINT_P(msg.m_source)) {
         case HARDWARE:
 
+          // keyboard interrupt
           if (msg.m_notify.interrupts & irq_set_kbd) {
             kbc_ih();
+
+            // ignore errors
             if (kbc_error) { size = 0; continue; }
 
+            // store byte
             bytes[size] = scancode_byte;
             size++;
 
-            if (scancode_byte == 0xE0 && size == 1) continue;
+            // wait for second byte
+            if (scancode_byte == TWO_BYTE_PREFIX && size == 1) continue;
 
+            // check make/break
             bool make = !(bytes[size - 1] & BIT(7));
+
+            // print scancode
             if (kbd_print_scancode(make, size, bytes) != 0) {
               timer_unsubscribe_int();
               keyboard_unsubscribe_int();
               return 1;
             }
+
             size = 0;
 
-            /* any keypress resets the idle timer */
+            // reset idle timer on key press
             tick_count   = 0;
             idle_seconds = 0;
           }
 
+          // timer interrupt
           if (msg.m_notify.interrupts & irq_set_timer) {
             timer_int_handler();
             tick_count++;
-            /* 60 ticks = 1 second */
+
+            // 60 ticks = 1 second
             if (tick_count % 60 == 0) idle_seconds++;
           }
 
@@ -157,6 +216,7 @@ int (kbd_test_timed_scan)(uint8_t n) {
     }
   }
 
+  // unsubscribe interrupts
   if (timer_unsubscribe_int()    != 0) return 1;
   if (keyboard_unsubscribe_int() != 0) return 1;
   return 0;
