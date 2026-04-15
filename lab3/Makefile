@@ -9,6 +9,7 @@ SRCS = lab3.c timer.c
 CFLAGS += -pedantic
 CFLAGS += -DLAB3
 CFLAGS += -I../lab2
+CFLAGS += -DLAB3
 
 LIB_NAME = libkbc.a
 LIB_SRCS = keyboard.c
