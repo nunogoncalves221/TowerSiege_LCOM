@@ -41,10 +41,6 @@ int (kbd_test_scan)() {
   int ipc_status, r;
   message msg;
 
-  // buffer to store scancode bytes
-  uint8_t bytes[2];
-  uint8_t size = 0;
-
   // subscribe keyboard interrupts
   if (keyboard_subscribe_int(&bit_no) != 0) return 1;
   irq_set = BIT(bit_no);
@@ -66,26 +62,16 @@ int (kbd_test_scan)() {
             kbc_ih(); // read scancode from keyboard
 
             // ignore if error occurred
-            if (kbc_error) { size = 0; continue; }
+            if (kbc_error) continue;
 
-            // store byte
-            bytes[size] = scancode_byte;
-            size++;
-
-            // wait for second byte if needed
-            if (scancode_byte == TWO_BYTE_PREFIX && size == 1) continue;
-
-            // check if make or break (0-make; 1-break)
-            bool make = !(bytes[size - 1] & BIT(7));
-
-            // print scancode
-            if (kbd_print_scancode(make, size, bytes) != 0) {
-              keyboard_unsubscribe_int();
-              return 1;
+            if (scancode_ready) {
+              bool make = !(scancode_bytes[scancode_size - 1] & BIT(7));
+              if (kbd_print_scancode(make, scancode_size, scancode_bytes) != 0) {
+                keyboard_unsubscribe_int();
+                return 1;
+              }
+              scancode_size = 0;
             }
-
-            // reset buffer
-            size = 0;
           }
           break;
         default:
@@ -96,6 +82,8 @@ int (kbd_test_scan)() {
 
   // unsubscribe interrupts
   if (keyboard_unsubscribe_int() != 0) return 1;
+
+  if (kbd_print_no_sysinb(kbd_get_sys_inb_count()) != 0) return 1;
   return 0;
 }
 
@@ -154,10 +142,8 @@ int (kbd_test_timed_scan)(uint8_t n) {
   uint32_t irq_set_timer = BIT(timer_bit_no);
 
   // buffer for scancodes
-  uint8_t bytes[2];
-  uint8_t size         = 0;
-  int     tick_count   = 0;
-  int     idle_seconds = 0;
+  int tick_count = 0;
+  int idle_seconds = 0;
 
   scancode_byte = 0;
 
@@ -174,26 +160,19 @@ int (kbd_test_timed_scan)(uint8_t n) {
             kbc_ih();
 
             // ignore errors
-            if (kbc_error) { size = 0; continue; }
+            if (kbc_error) continue;
 
-            // store byte
-            bytes[size] = scancode_byte;
-            size++;
-
-            // wait for second byte
-            if (scancode_byte == TWO_BYTE_PREFIX && size == 1) continue;
-
-            // check make/break
-            bool make = !(bytes[size - 1] & BIT(7));
-
-            // print scancode
-            if (kbd_print_scancode(make, size, bytes) != 0) {
-              timer_unsubscribe_int();
-              keyboard_unsubscribe_int();
-              return 1;
+            if (scancode_ready) {
+              bool make = !(scancode_bytes[scancode_size - 1] & BIT(7));
+              
+              if (kbd_print_scancode(make, scancode_size, scancode_bytes) != 0) {
+                timer_unsubscribe_int();
+                keyboard_unsubscribe_int();
+                return 1;
+              }
+              
+              scancode_size = 0;
             }
-
-            size = 0;
 
             // reset idle timer on key press
             tick_count   = 0;
@@ -219,5 +198,6 @@ int (kbd_test_timed_scan)(uint8_t n) {
   // unsubscribe interrupts
   if (timer_unsubscribe_int()    != 0) return 1;
   if (keyboard_unsubscribe_int() != 0) return 1;
+  if (kbd_print_no_sysinb(kbd_get_sys_inb_count()) != 0) return 1;
   return 0;
 }

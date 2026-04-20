@@ -1,16 +1,19 @@
 #include "keyboard.h"
 #include "i8042.h"
-#include "../lab2/utils.c"
+#include "../lab2/utils.h"
 
-// hook id used to subscribe keyboard interrupts
+#ifdef LAB3
+extern uint32_t sys_inb_count; 
+#endif
+
 static int kbd_hook_id = 1;
 
 // shared with lab3.c via extern in keyboard.h
 uint8_t scancode_byte = 0; // last byte read from keyboard
 bool    kbc_error     = false; // indicates if an error occurred
-
-// only counted during polling, not during interrupt mode
-static uint32_t sys_inb_count = 0; // counts sys_inb calls
+uint8_t scancode_bytes[2];
+uint8_t scancode_size = 0;
+bool    scancode_ready = false;
 
 int (keyboard_subscribe_int)(uint8_t *bit_no) {
   // check pointer
@@ -142,8 +145,8 @@ int (kbd_enable_interrupts)(void) {
 void (kbc_ih)(void) {
   uint8_t status, data;
 
-  // assume no error at start
-  kbc_error = false;
+  kbc_error = false; // assume no error at start
+  scancode_ready = false; // assume it's not a complete scancode yet
 
   // read status register
   if (util_sys_inb(KBC_ST_REG, &status) != 0) { kbc_error = true; return; }
@@ -154,11 +157,21 @@ void (kbc_ih)(void) {
   // read data from output buffer
   if (util_sys_inb(KBC_OUT_BUF, &data) != 0) { kbc_error = true; return; }
 
+  scancode_byte = data;
+
   // check for errors or mouse data
   if ((status & (PAR_ERR | TO_ERR)) || (status & AUX)) { kbc_error = true; return; }
 
-  // store scancode byte
-  scancode_byte = data;
+  // store byte in array
+  scancode_bytes[scancode_size] = data;
+  scancode_size++;
+
+  // check if waiting for a second byte is needed
+  if (data == TWO_BYTE_PREFIX && scancode_size == 1) {
+      return; 
+  }
+
+  scancode_ready = true;
 }
 
 int (kbd_poll)(void) {
@@ -176,17 +189,11 @@ int (kbd_poll)(void) {
     return 1;
   }
 
-  // count status read
-  sys_inb_count++;
-
   // read data
   if (util_sys_inb(KBC_OUT_BUF, &data) != 0) {
     tickdelay(micros_to_ticks(DELAY_US));
     return 1;
   }
-
-  // count data read
-  sys_inb_count++;
 
   // check for errors or mouse data
   if ((status & (PAR_ERR | TO_ERR)) || (status & AUX)) return 1;
@@ -196,8 +203,7 @@ int (kbd_poll)(void) {
   return 0;
 }
 
-// return number of sys_inb calls
-uint32_t (kbd_get_sys_inb_count)(void) { return sys_inb_count; }
-
-// reset sys_inb counter
-void (kbd_reset_sys_inb_count)(void) { sys_inb_count = 0; }
+#ifdef LAB3
+uint32_t (kbd_get_sys_inb_count)(void) { return sys_inb_count; } // return number of sys_inb calls
+void (kbd_reset_sys_inb_count)(void) { sys_inb_count = 0; } // reset sys_inb counter
+#endif

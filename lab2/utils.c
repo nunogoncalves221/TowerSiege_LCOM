@@ -1,6 +1,10 @@
 #include <lcom/lcf.h>
-
 #include <stdint.h>
+#include "utils.h"
+
+#ifdef LAB3
+uint32_t sys_inb_count = 0;
+#endif
 
 int(util_get_LSB)(uint16_t val, uint8_t *lsb) {
   if (lsb == NULL) return 1;
@@ -22,6 +26,11 @@ int (util_sys_inb)(int port, uint8_t *value) {
   if (sys_inb(port, &temp) != 0) return 1;
 
   *value = (uint8_t) temp;
+
+  // only increment in lab3
+  #ifdef LAB3
+  sys_inb_count++;
+  #endif
 
   return 0;
 }

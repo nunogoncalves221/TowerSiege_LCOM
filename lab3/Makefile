@@ -3,13 +3,12 @@ PROG=lab3
 .PATH: ../lab2
 
 # source code files to be compiled
-SRCS = lab3.c timer.c
+SRCS = lab3.c timer.c utils.c
 
 # additional compilation flags
 CFLAGS += -pedantic
 CFLAGS += -DLAB3
 CFLAGS += -I../lab2
-CFLAGS += -DLAB3
 
 LIB_NAME = libkbc.a
 LIB_SRCS = keyboard.c

@@ -8,6 +8,9 @@
 /* shared state — defined in keyboard.c, read by lab3.c */
 extern uint8_t scancode_byte;
 extern bool    kbc_error;
+extern uint8_t scancode_bytes[2];
+extern uint8_t scancode_size;
+extern bool    scancode_ready;
 
 int (keyboard_subscribe_int)(uint8_t *bit_no);
 int (keyboard_unsubscribe_int)(void);
