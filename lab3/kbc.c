@@ -39,7 +39,6 @@ void (kbc_ih)() {
 
     //first let's read the status register - port Ox64 - to see what's up
     if (util_sys_inb(KBC_CMD_REG, &status) != 0) {
-        ih_error = true;
         return;
     }
 
