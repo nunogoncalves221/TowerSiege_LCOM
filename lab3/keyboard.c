@@ -176,17 +176,21 @@ int (kbd_poll)(void) {
     return 1;
   }
 
-  // count status read
-  sys_inb_count++;
-
+  #ifndef LAB3
+    // count status read
+    sys_inb_count++;
+  #endif
+  
   // read data
   if (util_sys_inb(KBC_OUT_BUF, &data) != 0) {
     tickdelay(micros_to_ticks(DELAY_US));
     return 1;
   }
 
-  // count data read
-  sys_inb_count++;
+  #ifndef LAB3
+    // count data read
+    sys_inb_count++;
+  #endif
 
   // check for errors or mouse data
   if ((status & (PAR_ERR | TO_ERR)) || (status & AUX)) return 1;
