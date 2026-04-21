@@ -36,6 +36,16 @@
 #define MOUSE_NACK 0xFE // not acknowledged
 #define MOUSE_ERROR 0xFC // error
 
+// mouse packet byte 1 bits
+#define MOUSE_LB        BIT(0) // left button
+#define MOUSE_RB        BIT(1) // right button
+#define MOUSE_MB        BIT(2) // middle button
+#define MOUSE_SYNC_BIT  BIT(3) // always 1 on first byte
+#define MOUSE_X_SIGN    BIT(4) // X delta sign
+#define MOUSE_Y_SIGN    BIT(5) // Y delta sign
+#define MOUSE_X_OVF     BIT(6) // X delta overflow
+#define MOUSE_Y_OVF     BIT(7) // Y delta overflow
+
 //KBC command byte
 #define ENABLE_INTERRUPTS_KEYBOARD BIT(0)
 
@@ -43,6 +53,9 @@
 #define DELAY 20000
 #define MAX_RETRIES 10
 #define KBC_IBF BIT(1)
+#define MOUSE_PACKET_SIZE 3
 
+// timer constants
+#define TIMER_FREQ 60 // default timer frequency
 
 #endif /* _LCOM_I8042_H_ */

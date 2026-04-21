@@ -6,10 +6,23 @@
 #include "i8042.h"
 
 /* for mouse_ih() */
-static uint8_t packet_bytes[3]; // stores the 3 bytes of the current packet
-static int byte_idx = 0;        // keeps track of which byte we are reading (0, 1, or 2)
-static uint8_t current_byte;    // stores the most recently read byte from the KBC
-static bool valid_byte = false; // extra flag to know if the read was valid
+uint8_t packet_bytes[3]; // stores the 3 bytes of the current packet
+int byte_idx = 0;        // keeps track of which byte we are reading (0, 1, or 2)
+uint8_t current_byte;    // stores the most recently read byte from the KBC
+bool valid_byte = false; // extra flag to know if the read was valid
+
+int hook_id_mouse = IRQ_MOUSE; // hook id for mouse interrupts
+
+// subscribes to mouse interrupts
+int mouse_subscribe_int(uint8_t *bit_no) {
+    *bit_no = hook_id_mouse;
+    return sys_irqsetpolicy(IRQ_MOUSE, IRQ_REENABLE | IRQ_EXCLUSIVE, &hook_id_mouse);
+}
+
+// unsubscribes from mouse interrupts
+int mouse_unsubscribe_int() {
+    return sys_irqrmpolicy(&hook_id_mouse);
+}
 
 // helper function to write a byte to a kbc port, with retries
 static int kbc_write(uint8_t port, uint8_t byte) {
@@ -31,50 +44,47 @@ static int kbc_write(uint8_t port, uint8_t byte) {
 }
 
 int mouse_write_command(uint8_t cmd) {
-    uint8_t ack_byte = 0;
+    uint8_t ack_byte;
+    uint8_t status;
     int retries = MAX_RETRIES;
 
+    // flush the output buffer to remove any garbage left from previous tests
+    do {
+        util_sys_inb(KBC_CMD_REG, &status);
+        if (status & KBC_OBF) {
+            uint8_t trash;
+            util_sys_inb(KBC_OUT_BUF, &trash);
+        }
+    } while (status & KBC_OBF);
+
     while (retries > 0) {
-        // tell kbc we're writing to the mouse
+        // tell the kbc we are sending a mouse command
         if (kbc_write(KBC_CMD_REG, WRITE_TO_MOUSE) != 0) return 1;
 
-        // write the command itself
+        // send the actual command
         if (kbc_write(KBC_OUT_BUF, cmd) != 0) return 1;
 
-        // wait for and read acknowledgement from the mouse
-        int ack_retries = MAX_RETRIES;
-        bool ack_read = false;
-        while (ack_retries > 0) {
-            uint8_t status;
-            if (util_sys_inb(KBC_CMD_REG, &status) != 0) return 1;
+        // wait and read the acknowledgment byte
+        for (int i = 0; i < MAX_RETRIES; i++) {
+            util_sys_inb(KBC_CMD_REG, &status);
 
-            // if there's data in the output buffer, read it
             if (status & KBC_OBF) {
-                // check for communication errors before reading the byte
-                if (status & (KBC_PAR_ERR | KBC_TO_ERR)) return 1;
+                util_sys_inb(KBC_OUT_BUF, &ack_byte);
 
-                if (util_sys_inb(KBC_OUT_BUF, &ack_byte) != 0) return 1;
-                ack_read = true;
-                break; // exit the wait loop
+                // verify if there are no communication errors
+                if ((status & (KBC_PAR_ERR | KBC_TO_ERR)) == 0) {
+                    if (ack_byte == MOUSE_ACK) return 0;
+                    if (ack_byte == MOUSE_NACK) break;
+
+                    // if it is trash or an error just break and retry the whole command
+                    break;
+                }
             }
             tickdelay(micros_to_ticks(DELAY));
-            ack_retries--;
         }
-
-        if (!ack_read) return 1; // timed out waiting for acknowledgement
-
-        if (ack_byte == MOUSE_ACK) {
-            return 0; // success
-        }
-        
-        if (ack_byte == MOUSE_NACK || ack_byte == MOUSE_ERROR) {
-            retries--;
-            continue; // retry command on nack
-        }
-
-        return 1; // mouse error or unexpected byte
+        retries--;
     }
-    return 1; // failed after all retries
+    return 1;
 }
 
 void (mouse_ih)() {
@@ -124,4 +134,21 @@ void parse_mouse_packet(struct packet *pp) {
     } else {
         pp->delta_y = pp->bytes[2];
     }
+}
+
+bool mouse_process_packet_byte() {
+    // synchronization -> if it's the first byte, bit 3 must be 1
+    if (byte_idx == 0 && !(current_byte & MOUSE_SYNC_BIT)) {
+        return false; // desynchronized, ignore byte
+    }
+
+    packet_bytes[byte_idx] = current_byte;
+    byte_idx++;
+
+    if (byte_idx == MOUSE_PACKET_SIZE) {
+        byte_idx = 0; // reset for the next packet
+        return true;  // packet is complete
+    }
+
+    return false;
 }
