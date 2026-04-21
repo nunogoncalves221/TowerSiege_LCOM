@@ -13,7 +13,7 @@ uint8_t scancode_byte = 0; // last byte read from keyboard
 bool    kbc_error     = false; // indicates if an error occurred
 uint8_t scancode_bytes[2];
 uint8_t scancode_size = 0;
-bool    scancode_ready = false;
+
 
 int (keyboard_subscribe_int)(uint8_t *bit_no) {
   // check pointer
@@ -146,7 +146,6 @@ void (kbc_ih)(void) {
   uint8_t status, data;
 
   kbc_error = false; // assume no error at start
-  scancode_ready = false; // assume it's not a complete scancode yet
 
   // read status register
   if (util_sys_inb(KBC_ST_REG, &status) != 0) { kbc_error = true; return; }
@@ -161,17 +160,6 @@ void (kbc_ih)(void) {
 
   // check for errors or mouse data
   if ((status & (PAR_ERR | TO_ERR)) || (status & AUX)) { kbc_error = true; return; }
-
-  // store byte in array
-  scancode_bytes[scancode_size] = data;
-  scancode_size++;
-
-  // check if waiting for a second byte is needed
-  if (data == TWO_BYTE_PREFIX && scancode_size == 1) {
-      return; 
-  }
-
-  scancode_ready = true;
 }
 
 int (kbd_poll)(void) {
@@ -201,6 +189,20 @@ int (kbd_poll)(void) {
   // store scancode byte
   scancode_byte = data;
   return 0;
+}
+
+bool (kbd_process_scancode)(uint8_t *size, uint8_t scancodes_array[]) {
+  // add the newly read byte to our array
+  scancodes_array[*size] = scancode_byte; 
+  (*size)++;
+
+  // if it's the two byte prefix, we must wait for the second byte
+  if (scancode_byte == TWO_BYTE_PREFIX && *size == 1) {
+    return false; 
+  }
+
+  // the scancode is complete and ready to be printed
+  return true; 
 }
 
 #ifdef LAB3

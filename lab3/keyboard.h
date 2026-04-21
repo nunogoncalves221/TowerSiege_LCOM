@@ -31,4 +31,7 @@ int (kbd_poll)(void);
 uint32_t (kbd_get_sys_inb_count)(void);
 void     (kbd_reset_sys_inb_count)(void);
 
+/* processes the scancode array and returns true if it is completely assembled */
+bool (kbd_process_scancode)(uint8_t *size, uint8_t scancodes_array[]);
+
 #endif
