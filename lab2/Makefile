@@ -28,18 +28,18 @@ DPADD += ${LIBLCF} ${LIB_TIMER} ${LIB_UTILS}
 LDADD += -llcf -L. -ltimer -lutils
 
 # -------------------------------------------------------
-# build everything
+# build everything: both libraries must exist before the
+# program is linked, so we make them prerequisites of
+# the default 'all' target that LCOM's makefile exposes.
 # -------------------------------------------------------
 all: libutils libtimer
 
 # build utils lib
 libutils: ${UTILS_OBJS}
-	rm -f ${LIB_UTILS}
 	ar rcs ${LIB_UTILS} ${UTILS_OBJS}
 
 # build timer lib
 libtimer: ${TIMER_OBJS}
-	rm -f ${LIB_TIMER}
 	ar rcs ${LIB_TIMER} ${TIMER_OBJS}
 
 # include LCOM's makefile
