@@ -2,10 +2,6 @@
 #include "i8042.h"
 #include "../lab2/utils.h"
 
-#ifdef LAB3
-extern uint32_t sys_inb_count; 
-#endif
-
 static int kbd_hook_id = 1;
 
 // shared with lab3.c via extern in keyboard.h
@@ -204,8 +200,3 @@ bool (kbd_process_scancode)(uint8_t *size, uint8_t scancodes_array[]) {
   // the scancode is complete and ready to be printed
   return true; 
 }
-
-#ifdef LAB3
-uint32_t (kbd_get_sys_inb_count)(void) { return sys_inb_count; } // return number of sys_inb calls
-void (kbd_reset_sys_inb_count)(void) { sys_inb_count = 0; } // reset sys_inb counter
-#endif

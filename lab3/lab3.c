@@ -8,6 +8,7 @@
 #include "i8042.h"
 
 #include "../lab2/my_timer.h"
+#include "../lab2/utils.h"
 
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
