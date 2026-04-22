@@ -66,19 +66,27 @@ int mouse_write_command(uint8_t cmd) {
 
         // wait and read the acknowledgment byte
         for (int i = 0; i < MAX_RETRIES; i++) {
-            util_sys_inb(KBC_CMD_REG, &status);
+            if (util_sys_inb(KBC_CMD_REG, &status) != 0) {
+                break; // reading status failed, retry command
+            }
 
             if (status & KBC_OBF) {
-                util_sys_inb(KBC_OUT_BUF, &ack_byte);
-
-                // verify if there are no communication errors
-                if ((status & (KBC_PAR_ERR | KBC_TO_ERR)) == 0) {
-                    if (ack_byte == MOUSE_ACK) return 0;
-                    if (ack_byte == MOUSE_NACK) break;
-
-                    // if it is trash or an error just break and retry the whole command
+                // if there are communication errors, the byte is invalid
+                if (status & (KBC_PAR_ERR | KBC_TO_ERR)) {
+                    uint8_t trash;
+                    util_sys_inb(KBC_OUT_BUF, &trash); // flush garbage and retry
                     break;
                 }
+
+                if (util_sys_inb(KBC_OUT_BUF, &ack_byte) != 0) {
+                    break; // reading byte failed, retry command
+                }
+
+                if (ack_byte == MOUSE_ACK) return 0; // success
+                if (ack_byte == MOUSE_NACK) break;   // nack, retry command
+                
+                // any other byte is considered an error, so retry command
+                break;
             }
             tickdelay(micros_to_ticks(DELAY));
         }
