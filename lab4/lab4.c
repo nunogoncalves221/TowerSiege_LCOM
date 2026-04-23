@@ -7,9 +7,7 @@
 // any header files included below this line should have been created by you
 #include "i8042.h"
 #include "mouse.h"
-
-// from lab2 for mouse_test_async
-extern int timer_counter;
+#include "../lab2/my_timer.h"
 
 int main(int argc, char *argv[]) {
   // sets the language of LCF messages (can be either EN-US or PT-PT)
@@ -31,6 +29,8 @@ int main(int argc, char *argv[]) {
   // LCF clean up tasks
   // [must be the last statement before return]
   lcf_cleanup();
+
+  fix_lazy_linking();
 
   return 0;
 }
@@ -99,11 +99,11 @@ int (mouse_test_async)(uint8_t idle_time) {
     struct packet mouse_packet;
 
     // timer frequency (60hz) * time in seconds
-    int max_ticks = idle_time * 60;
-    timer_counter = 0;
+    uint32_t max_ticks = idle_time * 60;
+    reset_timer_counter();
 
     // exit the loop if timer_counter exceeds the limit
-    while (timer_counter < max_ticks) {
+    while (get_timer_counter() < max_ticks) {
         if ((r = driver_receive(ANY, &msg, &ipc_status)) != 0) continue;
 
         if (is_ipc_notify(ipc_status)) {
@@ -117,7 +117,7 @@ int (mouse_test_async)(uint8_t idle_time) {
                             parse_mouse_packet(&mouse_packet);
                             mouse_print_packet(&mouse_packet);
                             // the mouse moved! reset the timer
-                            timer_counter = 0;
+                            reset_timer_counter();
                         }
                     }
 
