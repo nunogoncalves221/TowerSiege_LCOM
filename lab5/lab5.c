@@ -2,11 +2,10 @@
 #include <lcom/lcf.h>
 
 #include <lcom/lab5.h>
+#include "video.h"
 
 #include <stdint.h>
 #include <stdio.h>
-
-// Any header files included below this line should have been created by you
 
 int main(int argc, char *argv[]) {
     // sets the language of LCF messages (can be either EN-US or PT-PT)
@@ -33,9 +32,17 @@ int main(int argc, char *argv[]) {
 }
 
 int(video_test_init)(uint16_t mode, uint8_t delay) {
-    /* To be completed */
-    printf("%s(0x%03x, %u): under construction\n", __func__, mode, delay);
-    return 1;
+
+    // change to specified mode
+    if (vg_init(mode) == NULL) {
+        return 1;
+    }
+
+    // wait
+    tickdelay(micros_to_ticks(delay * 1000000));
+
+    // restore minix text mode
+    return vg_exit();
 }
 
 int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
