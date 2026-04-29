@@ -5,5 +5,6 @@
 
 uint32_t get_timer_counter(void);
 void reset_timer_counter(void);
+void fix_lazy_linking(void);
 
 #endif

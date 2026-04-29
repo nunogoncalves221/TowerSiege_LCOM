@@ -1,26 +1,46 @@
 # name of the program (Minix service)
-PROG=lab2 
+PROG=lab2
 
 # source code files to be compiled
-SRCS = lab2.c timer.c utils.c
+SRCS = lab2.c
 
-# additional compilation flags
-# "-Wall -Wextra -Werror -I . -std=c11 -Wno-unused-parameter" are already set
+# flags
 CFLAGS += -pedantic
 
-# list of library dependencies (for Lab 2, only LCF library)
-DPADD += ${LIBLCF} ${LIB_NAME}
-LDADD += -llcf -L.
-LDADD += -ltimer
+# -------------------------------------------------------
+# utils library
+# -------------------------------------------------------
+LIB_UTILS = libutils.a
+UTILS_SRCS = utils.c
+UTILS_OBJS = ${UTILS_SRCS:.c=.o}
 
-LIB_NAME = libtimer.a
-LIB_SRCS = timer.c utils.c
-LIB_OBJS = ${LIB_SRCS:.c=.o}
-CLEANFILES += ${LIB_NAME} ${LIB_OBJS}
+# -------------------------------------------------------
+# timer library
+# -------------------------------------------------------
+LIB_TIMER = libtimer.a
+TIMER_SRCS = timer.c
+TIMER_OBJS = ${TIMER_SRCS:.c=.o}
 
-all: lib
-lib: ${LIB_OBJS}
-	ar rcs ${LIB_NAME} ${LIB_OBJS}
+# -------------------------------------------------------
+# link against both libraries
+# -------------------------------------------------------
+DPADD += ${LIBLCF} ${LIB_TIMER} ${LIB_UTILS}
+LDADD += -llcf -L. -ltimer -lutils
 
-# include LCOM's makefile that does all the "heavy lifting"
+# -------------------------------------------------------
+# build everything: both libraries must exist before the
+# program is linked, so we make them prerequisites of
+# the default 'all' target that LCOM's makefile exposes.
+# -------------------------------------------------------
+all: libutils libtimer
+
+# build utils lib
+libutils: ${UTILS_OBJS}
+	ar rcs ${LIB_UTILS} ${UTILS_OBJS}
+
+# build timer lib
+libtimer: ${TIMER_OBJS}
+	ar rcs ${LIB_TIMER} ${TIMER_OBJS}
+
+# include LCOM's makefile
 .include <minix.lcom.mk>

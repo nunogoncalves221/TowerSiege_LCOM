@@ -213,3 +213,7 @@ int (timer_display_conf)(uint8_t timer, uint8_t st,
   // print selected configuration field
   return timer_print_config(timer, field, val);
 }
+
+void (fix_lazy_linking) (void) {
+  return;
+}
