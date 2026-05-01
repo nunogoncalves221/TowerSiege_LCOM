@@ -3,6 +3,7 @@
 
 #include <lcom/lab5.h>
 #include "video.h"
+#include "../lab3/keyboard.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -32,23 +33,50 @@ int main(int argc, char *argv[]) {
 }
 
 int(video_test_init)(uint16_t mode, uint8_t delay) {
-
-    // change to specified mode
-    if (vg_init(mode) == NULL) {
-        return 1;
-    }
-
-    // wait
-    tickdelay(micros_to_ticks(delay * 1000000));
-
-    // restore minix text mode
-    return vg_exit();
+    if (vg_init(mode) == NULL) return 1; // change to specified mode
+    tickdelay(micros_to_ticks(delay * 1000000)); // wait
+    return vg_exit(); // restore minix text mode
 }
 
 int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
-    /* To be completed */
-    printf("%s(0x%03X, %u, %u, %u, %u, 0x%08x): under construction\n", __func__, mode, x, y, width, height, color);
-    return 1;
+    if (vg_init(mode) == NULL) return 1;
+
+    if ((vg_draw_rectangle)(x, y, width, height, color) != 0) {
+        vg_exit();
+        return 1;
+    }
+
+    uint8_t bit_no;
+    if ((keyboard_subscribe_int)(&bit_no) != 0) {
+        vg_exit();
+        return 1;
+    }
+
+    uint32_t irq_set = BIT(bit_no);
+    int ipc_status;
+    message msg;
+    extern uint8_t scancode_byte;
+    scancode_byte = 0;
+
+    while (scancode_byte != 0x81) { // 0x81 is the breakcode for esc
+        if (driver_receive(ANY, &msg, &ipc_status) != 0) { // wait for an interrupt message
+            printf("driver_receive failed\n");
+            continue;
+        }
+
+        if (is_ipc_notify(ipc_status)) { // received notification
+            switch (_ENDPOINT_P(msg.m_source)) {
+                case HARDWARE:
+                    if (msg.m_notify.interrupts & irq_set) kbc_ih();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    (keyboard_unsubscribe_int)();
+    return vg_exit();
 }
 
 int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {

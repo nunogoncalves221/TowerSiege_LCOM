@@ -1,4 +1,5 @@
 .minix-src/
+.idea/
 
 *.o
 *.a

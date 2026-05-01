@@ -43,6 +43,27 @@ void* (vg_init)(uint16_t mode) {
     return video_mem;
 }
 
-int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) { return 0; }
-int (vg_draw_hline)(uint16_t x, uint16_t y, uint16_t len, uint32_t color) { return 0; }
-int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) { return 0; }
+int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
+    if (x >= vmi.XResolution || y >= vmi.YResolution) return 0; //check boundaries
+    unsigned bpp = (vmi.BitsPerPixel + 7) / 8; //number of bytes per pixel
+    uint8_t *ptr = (uint8_t *)video_mem + (y * vmi.XResolution + x) * bpp; //mem addr
+    if (memcpy(ptr, &color, bpp) == NULL) return 1; //copy color bytes
+    return 0;
+}
+
+int (vg_draw_hline)(uint16_t x, uint16_t y, uint16_t len, uint32_t color) {
+    for (uint16_t i = 0; i < len; i++) {
+        if (vg_draw_pixel(x + i, y, color) != 0) return 1;
+    }
+    return 0;
+}
+
+int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
+    for (uint16_t i = 0; i < height; i++) {
+        if (vg_draw_hline(x, y + i, width, color) != 0) {
+            vg_exit();
+            return 1;
+        }
+    }
+    return 0;
+}
