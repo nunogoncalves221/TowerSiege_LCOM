@@ -8,6 +8,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
+extern uint8_t scancode_byte;
+
 int main(int argc, char *argv[]) {
     // sets the language of LCF messages (can be either EN-US or PT-PT)
     lcf_set_language("EN-US");
@@ -47,7 +49,7 @@ int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y, uint16_t width,
     }
 
     uint8_t bit_no;
-    if ((keyboard_subscribe_int)(&bit_no) != 0) {
+    if (keyboard_subscribe_int(&bit_no) != 0) {
         vg_exit();
         return 1;
     }
@@ -75,12 +77,61 @@ int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y, uint16_t width,
         }
     }
 
-    (keyboard_unsubscribe_int)();
+    keyboard_unsubscribe_int();
     return vg_exit();
 }
 
 int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
-    /* To be completed */
-    printf("%s(%8p, %u, %u): under construction\n", __func__, xpm, x, y);
-    return 1;
+    // load xpm image
+    xpm_image_t img;
+    uint8_t *map = xpm_load(xpm, XPM_INDEXED, &img);
+    if (map == NULL) {
+        printf("Failed to load XPM\\n");
+        return 1;
+    }
+
+    // graphics mode 0x105
+    if (vg_init(0x105) == NULL) return 1;
+
+    // draw image
+    for (int i = 0; i < img.height; i++) {
+        for (int j = 0; j < img.width; j++) {
+            // get color
+            uint32_t color = map[i * img.width + j];
+
+            // draw pixel
+            vg_draw_pixel(x + j, y + i, color);
+        }
+    }
+
+    uint8_t bit_no;
+    if (keyboard_subscribe_int(&bit_no) != 0) {
+        vg_exit();
+        return 1;
+    }
+
+    uint32_t irq_set = BIT(bit_no);
+    int ipc_status;
+    message msg;
+    extern uint8_t scancode_byte;
+
+    while (scancode_byte != 0x81) {
+        if (driver_receive(ANY, &msg, &ipc_status) != 0) {
+            continue;
+        }
+        if (is_ipc_notify(ipc_status)) {
+            switch (_ENDPOINT_P(msg.m_source)) {
+                case HARDWARE:
+                    if (msg.m_notify.interrupts & irq_set) {
+                        kbc_ih();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    keyboard_unsubscribe_int();
+    return vg_exit();
 }
