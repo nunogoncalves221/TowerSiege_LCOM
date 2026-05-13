@@ -4,6 +4,7 @@
 // global statics
 static void *video_mem; // process address where vram is mapped
 static vbe_mode_info_t vmi; // vbe mode info
+static unsigned int bytes_per_pixel;
 
 void* (vg_init)(uint16_t mode) {
 
@@ -11,11 +12,13 @@ void* (vg_init)(uint16_t mode) {
     memset(&vmi, 0, sizeof(vmi));
     if (vbe_get_mode_info(mode, &vmi) != OK) return NULL;
 
+    bytes_per_pixel = (vmi.BitsPerPixel + 7) / 8;
+
     // map physical memory to the process address space
     int r;
     struct minix_mem_range mr;
     unsigned int vram_base = vmi.PhysBasePtr;
-    unsigned int vram_size = vmi.XResolution * vmi.YResolution * ((vmi.BitsPerPixel + 7) / 8);
+    unsigned int vram_size = vmi.XResolution * vmi.YResolution * bytes_per_pixel;
 
     mr.mr_base = (phys_bytes) vram_base;
     mr.mr_limit = mr.mr_base + vram_size;
@@ -45,9 +48,8 @@ void* (vg_init)(uint16_t mode) {
 
 int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
     if (x >= vmi.XResolution || y >= vmi.YResolution) return 0; //check boundaries
-    unsigned bpp = (vmi.BitsPerPixel + 7) / 8; //number of bytes per pixel
-    uint8_t *ptr = (uint8_t *)video_mem + (y * vmi.XResolution + x) * bpp; //mem addr
-    if (memcpy(ptr, &color, bpp) == NULL) return 1; //copy color bytes
+    uint8_t *ptr = (uint8_t *)video_mem + (y * vmi.XResolution + x) * bytes_per_pixel;
+    if (memcpy(ptr, &color, bytes_per_pixel) == NULL) return 1;
     return 0;
 }
 
@@ -61,9 +63,12 @@ int (vg_draw_hline)(uint16_t x, uint16_t y, uint16_t len, uint32_t color) {
 int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint32_t color) {
     for (uint16_t i = 0; i < height; i++) {
         if (vg_draw_hline(x, y + i, width, color) != 0) {
-            vg_exit();
             return 1;
         }
     }
     return 0;
+}
+
+unsigned (get_bytes_per_pixel)() {
+    return bytes_per_pixel;
 }

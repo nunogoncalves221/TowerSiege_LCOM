@@ -93,11 +93,16 @@ int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
     // graphics mode 0x105
     if (vg_init(0x105) == NULL) return 1;
 
+    unsigned bpp = get_bytes_per_pixel();
+    uint8_t *ptr = map;
+
     // draw image
     for (int i = 0; i < img.height; i++) {
         for (int j = 0; j < img.width; j++) {
             // get color
-            uint32_t color = map[i * img.width + j];
+            uint32_t color = 0;
+            memcpy(&color, ptr, bpp);
+            ptr += bpp;
 
             // draw pixel
             vg_draw_pixel(x + j, y + i, color);
