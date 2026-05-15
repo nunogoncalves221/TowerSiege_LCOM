@@ -5,7 +5,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/* shared state — defined in keyboard.c, read by lab3.c */
 extern uint8_t scancode_byte;
 extern bool    kbc_error;
 extern uint8_t scancode_bytes[2];
@@ -21,7 +20,7 @@ int (kbc_read_cmd_byte)(uint8_t *cmd_byte);
 int (kbc_write_cmd_byte)(uint8_t cmd_byte);
 int (kbd_enable_interrupts)(void);
 
-/* interrupt handler — called from lab3.c on every keyboard IRQ */
+/* interrupt handler — called on every keyboard IRQ */
 void (kbc_ih)(void);
 
 /* polling read — returns 0 when a valid byte is in scancode_byte */

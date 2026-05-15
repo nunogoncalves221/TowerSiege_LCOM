@@ -9,6 +9,7 @@
 /* FOR kbd_test_scan and kbc_ih */
 
 #define KBC_OUT_BUF   0x60    // port of Output Buffer
+#define KBC_IN_BUF    0x60 // port to write arguments to the KBC
 #define KBC_CMD_REG   0x64    // port of Status/Command Register
 
 #define KBC_AUX       BIT(5)  // bit 5: mouse data

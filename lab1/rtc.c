@@ -3,11 +3,14 @@
 
 #define RTC_ADDR_REG 0x70
 #define RTC_DATA_REG 0x71
-#define RTC_REG_A 0x0A
-#define RTC_REG_B 0x0B
+#define RTC_REG_SEC 0x00
+#define RTC_REG_MIN 0x02
+#define RTC_REG_HOUR 0x04
 #define RTC_REG_DAY 0x07
 #define RTC_REG_MONTH 0x08
 #define RTC_REG_YEAR 0x09
+#define RTC_REG_A 0x0A
+#define RTC_REG_B 0x0B
 #define RTC_UIP_MSK (1 << 7)  // Update In Progress bit
 #define RTC_DM_MSK (1 << 2)   // Data Mode bit (BCD or binary)
 
@@ -33,7 +36,7 @@ int rtc_read_date(rtc_date *date) {
         return 1;
     }
 
-    uint32_t regB, day, month, year;
+    uint32_t regB, seconds, minutes, hours, day, month, year;
 
     wait_for_uip_clear(); // ensure RTC is not updating
 
@@ -45,6 +48,36 @@ int rtc_read_date(rtc_date *date) {
 
     if (sys_inb(RTC_DATA_REG, &regB) != 0) {
         printf("rtc_read_date: failed to read regB\n");
+        return 1;
+    }
+
+    // Read seconds
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_SEC) != 0) {
+        printf("rtc_read_date: failed to select SECONDS register\n");
+        return 1;
+    }
+    if (sys_inb(RTC_DATA_REG, &seconds) != 0) {
+        printf("rtc_read_date: failed to read seconds\n");
+        return 1;
+    }
+
+    // Read minutes
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_MIN) != 0) {
+        printf("rtc_read_date: failed to select MINUTES register\n");
+        return 1;
+    }
+    if (sys_inb(RTC_DATA_REG, &minutes) != 0) {
+        printf("rtc_read_date: failed to read minutes\n");
+        return 1;
+    }
+
+    // Read hours
+    if (sys_outb(RTC_ADDR_REG, RTC_REG_HOUR) != 0) {
+        printf("rtc_read_date: failed to select HOURS register\n");
+        return 1;
+    }
+    if (sys_inb(RTC_DATA_REG, &hours) != 0) {
+        printf("rtc_read_date: failed to read hours\n");
         return 1;
     }
 
@@ -83,12 +116,18 @@ int rtc_read_date(rtc_date *date) {
 
     // Convert from BCD to binary if necessary
     if (!(regB & RTC_DM_MSK)) {
+        seconds = bcd_to_bin(seconds);
+        minutes = bcd_to_bin(minutes);
+        hours   = bcd_to_bin(hours);
         day   = bcd_to_bin(day);
         month = bcd_to_bin(month);
         year  = bcd_to_bin(year);
     }
 
     // Store the values
+    date->seconds = (uint8_t)seconds;
+    date->minutes = (uint8_t)minutes;
+    date->hours   = (uint8_t)hours;
     date->day   = (uint8_t)day;
     date->month = (uint8_t)month;
     date->year  = (uint8_t)year;

@@ -31,6 +31,8 @@ void* (vg_init)(uint16_t mode) {
     video_mem = vm_map_phys(SELF, (void *)mr.mr_base, vram_size);
     if (video_mem == MAP_FAILED) return NULL;
 
+    //implement double buffering later
+
     // set graphics mode
     reg86_t reg;
     memset(&reg, 0, sizeof(reg));
