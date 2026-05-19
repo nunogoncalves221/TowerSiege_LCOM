@@ -31,6 +31,8 @@ int main(int argc, char *argv[]) {
   // [must be the last statement before return]
   lcf_cleanup();
 
+  fix_lazy_linking();
+
   return 0;
 }
 

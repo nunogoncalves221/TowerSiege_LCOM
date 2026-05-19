@@ -125,10 +125,10 @@ uint32_t (get_timer_counter)() {
 }
 
 void (reset_timer_counter)() {
-
-  // reset interrupt counter to zero
   timer_counter = 0;
 }
+
+void fix_lazy_linking(void) {}
 
 int (timer_get_conf)(uint8_t timer, uint8_t *st) {
 

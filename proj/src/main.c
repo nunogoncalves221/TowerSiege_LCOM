@@ -21,5 +21,60 @@ int main(int argc, char *argv[]) {
 }
 
 int(proj_main_loop)(int argc, char* argv[]) {
-  return 0;
+  if (vg_init(0x14C) == NULL) return 1; // 1152x864 RGB 32-bit
+
+  uint8_t timer_bit, kbd_bit, mouse_bit;
+
+  if (timer_subscribe_int(&timer_bit) != 0) { vg_exit(); return 1; }
+  if (keyboard_subscribe_int(&kbd_bit) != 0) { timer_unsubscribe_int(); vg_exit(); return 1; }
+  if (mouse_write_command(ENABLE_DATA_REPORTING) != 0) { keyboard_unsubscribe_int(); timer_unsubscribe_int(); vg_exit(); return 1; }
+  if (mouse_subscribe_int(&mouse_bit) != 0) { keyboard_unsubscribe_int(); timer_unsubscribe_int(); vg_exit(); return 1; }
+
+  uint32_t timer_irq = BIT(timer_bit);
+  uint32_t kbd_irq   = BIT(kbd_bit);
+  uint32_t mouse_irq = BIT(mouse_bit);
+
+  int ipc_status;
+  message msg;
+  bool running = true;
+
+  while (running) {
+    if (driver_receive(ANY, &msg, &ipc_status) != 0) continue;
+
+    if (is_ipc_notify(ipc_status)) {
+      switch (_ENDPOINT_P(msg.m_source)) {
+        case HARDWARE:
+
+          if (msg.m_notify.interrupts & timer_irq) {
+            timer_int_handler();
+            // game update
+          }
+
+          if (msg.m_notify.interrupts & kbd_irq) {
+            kbc_ih();
+            if (!kbc_error && scancode_byte == ESC_BREAKCODE)
+              running = false;
+          }
+
+          if (msg.m_notify.interrupts & mouse_irq) {
+            mouse_ih();
+            if (valid_byte && mouse_process_packet_byte()) {
+              struct packet pp;
+              parse_mouse_packet(&pp);
+              // handle mouse
+            }
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+
+  mouse_unsubscribe_int();
+  mouse_write_command(DISABLE_DATA_REPORTING);
+  keyboard_unsubscribe_int();
+  timer_unsubscribe_int();
+  return vg_exit();
 }
