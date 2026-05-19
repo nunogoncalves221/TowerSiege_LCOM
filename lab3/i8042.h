@@ -47,6 +47,9 @@
 #define MOUSE_X_OVF     BIT(6) // X delta overflow
 #define MOUSE_Y_OVF     BIT(7) // Y delta overflow
 
+// scancodes
+#define ESC_BREAKCODE 0x81
+
 //KBC command byte
 #define ENABLE_INTERRUPTS_KEYBOARD BIT(0)
 

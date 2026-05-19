@@ -27,7 +27,6 @@ LDADD += -L../../lab5 -lvideo \
          -L../../lab4 -lmouse \
          -L../../lab3 -lkbd \
          -L../../lab2 -ltimer -lutils \
-         
          -llcf
 
 #-L../../lab1 -lrtc \
