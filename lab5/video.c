@@ -3,8 +3,10 @@
 
 // global statics
 static void *video_mem; // process address where vram is mapped
+static uint8_t *double_buffer = NULL; // backstage buffer for smooth drawing
 static vbe_mode_info_t vmi; // vbe mode info
 static unsigned int bytes_per_pixel;
+static unsigned int vram_size; // keep track of the total size for the memcpy
 
 void* (vg_init)(uint16_t mode) {
 
@@ -18,7 +20,7 @@ void* (vg_init)(uint16_t mode) {
     int r;
     struct minix_mem_range mr;
     unsigned int vram_base = vmi.PhysBasePtr;
-    unsigned int vram_size = vmi.XResolution * vmi.YResolution * bytes_per_pixel;
+    vram_size = vmi.XResolution * vmi.YResolution * bytes_per_pixel;
 
     mr.mr_base = (phys_bytes) vram_base;
     mr.mr_limit = mr.mr_base + vram_size;
@@ -31,7 +33,15 @@ void* (vg_init)(uint16_t mode) {
     video_mem = vm_map_phys(SELF, (void *)mr.mr_base, vram_size);
     if (video_mem == MAP_FAILED) return NULL;
 
-    //implement double buffering later
+    // allocate our double buffer dynamically
+    double_buffer = (uint8_t *) malloc(vram_size);
+    if (double_buffer == NULL) {
+        printf("Failed to allocate double buffer!\n");
+        return NULL;
+    }
+    
+    // clean the buffer (make it black) so we don't draw garbage on startup
+    memset(double_buffer, 0, vram_size);
 
     // set graphics mode
     reg86_t reg;
@@ -42,6 +52,7 @@ void* (vg_init)(uint16_t mode) {
 
     if (sys_int86(&reg) != OK) {
         printf("Set Value Mode failed\n");
+        free(double_buffer); // don't leak memory if we fail
         return NULL;
     }
 
@@ -49,9 +60,15 @@ void* (vg_init)(uint16_t mode) {
 }
 
 int (vg_draw_pixel)(uint16_t x, uint16_t y, uint32_t color) {
-    if (x >= vmi.XResolution || y >= vmi.YResolution) return 0; //check boundaries
-    uint8_t *ptr = (uint8_t *)video_mem + (y * vmi.XResolution + x) * bytes_per_pixel;
-    if (memcpy(ptr, &color, bytes_per_pixel) == NULL) return 1;
+    // check boundaries so we don't write outside our buffer and crash
+    if (x >= vmi.XResolution || y >= vmi.YResolution) return 0; 
+    
+    // draw to our hidden double_buffer instead of video_mem
+    uint8_t *ptr = double_buffer + (y * vmi.XResolution + x) * bytes_per_pixel;
+    
+    // copy the color into the buffer
+    memcpy(ptr, &color, bytes_per_pixel);
+    
     return 0;
 }
 
@@ -73,4 +90,26 @@ int (vg_draw_rectangle)(uint16_t x, uint16_t y, uint16_t width, uint16_t height,
 
 unsigned (get_bytes_per_pixel)() {
     return bytes_per_pixel;
+}
+
+// dumps everything we drew to the actual screen in one go
+void (vg_refresh)() {
+    if (double_buffer != NULL && video_mem != NULL) {
+        memcpy(video_mem, double_buffer, vram_size);
+    }
+}
+
+// clears the double buffer back to black for the next frame
+void (vg_clear_buffer)() {
+    if (double_buffer != NULL) {
+        memset(double_buffer, 0, vram_size);
+    }
+}
+
+// frees the memory when the game is over to avoid leaks
+void (vg_free)() {
+    if (double_buffer != NULL) {
+        free(double_buffer);
+        double_buffer = NULL;
+    }
 }
