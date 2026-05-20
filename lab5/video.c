@@ -113,3 +113,11 @@ void (vg_free)() {
         double_buffer = NULL;
     }
 }
+
+unsigned (vg_get_x_res)() {
+    return vmi.XResolution;
+}
+
+unsigned (vg_get_y_res)() {
+    return vmi.YResolution;
+}
