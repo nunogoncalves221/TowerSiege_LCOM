@@ -59,7 +59,7 @@ int draw_sprite(sprite_t *sp, int16_t x, int16_t y) {
             uint32_t color = sp->map[i * sp->width + j];
             
             if (color != transparent) {
-                vg_draw_pixel(px, py, color);
+                vg_draw_pixel((uint16_t)px, (uint16_t)py, color);
             }
         }
     }
