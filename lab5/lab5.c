@@ -48,6 +48,8 @@ int(video_test_rectangle)(uint16_t mode, uint16_t x, uint16_t y, uint16_t width,
         return 1;
     }
 
+    vg_refresh();
+
     uint8_t bit_no;
     if (keyboard_subscribe_int(&bit_no) != 0) {
         vg_exit();
@@ -108,6 +110,8 @@ int(video_test_xpm)(xpm_map_t xpm, uint16_t x, uint16_t y) {
             vg_draw_pixel(x + j, y + i, color);
         }
     }
+
+    vg_refresh();
 
     uint8_t bit_no;
     if (keyboard_subscribe_int(&bit_no) != 0) {
