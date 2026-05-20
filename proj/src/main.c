@@ -5,6 +5,7 @@
 #include "i8042.h"
 #include "keyboard.h"
 #include "mouse.h"
+#include "rtc.h"
 
 #include "states.h"
 #include "menu.h"
