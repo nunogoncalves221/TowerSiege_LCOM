@@ -88,7 +88,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
             if (state == STATE_MENU) {
               menu_draw();
             } else if (state == STATE_GAME) {
-              // game_tick(); // uncomment this when we implement the logic!!
+              game_tick();
               game_draw();
             }
 
@@ -110,6 +110,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
                   running = false; // time to quit
                 }
               } else if (state == STATE_GAME) {
+                game_handle_key(scancode_byte);
                 if (scancode_byte == ESC_BREAKCODE) { // back to main menu
                   state = STATE_MENU;
                 }
