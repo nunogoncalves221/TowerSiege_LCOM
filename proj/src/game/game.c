@@ -1,6 +1,7 @@
 #include "game.h"
 #include "sprite.h"
 #include "video.h"
+#include "map.h"
 #include "../assets/hero.xpm"
 
 static sprite_t *hero_sprite = NULL;
@@ -13,6 +14,8 @@ static bool key_s = false;
 static bool key_d = false;
 
 void game_reset(void) {
+    map_init();
+
     destroy_sprite(hero_sprite);
     hero_sprite = create_sprite((xpm_map_t) hero);
 
@@ -59,6 +62,7 @@ void game_tick(void) {
 }
 
 void game_draw(void) {
+    map_draw();
     if (hero_sprite == NULL) return;
     draw_sprite(hero_sprite, hero_x, hero_y);
 }
