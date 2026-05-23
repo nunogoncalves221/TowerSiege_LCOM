@@ -4,7 +4,7 @@
 #include <lcom/lcf.h>
 
 #define TIMER_FREQ 60
-#define FPS 60
+#define FPS 30
 #define HERO_SPEED 4  // pixels per frame
 
 // WASD Set-1 scancodes (make) — break = make | 0x80

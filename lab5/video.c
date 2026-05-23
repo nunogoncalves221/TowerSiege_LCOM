@@ -121,3 +121,25 @@ unsigned (vg_get_x_res)() {
 unsigned (vg_get_y_res)() {
     return vmi.YResolution;
 }
+
+void (vg_blit_region)(const uint8_t *src, uint16_t src_stride_px, uint16_t x, uint16_t y, uint16_t w, uint16_t h) {
+    if (double_buffer == NULL || src == NULL) return;
+    for (uint16_t row = 0; row < h; row++) {
+        if (y + row >= vmi.YResolution) break;
+        uint16_t clamped_w = (x + w > vmi.XResolution) ? vmi.XResolution - x : w;
+        uint8_t *dst_ptr = double_buffer + ((y + row) * vmi.XResolution + x) * bytes_per_pixel;
+        const uint8_t *src_ptr = src + (uint32_t)row * src_stride_px * bytes_per_pixel;
+        memcpy(dst_ptr, src_ptr, clamped_w * bytes_per_pixel);
+    }
+}
+
+void (vg_copy_region)(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t *dst, uint16_t dst_stride_px) {
+    if (double_buffer == NULL || dst == NULL) return;
+    for (uint16_t row = 0; row < h; row++) {
+        if (y + row >= vmi.YResolution) break;
+        uint16_t clamped_w = (x + w > vmi.XResolution) ? vmi.XResolution - x : w;
+        const uint8_t *src_ptr = double_buffer + ((y + row) * vmi.XResolution + x) * bytes_per_pixel;
+        uint8_t *dst_ptr = dst + (uint32_t)row * dst_stride_px * bytes_per_pixel;
+        memcpy(dst_ptr, src_ptr, clamped_w * bytes_per_pixel);
+    }
+}

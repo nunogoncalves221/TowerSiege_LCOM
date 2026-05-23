@@ -21,6 +21,12 @@ static sprite_t *grass_sprite = NULL;
 static sprite_t *path_sprite  = NULL;
 static sprite_t *blank_sprite = NULL;
 
+static uint8_t *map_cache = NULL;
+static bool map_dirty = true;
+
+#define MAP_CACHE_W (MAP_COLS * TILE_SIZE)
+#define MAP_CACHE_H (MAP_ROWS * TILE_SIZE)
+
 void map_init(void) {
     if (grass_sprite == NULL)
         grass_sprite = create_sprite((xpm_map_t) grass);
@@ -28,9 +34,23 @@ void map_init(void) {
         path_sprite = create_sprite((xpm_map_t) path);
     if (blank_sprite == NULL)
         blank_sprite = create_sprite((xpm_map_t) blank);
+
+    if (map_cache == NULL)
+        map_cache = malloc((uint32_t)MAP_CACHE_W * MAP_CACHE_H * get_bytes_per_pixel());
+
+    map_dirty = true;
+}
+
+void map_mark_dirty(void) {
+    map_dirty = true;
 }
 
 void map_draw(void) {
+    if (!map_dirty) {
+        vg_blit_region(map_cache, MAP_CACHE_W, 0, 0, MAP_CACHE_W, MAP_CACHE_H);
+        return;
+    }
+
     for (int row = 0; row < MAP_ROWS; row++) {
         for (int col = 0; col < MAP_COLS; col++) {
             int16_t x = (int16_t)(col * TILE_SIZE);
@@ -42,6 +62,9 @@ void map_draw(void) {
             }
         }
     }
+
+    vg_copy_region(0, 0, MAP_CACHE_W, MAP_CACHE_H, map_cache, MAP_CACHE_W);
+    map_dirty = false;
 }
 
 tile_t map_get_tile(int col, int row) {

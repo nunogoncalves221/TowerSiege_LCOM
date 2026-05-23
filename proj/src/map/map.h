@@ -15,6 +15,7 @@ typedef enum {
 
 void map_init(void);
 void map_draw(void);
+void map_mark_dirty(void);
 
 tile_t map_get_tile(int col, int row);
 

@@ -15,5 +15,7 @@ unsigned (vg_get_y_res)();
 void (vg_refresh)();
 void (vg_clear_buffer)();
 void (vg_free)();
+void (vg_blit_region)(const uint8_t *src, uint16_t src_stride_px, uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+void (vg_copy_region)(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t *dst, uint16_t dst_stride_px);
 
 #endif
