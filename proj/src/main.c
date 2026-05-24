@@ -28,41 +28,42 @@ int(proj_main_loop)(int argc, char* argv[]) {
   uint8_t timer_bit, kbd_bit, mouse_bit;
 
   // timer
-  if (timer_subscribe_int(&timer_bit) != 0) { 
-    vg_exit(); 
-    return 1; 
-  }
-  
-  // keyboard
-  if (keyboard_subscribe_int(&kbd_bit) != 0) { 
-    timer_unsubscribe_int(); 
-    vg_exit(); 
-    return 1; 
-  }
-  
-  // enable mouse data reporting
-  if (mouse_write_command(ENABLE_DATA_REPORTING) != 0) { 
-    keyboard_unsubscribe_int();
-    timer_unsubscribe_int(); 
-    vg_exit(); 
-    return 1; 
-  }
-  
-  // mouse subscribe
-  if (mouse_subscribe_int(&mouse_bit) != 0) { 
-    mouse_write_command(DISABLE_DATA_REPORTING);
-    keyboard_unsubscribe_int(); 
-    timer_unsubscribe_int(); 
-    vg_exit(); 
-    return 1; 
+  if (timer_subscribe_int(&timer_bit) != 0) {
+    vg_exit();
+    return 1;
   }
 
-  //bit masks
+  // keyboard
+  if (keyboard_subscribe_int(&kbd_bit) != 0) {
+    timer_unsubscribe_int();
+    vg_exit();
+    return 1;
+  }
+
+  // enable mouse data reporting
+  if (mouse_write_command(ENABLE_DATA_REPORTING) != 0) {
+    keyboard_unsubscribe_int();
+    timer_unsubscribe_int();
+    vg_exit();
+    return 1;
+  }
+
+  // mouse subscribe
+  if (mouse_subscribe_int(&mouse_bit) != 0) {
+    mouse_write_command(DISABLE_DATA_REPORTING);
+    keyboard_unsubscribe_int();
+    timer_unsubscribe_int();
+    vg_exit();
+    return 1;
+  }
+
+  // bit masks
   uint32_t timer_irq = BIT(timer_bit);
   uint32_t kbd_irq   = BIT(kbd_bit);
   uint32_t mouse_irq = BIT(mouse_bit);
 
   app_state_t state = STATE_MENU;
+  menu_reset();  // initialise menu (loads logo sprite, resets selection)
 
   int ipc_status;
   message msg;
@@ -75,50 +76,67 @@ int(proj_main_loop)(int argc, char* argv[]) {
       switch (_ENDPOINT_P(msg.m_source)) {
         case HARDWARE:
 
-          // timers
+          // Timer
           if (msg.m_notify.interrupts & timer_irq) {
             timer_int_handler();
-            
-            // calculates the ratio dynamically
+
             if (get_timer_counter() % (TIMER_FREQ / FPS) == 0) {
-            // clear the backstage buffer to pure black before drawing
-            vg_clear_buffer();
+              vg_clear_buffer();
 
-            // paint the correct screen on our hidden buffer
-            if (state == STATE_MENU) {
-              menu_draw();
-            } else if (state == STATE_GAME) {
-              game_tick();
-              game_draw();
-            }
+              if (state == STATE_MENU) {
+                menu_draw();
+              } else if (state == STATE_GAME) {
+                game_tick();
+                game_draw();
+              }
 
-            // dump everything to the actual screen at once (zero flickering)
-            vg_refresh();
+              vg_refresh();
             }
           }
 
-          // keyboard: just update states, don't draw here
+          // Keyboard
           if (msg.m_notify.interrupts & kbd_irq) {
             kbc_ih();
 
             if (!kbc_error) {
               if (state == STATE_MENU) {
-                if (scancode_byte == 0x22) { // transitioning to game
-                  state = STATE_GAME;
-                  game_reset();
-                } else if (scancode_byte == ESC_BREAKCODE) {
-                  running = false; // time to quit
+                // ESC always quits
+                if (scancode_byte == ESC_BREAKCODE) {
+                  running = false;
                 }
+                // forward all other keys to the menu handler
+                else if (menu_handle_key(scancode_byte)) {
+                  // Enter was pressed — act on the selected option
+                  switch (menu_get_selected()) {
+                    case MENU_PLAY:
+                      state = STATE_GAME;
+                      game_reset();
+                      break;
+
+                    case MENU_QUIT:
+                      running = false;
+                      break;
+
+                    // INSTRUCTIONS / SETTINGS / HIGH_SCORES:
+                    // placeholders — stay on menu for now
+                    default:
+                      break;
+                  }
+                }
+
               } else if (state == STATE_GAME) {
                 game_handle_key(scancode_byte);
-                if (scancode_byte == ESC_BREAKCODE) { // back to main menu
+
+                // ESC from game returns to menu
+                if (scancode_byte == ESC_BREAKCODE) {
                   state = STATE_MENU;
+                  menu_reset();
                 }
               }
             }
           }
 
-          // mouse: just parse the packets for now
+          // Mouse
           if (msg.m_notify.interrupts & mouse_irq) {
             mouse_ih();
             if (valid_byte && mouse_process_packet_byte()) {
@@ -134,14 +152,12 @@ int(proj_main_loop)(int argc, char* argv[]) {
     }
   }
 
-  // cleanup: free the double buffer before shutting down graphics
+  // cleanup
   vg_free();
-
   mouse_unsubscribe_int();
   mouse_write_command(DISABLE_DATA_REPORTING);
   keyboard_unsubscribe_int();
   timer_unsubscribe_int();
-  
+
   return vg_exit();
 }
-
