@@ -2,11 +2,18 @@
 #include "sprite.h"
 #include "video.h"
 #include "map.h"
+#include "enemy.h"
 #include "../assets/hero.xpm"
+
+#define MAX_ENEMIES 20 //ready for waves
 
 static sprite_t *hero_sprite = NULL;
 static int16_t hero_x = 0;
 static int16_t hero_y = 0;
+
+// array to manage multiple enemies
+static enemy_t *enemies[MAX_ENEMIES];
+static int enemy_count = 0;
 
 static bool key_w = false;
 static bool key_a = false;
@@ -23,6 +30,18 @@ void game_reset(void) {
         hero_x = (int16_t)((vg_get_x_res() - hero_sprite->width)  / 2);
         hero_y = (int16_t)((vg_get_y_res() - hero_sprite->height) / 2);
     }
+
+    // clean up any remaining enemies from previous games
+    for (int i = 0; i < enemy_count; i++) {
+        enemy_destroy(enemies[i]);
+    }
+    enemy_count = 0;
+
+    // spawn 3 test enemies slightly staggered horizontally
+    enemies[0] = enemy_create((xpm_map_t) hero, 0, TILE_SIZE * 1, 100, 2);
+    enemies[1] = enemy_create((xpm_map_t) hero, -150, TILE_SIZE * 1, 100, 3); // faster
+    enemies[2] = enemy_create((xpm_map_t) hero, -300, TILE_SIZE * 1, 100, 2);
+    enemy_count = 3;
 
     key_w = key_a = key_s = key_d = false;
 }
@@ -59,10 +78,38 @@ void game_tick(void) {
         hero_x = screen_w - (int16_t) hero_sprite->width;
     if (hero_y > screen_h - (int16_t) hero_sprite->height)
         hero_y = screen_h - (int16_t) hero_sprite->height;
+
+    // enemies manager & active memory cleanup
+    for (int i = 0; i < enemy_count; i++) {
+        if (enemies[i] != NULL) {
+            enemy_update(enemies[i]);
+
+            // if the enemy reached the end or died, destroy it
+            if (!enemies[i]->active) {
+                enemy_destroy(enemies[i]);
+                
+                // shift the remaining enemies in the array to keep it compact
+                for (int j = i; j < enemy_count - 1; j++) {
+                    enemies[j] = enemies[j + 1];
+                }
+                enemies[enemy_count - 1] = NULL;
+                enemy_count--;
+                i--; // re-check this index since a new enemy shifted into it
+            }
+        }
+    }
 }
 
 void game_draw(void) {
     map_draw();
+
+    // draw all active enemies
+    for (int i = 0; i < enemy_count; i++) {
+        if (enemies[i] != NULL) {
+            enemy_draw(enemies[i]);
+        }
+    }
+
     if (hero_sprite == NULL) return;
     draw_sprite(hero_sprite, hero_x, hero_y);
 }
