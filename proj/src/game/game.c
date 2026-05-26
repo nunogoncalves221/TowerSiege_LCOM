@@ -6,7 +6,7 @@
 #include "../assets/hero.xpm"
 #include "../assets/orc.xpm"
 
-#define MAX_ENEMIES 20 //ready for waves
+#define MAX_ENEMIES 20 // ready for waves
 
 static sprite_t *hero_sprite = NULL;
 static int16_t hero_x = 0;
@@ -77,6 +77,7 @@ void game_handle_key(uint8_t scancode) {
 void game_tick(void) {
     if (hero_sprite == NULL) return;
 
+    // HERO MOVEMENT
     int16_t screen_w = (int16_t) vg_get_x_res();
     int16_t screen_h = (int16_t) vg_get_y_res();
 
@@ -93,16 +94,24 @@ void game_tick(void) {
     if (hero_y > screen_h - (int16_t) hero_sprite->height)
         hero_y = screen_h - (int16_t) hero_sprite->height;
 
-    // enemies manager & active memory cleanup
+    // ENEMY MANAGER
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
             enemy_update(enemies[i]);
 
-            // if the enemy reached the end or died, destroy it
+            // deactivate enemy if it leaves the screen, this is done here to avoid
+            // calling vg_get_x_res() for every enemy in every frame
+            if (enemies[i]->x > screen_w || enemies[i]->y > screen_h ||
+                enemies[i]->y < -(int16_t) enemies[i]->sp->height ||
+                enemies[i]->x < -(int16_t) enemies[i]->sp->width) {
+                enemies[i]->active = false;
+            }
+
+            // if the enemy is inactive (dead or off-screen), destroy it
             if (!enemies[i]->active) {
                 enemy_destroy(enemies[i]);
                 
-                // shift the remaining enemies in the array to keep it compact
+                // shift array to maintain strict visual depth order
                 for (int j = i; j < enemy_count - 1; j++) {
                     enemies[j] = enemies[j + 1];
                 }
@@ -116,14 +125,14 @@ void game_tick(void) {
 
 void game_draw(void) {
     map_draw();
-
-    // draw all active enemies
+    
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
             enemy_draw(enemies[i]);
         }
     }
 
-    if (hero_sprite == NULL) return;
-    draw_sprite(hero_sprite, hero_x, hero_y);
+    if (hero_sprite != NULL) {
+        draw_sprite(hero_sprite, hero_x, hero_y);
+    }
 }

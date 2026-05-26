@@ -1,6 +1,5 @@
 #include "enemy.h"
 #include "map.h"
-#include "video.h"  // needed for vg_get_x_res()
 #include <stdlib.h>
 
 enemy_t* enemy_create(xpm_map_t xpm, int16_t start_x, int16_t start_y, int16_t hp, int16_t speed) {
@@ -45,7 +44,7 @@ void enemy_update(enemy_t *e) {
     int16_t tile_center_x = (int16_t)(col * TILE_SIZE + TILE_SIZE / 2);
     int16_t tile_center_y = (int16_t)(row * TILE_SIZE + TILE_SIZE / 2);
 
-    // 3. check decision point depending ONLY on the current axis of movement
+    // check decision point depending ONLY on the current axis of movement
     bool at_decision_point = false;
 
     if ((e->dir == DIR_RIGHT || e->dir == DIR_LEFT) && abs(center_x - tile_center_x) <= e->speed) {
@@ -59,18 +58,10 @@ void enemy_update(enemy_t *e) {
         // look ahead based on current direction to see if TILE_PATH continues
         bool path_ahead = false;
         
-        if (e->dir == DIR_RIGHT && (col + 1 >= MAP_COLS || map_get_tile(col + 1, row) == TILE_PATH)) {
-            path_ahead = true;
-        }
-        else if (e->dir == DIR_LEFT && (col - 1 < 0 || map_get_tile(col - 1, row) == TILE_PATH)) {
-            path_ahead = true;
-        }
-        else if (e->dir == DIR_UP && (row - 1 < 0 || map_get_tile(col, row - 1) == TILE_PATH)) {
-            path_ahead = true;
-        }
-        else if (e->dir == DIR_DOWN && (row + 1 >= MAP_ROWS || map_get_tile(col, row + 1) == TILE_PATH)) {
-            path_ahead = true;
-        }
+        if (e->dir == DIR_RIGHT && (col + 1 >= MAP_COLS || map_get_tile(col + 1, row) == TILE_PATH)) path_ahead = true;
+        else if (e->dir == DIR_LEFT && (col - 1 < 0 || map_get_tile(col - 1, row) == TILE_PATH)) path_ahead = true;
+        else if (e->dir == DIR_UP && (row - 1 < 0 || map_get_tile(col, row - 1) == TILE_PATH)) path_ahead = true;
+        else if (e->dir == DIR_DOWN && (row + 1 >= MAP_ROWS || map_get_tile(col, row + 1) == TILE_PATH)) path_ahead = true;
 
         // if the path ends or turns, evaluate neighbors to find the sand road
         if (!path_ahead) {
@@ -100,22 +91,9 @@ void enemy_update(enemy_t *e) {
         case DIR_UP:    e->y -= e->speed; break;
         case DIR_DOWN:  e->y += e->speed; break;
     }
-
-    // dynamic screen bounds check
-    int16_t screen_w = (int16_t) vg_get_x_res();
-    int16_t screen_h = (int16_t) vg_get_y_res();
-
-    // safely disable the enemy if it completely leaves any of the 4 screen edges
-    if (e->x > screen_w || e->y > screen_h || 
-        e->y < -(int16_t)e->sp->height || 
-        e->x < -(int16_t)e->sp->width) {
-        e->active = false; 
-    }
 }
 
 void enemy_draw(enemy_t *e) {
     if (e == NULL || !e->active || e->sp == NULL) return;
-    
-    // cast to uint16_t to comply with the team's warning fix
     draw_sprite(e->sp, e->x, e->y);
 }
