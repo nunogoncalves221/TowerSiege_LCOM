@@ -4,6 +4,14 @@
 #include <lcom/lcf.h>
 #include "../sprite/sprite.h"
 
+// direction enumeration for grid movement
+typedef enum {
+    DIR_UP,
+    DIR_DOWN,
+    DIR_LEFT,
+    DIR_RIGHT
+} direction_t;
+
 typedef struct {
     int16_t x;
     int16_t y;
@@ -11,6 +19,7 @@ typedef struct {
     int16_t hp;
     sprite_t *sp;
     bool active; // false if dead or reached the end
+    direction_t dir; // track which way the enemy is currently facing
 } enemy_t;
 
 // allocates and initializes a single enemy at the start coordinates
