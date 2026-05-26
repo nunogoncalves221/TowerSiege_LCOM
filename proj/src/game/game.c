@@ -52,10 +52,8 @@ void game_reset(void) {
     enemies[0]->x = -enemy_w;
     enemies[0]->y = start_y;
     
-    // replace hardcoded array indexing with a wave spawner, TODO!!!!
-    enemies[1] = enemy_create((xpm_map_t) orc, -enemy_w - 150, start_y, 100, 3); 
-    enemies[2] = enemy_create((xpm_map_t) orc, -enemy_w - 300, start_y, 100, 2);
-    enemy_count = 3;
+    // replace this single test spawn with a proper automated wave spawner, TODO!!!!
+    enemy_count = 1;
 
     key_w = key_a = key_s = key_d = false;
 }
