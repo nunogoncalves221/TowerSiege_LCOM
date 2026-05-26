@@ -4,6 +4,7 @@
 #include "map.h"
 #include "enemy.h"
 #include "../assets/hero.xpm"
+#include "../assets/orc.xpm"
 
 #define MAX_ENEMIES 20 //ready for waves
 
@@ -37,16 +38,25 @@ void game_reset(void) {
     }
     enemy_count = 0;
 
-    // center enemies vertically relative to the 96px tile height using the variables
-    int16_t sprite_w = (int16_t)hero_sprite->width;
-    int16_t start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (hero_sprite->height / 2));
+    // create the first enemy to load the sprite into memory
+    enemies[0] = enemy_create((xpm_map_t) orc, 0, 0, 100, 2);
 
-    // using sprite_w and start_y 
-    enemies[0] = enemy_create((xpm_map_t) hero, -sprite_w,       start_y, 100, 2);
-    enemies[1] = enemy_create((xpm_map_t) hero, -sprite_w - 150, start_y, 100, 3); 
-    enemies[2] = enemy_create((xpm_map_t) hero, -sprite_w - 300, start_y, 100, 2);
-    enemy_count = 3;
+    // read the exact dimensions of the newly loaded enemy sprite
+    int16_t enemy_w = (int16_t)enemies[0]->sp->width;
+    int16_t enemy_h = (int16_t)enemies[0]->sp->height;
+
+    // calculate perfect grid centering for whatever size the sprite is
+    int16_t start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (enemy_h / 2));
+
+    // update the first enemy's position and spawn the rest using the correct math
+    enemies[0]->x = -enemy_w;
+    enemies[0]->y = start_y;
     
+    // replace hardcoded array indexing with a wave spawner, TODO!!!!
+    enemies[1] = enemy_create((xpm_map_t) orc, -enemy_w - 150, start_y, 100, 3); 
+    enemies[2] = enemy_create((xpm_map_t) orc, -enemy_w - 300, start_y, 100, 2);
+    enemy_count = 3;
+
     key_w = key_a = key_s = key_d = false;
 }
 

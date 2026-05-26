@@ -59,10 +59,18 @@ void enemy_update(enemy_t *e) {
         // look ahead based on current direction to see if TILE_PATH continues
         bool path_ahead = false;
         
-        if (e->dir == DIR_RIGHT && col + 1 < MAP_COLS && map_get_tile(col + 1, row) == TILE_PATH) path_ahead = true;
-        else if (e->dir == DIR_LEFT && col - 1 >= 0 && map_get_tile(col - 1, row) == TILE_PATH) path_ahead = true;
-        else if (e->dir == DIR_UP && row - 1 >= 0 && map_get_tile(col, row - 1) == TILE_PATH) path_ahead = true;
-        else if (e->dir == DIR_DOWN && row + 1 < MAP_ROWS && map_get_tile(col, row + 1) == TILE_PATH) path_ahead = true;
+        if (e->dir == DIR_RIGHT && (col + 1 >= MAP_COLS || map_get_tile(col + 1, row) == TILE_PATH)) {
+            path_ahead = true;
+        }
+        else if (e->dir == DIR_LEFT && (col - 1 < 0 || map_get_tile(col - 1, row) == TILE_PATH)) {
+            path_ahead = true;
+        }
+        else if (e->dir == DIR_UP && (row - 1 < 0 || map_get_tile(col, row - 1) == TILE_PATH)) {
+            path_ahead = true;
+        }
+        else if (e->dir == DIR_DOWN && (row + 1 >= MAP_ROWS || map_get_tile(col, row + 1) == TILE_PATH)) {
+            path_ahead = true;
+        }
 
         // if the path ends or turns, evaluate neighbors to find the sand road
         if (!path_ahead) {
@@ -93,8 +101,14 @@ void enemy_update(enemy_t *e) {
         case DIR_DOWN:  e->y += e->speed; break;
     }
 
-    // dynamic resolution limit -> check if the enemy exited the right-hand boundary of the final path tile
-    if (e->x > (int16_t) vg_get_x_res() || e->y > (int16_t) vg_get_y_res() || e->y < -100) {
+    // dynamic screen bounds check
+    int16_t screen_w = (int16_t) vg_get_x_res();
+    int16_t screen_h = (int16_t) vg_get_y_res();
+
+    // safely disable the enemy if it completely leaves any of the 4 screen edges
+    if (e->x > screen_w || e->y > screen_h || 
+        e->y < -(int16_t)e->sp->height || 
+        e->x < -(int16_t)e->sp->width) {
         e->active = false; 
     }
 }
