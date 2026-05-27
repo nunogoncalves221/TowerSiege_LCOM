@@ -3,6 +3,7 @@
 #include "video.h"
 #include "map.h"
 #include "enemy.h"
+#include "tower.h"
 #include "../assets/hero.xpm"
 #include "../assets/orc.xpm"
 #include "../assets/cursor.xpm"
@@ -27,6 +28,7 @@ static bool key_s = false;
 static bool key_d = false;
 
 void game_reset(void) {
+    tower_init();
     map_init();
 
     destroy_sprite(hero_sprite);
@@ -129,6 +131,7 @@ void game_tick(void) {
             }
         }
     }
+    tower_tick();
 }
 
 void game_draw(void) {
@@ -143,6 +146,8 @@ void game_draw(void) {
     if (hero_sprite != NULL) {
         draw_sprite(hero_sprite, hero_x, hero_y);
     }
+
+    tower_draw();
 
     if (cursor_sprite != NULL) {
     draw_sprite(cursor_sprite, cursor_x, cursor_y);
@@ -160,4 +165,8 @@ void game_update_cursor(int16_t dx, int16_t dy) {
     if (cursor_y < 0) cursor_y = 0;
     if (cursor_x >= w) cursor_x = w - 1;
     if (cursor_y >= h) cursor_y = h - 1;
+}
+
+void game_handle_click(void) {
+    tower_handle_click(cursor_x / TILE_SIZE, cursor_y / TILE_SIZE);
 }
