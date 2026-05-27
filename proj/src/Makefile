@@ -2,14 +2,14 @@
 PROG = proj
 
 # APENAS os ficheiros que estão fisicamente na pasta proj/src
-SRCS = main.c menu.c game.c sprite.c map.c
+SRCS = main.c menu.c game.c sprite.c map.c enemy.c
 
 # Procurar os .c nas subpastas
-.PATH: menu game sprite map
+.PATH: menu game sprite map enemy
 
 # Dizer ao compilador onde procurar os ficheiros .h
 CFLAGS += -I../../lab1 -I../../lab2 -I../../lab3 -I../../lab4 -I../../lab5
-CFLAGS += -Imenu -Igame -Isprite -Imap
+CFLAGS += -Imenu -Igame -Isprite -Imap -Ienemy
 CFLAGS += -pedantic -D__LCOM_OPTIMIZED__ -O2
 
 # Importar as bibliotecas das labs (tal como no exemplo da lab5)

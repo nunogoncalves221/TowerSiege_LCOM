@@ -2,11 +2,19 @@
 #include "sprite.h"
 #include "video.h"
 #include "map.h"
+#include "enemy.h"
 #include "../assets/hero.xpm"
+#include "../assets/orc.xpm"
+
+#define MAX_ENEMIES 20 // ready for waves
 
 static sprite_t *hero_sprite = NULL;
 static int16_t hero_x = 0;
 static int16_t hero_y = 0;
+
+// array to manage multiple enemies
+static enemy_t *enemies[MAX_ENEMIES];
+static int enemy_count = 0;
 
 static bool key_w = false;
 static bool key_a = false;
@@ -23,6 +31,29 @@ void game_reset(void) {
         hero_x = (int16_t)((vg_get_x_res() - hero_sprite->width)  / 2);
         hero_y = (int16_t)((vg_get_y_res() - hero_sprite->height) / 2);
     }
+
+    // clean up any remaining enemies from previous games
+    for (int i = 0; i < enemy_count; i++) {
+        enemy_destroy(enemies[i]);
+    }
+    enemy_count = 0;
+
+    // create the first enemy to load the sprite into memory
+    enemies[0] = enemy_create((xpm_map_t) orc, 0, 0, 100, 2);
+
+    // read the exact dimensions of the newly loaded enemy sprite
+    int16_t enemy_w = (int16_t)enemies[0]->sp->width;
+    int16_t enemy_h = (int16_t)enemies[0]->sp->height;
+
+    // calculate perfect grid centering for whatever size the sprite is
+    int16_t start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (enemy_h / 2));
+
+    // update the first enemy's position and spawn the rest using the correct math
+    enemies[0]->x = -enemy_w;
+    enemies[0]->y = start_y;
+    
+    // replace this single test spawn with a proper automated wave spawner, TODO!!!!
+    enemy_count = 1;
 
     key_w = key_a = key_s = key_d = false;
 }
@@ -44,6 +75,7 @@ void game_handle_key(uint8_t scancode) {
 void game_tick(void) {
     if (hero_sprite == NULL) return;
 
+    // HERO MOVEMENT
     int16_t screen_w = (int16_t) vg_get_x_res();
     int16_t screen_h = (int16_t) vg_get_y_res();
 
@@ -59,10 +91,46 @@ void game_tick(void) {
         hero_x = screen_w - (int16_t) hero_sprite->width;
     if (hero_y > screen_h - (int16_t) hero_sprite->height)
         hero_y = screen_h - (int16_t) hero_sprite->height;
+
+    // ENEMY MANAGER
+    for (int i = 0; i < enemy_count; i++) {
+        if (enemies[i] != NULL) {
+            enemy_update(enemies[i]);
+
+            // deactivate enemy if it leaves the screen, this is done here to avoid
+            // calling vg_get_x_res() for every enemy in every frame
+            if (enemies[i]->x > screen_w || enemies[i]->y > screen_h ||
+                enemies[i]->y < -(int16_t) enemies[i]->sp->height ||
+                enemies[i]->x < -(int16_t) enemies[i]->sp->width) {
+                enemies[i]->active = false;
+            }
+
+            // if the enemy is inactive (dead or off-screen), destroy it
+            if (!enemies[i]->active) {
+                enemy_destroy(enemies[i]);
+                
+                // shift array to maintain strict visual depth order
+                for (int j = i; j < enemy_count - 1; j++) {
+                    enemies[j] = enemies[j + 1];
+                }
+                enemies[enemy_count - 1] = NULL;
+                enemy_count--;
+                i--; // re-check this index since a new enemy shifted into it
+            }
+        }
+    }
 }
 
 void game_draw(void) {
     map_draw();
-    if (hero_sprite == NULL) return;
-    draw_sprite(hero_sprite, hero_x, hero_y);
+    
+    for (int i = 0; i < enemy_count; i++) {
+        if (enemies[i] != NULL) {
+            enemy_draw(enemies[i]);
+        }
+    }
+
+    if (hero_sprite != NULL) {
+        draw_sprite(hero_sprite, hero_x, hero_y);
+    }
 }
