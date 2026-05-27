@@ -5,12 +5,17 @@
 #include "enemy.h"
 #include "../assets/hero.xpm"
 #include "../assets/orc.xpm"
+#include "../assets/cursor.xpm"
 
 #define MAX_ENEMIES 20 // ready for waves
 
 static sprite_t *hero_sprite = NULL;
 static int16_t hero_x = 0;
 static int16_t hero_y = 0;
+
+static sprite_t *cursor_sprite = NULL;
+static int16_t cursor_x = 0;
+static int16_t cursor_y = 0;
 
 // array to manage multiple enemies
 static enemy_t *enemies[MAX_ENEMIES];
@@ -26,6 +31,11 @@ void game_reset(void) {
 
     destroy_sprite(hero_sprite);
     hero_sprite = create_sprite((xpm_map_t) hero);
+
+    destroy_sprite(cursor_sprite);
+    cursor_sprite = create_sprite((xpm_map_t) cursor);
+    cursor_x = vg_get_x_res() / 2;
+    cursor_y = vg_get_y_res() / 2; // start cursor in center of screen
 
     if (hero_sprite != NULL) {
         hero_x = (int16_t)((vg_get_x_res() - hero_sprite->width)  / 2);
@@ -133,4 +143,21 @@ void game_draw(void) {
     if (hero_sprite != NULL) {
         draw_sprite(hero_sprite, hero_x, hero_y);
     }
+
+    if (cursor_sprite != NULL) {
+    draw_sprite(cursor_sprite, cursor_x, cursor_y);
+    }
+}
+
+void game_update_cursor(int16_t dx, int16_t dy) {
+    cursor_x += dx;
+    cursor_y -= dy;  // y is inverted
+    
+    // clamp to screen
+    int16_t w = (int16_t) vg_get_x_res();
+    int16_t h = (int16_t) vg_get_y_res();
+    if (cursor_x < 0) cursor_x = 0;
+    if (cursor_y < 0) cursor_y = 0;
+    if (cursor_x >= w) cursor_x = w - 1;
+    if (cursor_y >= h) cursor_y = h - 1;
 }
