@@ -1,0 +1,21 @@
+/* XPM */
+/* Credits: https://github.com/HenriqueSFernandes/LCOMaze/tree/main/src/images/font */
+static char * number_four_xpm[] = {
+"15 15 2 1",
+" 	c None",
+".	c #A2A2A2",
+"       ...     ",
+"       ...     ",
+"       ...     ",
+"    ......     ",
+"    ......     ",
+"    ......     ",
+" ...   ...     ",
+" ...   ...     ",
+" ...   ...     ",
+" ............  ",
+" ............  ",
+" ............  ",
+"       ...     ",
+"       ...     ",
+"       ...     "};
