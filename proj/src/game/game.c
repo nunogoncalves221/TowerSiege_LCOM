@@ -135,8 +135,14 @@ void game_tick(void) {
 }
 
 void game_draw(void) {
-    map_draw();
-    
+    bool was_dirty = map_draw();
+
+    if (was_dirty) {
+        tower_draw();        // bake towers + shop into the cache
+        map_update_cache();
+    }
+
+    // dynamic elements are never cached
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
             enemy_draw(enemies[i]);
@@ -147,10 +153,8 @@ void game_draw(void) {
         draw_sprite(hero_sprite, hero_x, hero_y);
     }
 
-    tower_draw();
-
     if (cursor_sprite != NULL) {
-    draw_sprite(cursor_sprite, cursor_x, cursor_y);
+        draw_sprite(cursor_sprite, cursor_x, cursor_y);
     }
 }
 

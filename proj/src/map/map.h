@@ -14,7 +14,8 @@ typedef enum {
 } tile_t;
 
 void map_init(void);
-void map_draw(void);
+bool map_draw(void);       // returns true if tiles were redrawn (was dirty)
+void map_update_cache(void);
 void map_mark_dirty(void);
 
 tile_t map_get_tile(int col, int row);
