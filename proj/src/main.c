@@ -142,6 +142,11 @@ int(proj_main_loop)(int argc, char* argv[]) {
             if (valid_byte && mouse_process_packet_byte()) {
               struct packet pp;
               parse_mouse_packet(&pp);
+              static bool lb_prev = false;
+              if (pp.lb && !lb_prev) {
+                game_handle_click();
+              }
+              lb_prev = pp.lb;
               game_update_cursor(pp.delta_x, pp.delta_y);
             }
           }

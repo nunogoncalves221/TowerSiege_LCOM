@@ -22,5 +22,6 @@ void game_tick(void);
 void game_draw(void);
 void game_handle_key(uint8_t scancode);
 void game_update_cursor(int16_t dx, int16_t dy);
+void game_handle_click(void);
 
 #endif
