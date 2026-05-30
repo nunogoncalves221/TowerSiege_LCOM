@@ -36,14 +36,17 @@ void tower_init(void) {
     }
 }
 
-void tower_handle_click(int col, int row) {
+void tower_handle_click(int col, int row, int *gold) {
     if (row == 8 && col == 5) { selected_tower_type = TOWER_ARCHER; return; }
     if (row == 8 && col == 6) { selected_tower_type = TOWER_MAGE;   return; }
 
-    // Place selected tower on an empty blank slot
     if (selected_tower_type != TOWER_NONE && tower_count < MAX_TOWERS) {
+        int cost = (selected_tower_type == TOWER_ARCHER) ? TOWER_ARCHER_COST : TOWER_MAGE_COST;
+        if (*gold < cost) { selected_tower_type = TOWER_NONE; return; }
+
         for (int i = 0; i < slot_count; i++) {
             if (slots[i].col == col && slots[i].row == row && slots[i].tower == NULL) {
+                *gold -= cost;
                 tower_t *t = &towers[tower_count++];
                 t->type = selected_tower_type;
                 t->level = 1;
@@ -64,7 +67,6 @@ void tower_handle_click(int col, int row) {
         }
     }
 
-    // Click outside shop/slots deselects
     selected_tower_type = TOWER_NONE;
 }
 

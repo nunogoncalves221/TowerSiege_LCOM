@@ -4,6 +4,8 @@
 #include "map.h"
 #include "enemy.h"
 #include "tower.h"
+#include "font.h"
+#include <stdio.h>
 #include "../assets/hero.xpm"
 #include "../assets/orc.xpm"
 #include "../assets/cursor.xpm"
@@ -26,6 +28,8 @@ static bool key_w = false;
 static bool key_a = false;
 static bool key_s = false;
 static bool key_d = false;
+
+static int player_gold = 500;
 
 void game_reset(void) {
     tower_init();
@@ -67,6 +71,7 @@ void game_reset(void) {
     // replace this single test spawn with a proper automated wave spawner, TODO!!!!
     enemy_count = 1;
 
+    player_gold = 500;
     key_w = key_a = key_s = key_d = false;
 }
 
@@ -156,6 +161,11 @@ void game_draw(void) {
     if (cursor_sprite != NULL) {
         draw_sprite(cursor_sprite, cursor_x, cursor_y);
     }
+
+    char gold_str[32];
+    snprintf(gold_str, sizeof(gold_str), "gold %d", player_gold);
+    uint16_t tw = font_string_width(gold_str);
+    font_draw_string((uint16_t)(vg_get_x_res() - tw - 10), 10, gold_str, 0x00FFD700);
 }
 
 void game_update_cursor(int16_t dx, int16_t dy) {
@@ -172,5 +182,5 @@ void game_update_cursor(int16_t dx, int16_t dy) {
 }
 
 void game_handle_click(void) {
-    tower_handle_click(cursor_x / TILE_SIZE, cursor_y / TILE_SIZE);
+    tower_handle_click(cursor_x / TILE_SIZE, cursor_y / TILE_SIZE, &player_gold);
 }

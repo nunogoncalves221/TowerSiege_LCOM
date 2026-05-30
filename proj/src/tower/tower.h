@@ -8,6 +8,9 @@
 typedef enum { TOWER_NONE, TOWER_ARCHER, TOWER_MAGE } tower_type_t;
 typedef enum { UI_NONE, UI_BUILD, UI_UPGRADE } ui_state_t;
 
+#define TOWER_ARCHER_COST 200
+#define TOWER_MAGE_COST   350
+
 typedef struct {
     tower_type_t type;
     int level; // level of upgrade
@@ -25,7 +28,7 @@ typedef struct {
 } tower_slot_t;
 
 void tower_init(void);
-void tower_handle_click(int col, int row);
+void tower_handle_click(int col, int row, int *gold);
 void tower_tick(void);
 void tower_draw(void);
 
