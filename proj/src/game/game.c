@@ -10,7 +10,9 @@
 #include "../assets/orc.xpm"
 #include "../assets/cursor.xpm"
 
-#define MAX_ENEMIES 20 // ready for waves
+#define MAX_ENEMIES 20
+#define MAX_LIVES   20
+#define WAVE_DELAY  150  // frames between waves
 
 static sprite_t *hero_sprite = NULL;
 static int16_t hero_x = 0;
@@ -30,6 +32,25 @@ static bool key_s = false;
 static bool key_d = false;
 
 static int player_gold = 500;
+static int player_lives = MAX_LIVES;
+static bool game_over = false;
+
+// cached spawn position calculated once from sprite dimensions
+static int16_t enemy_start_x = 0;
+static int16_t enemy_start_y = 0;
+
+// wave state
+static int wave_number = 0;
+static int enemies_to_spawn = 0;
+static int spawn_timer = 0;
+static int wave_delay = 0;
+
+static void start_wave(int wave) {
+    wave_number = wave;
+    enemies_to_spawn = 5 + (wave - 1) * 3; // wave 1→5, 2→8, 3→11, …
+    spawn_timer = 60; // 2-second lead-in before first enemy of each wave
+    wave_delay = 0;
+}
 
 void game_reset(void) {
     tower_init();
@@ -54,24 +75,18 @@ void game_reset(void) {
     }
     enemy_count = 0;
 
-    // create the first enemy to load the sprite into memory
-    enemies[0] = enemy_create((xpm_map_t) orc, 0, 0, 100, 2);
-
-    // read the exact dimensions of the newly loaded enemy sprite
-    int16_t enemy_w = (int16_t)enemies[0]->sp->width;
-    int16_t enemy_h = (int16_t)enemies[0]->sp->height;
-
-    // calculate perfect grid centering for whatever size the sprite is
-    int16_t start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (enemy_h / 2));
-
-    // update the first enemy's position and spawn the rest using the correct math
-    enemies[0]->x = -enemy_w;
-    enemies[0]->y = start_y;
-    
-    // replace this single test spawn with a proper automated wave spawner, TODO!!!!
-    enemy_count = 1;
+    // probe a temporary enemy to measure sprite dimensions, then discard it
+    enemy_t *probe = enemy_create((xpm_map_t) orc, 0, 0, 100, 2);
+    if (probe != NULL) {
+        enemy_start_x = -(int16_t)probe->sp->width;
+        enemy_start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (int16_t)(probe->sp->height / 2));
+        enemy_destroy(probe);
+    }
 
     player_gold = 500;
+    player_lives = MAX_LIVES;
+    game_over = false;
+    start_wave(1);
     key_w = key_a = key_s = key_d = false;
 }
 
@@ -90,7 +105,7 @@ void game_handle_key(uint8_t scancode) {
 }
 
 void game_tick(void) {
-    if (hero_sprite == NULL) return;
+    if (hero_sprite == NULL || game_over) return;
 
     // HERO MOVEMENT
     int16_t screen_w = (int16_t) vg_get_x_res();
@@ -114,18 +129,26 @@ void game_tick(void) {
         if (enemies[i] != NULL) {
             enemy_update(enemies[i]);
 
-            // deactivate enemy if it leaves the screen, this is done here to avoid
-            // calling vg_get_x_res() for every enemy in every frame
-            if (enemies[i]->x > screen_w || enemies[i]->y > screen_h ||
-                enemies[i]->y < -(int16_t) enemies[i]->sp->height ||
-                enemies[i]->x < -(int16_t) enemies[i]->sp->width) {
+            // enemy escaped through the right edge — costs a life
+            if (enemies[i]->x > screen_w) {
+                enemies[i]->active = false;
+                player_lives--;
+                if (player_lives <= 0) {
+                    player_lives = 0;
+                    game_over = true;
+                }
+            }
+            // safety: deactivate if out of bounds in any other direction
+            else if (enemies[i]->y > screen_h ||
+                     enemies[i]->y < -(int16_t) enemies[i]->sp->height ||
+                     enemies[i]->x < -(int16_t) enemies[i]->sp->width) {
                 enemies[i]->active = false;
             }
 
             // if the enemy is inactive (dead or off-screen), destroy it
             if (!enemies[i]->active) {
                 enemy_destroy(enemies[i]);
-                
+
                 // shift array to maintain strict visual depth order
                 for (int j = i; j < enemy_count - 1; j++) {
                     enemies[j] = enemies[j + 1];
@@ -136,6 +159,28 @@ void game_tick(void) {
             }
         }
     }
+
+    // WAVE MANAGER
+    if (enemies_to_spawn > 0) {
+        // still releasing enemies for this wave
+        spawn_timer--;
+        if (spawn_timer <= 0 && enemy_count < MAX_ENEMIES) {
+            enemy_t *e = enemy_create((xpm_map_t) orc, enemy_start_x, enemy_start_y, 100, 2);
+            if (e != NULL) {
+                enemies[enemy_count++] = e;
+                enemies_to_spawn--;
+                int interval = 90 - (wave_number - 1) * 5;
+                spawn_timer = interval < 45 ? 45 : interval;
+            }
+        }
+    } else if (enemy_count == 0) {
+        // all enemies dealt with — count up to the inter-wave pause
+        wave_delay++;
+        if (wave_delay >= WAVE_DELAY) {
+            start_wave(wave_number + 1);
+        }
+    }
+
     tower_tick();
 }
 
@@ -162,10 +207,31 @@ void game_draw(void) {
         draw_sprite(cursor_sprite, cursor_x, cursor_y);
     }
 
+    // lives bar: filled rectangle that shrinks as lives are lost
+    int bar_x = 10, bar_y = 10;
+    int bar_w = 200, bar_h = 14;
+    int fill_w = (bar_w * player_lives) / MAX_LIVES;
+    uint32_t fill_color = player_lives > MAX_LIVES / 4 ? 0x00EE3333 : 0x00FF8800;
+    for (int py = bar_y; py < bar_y + bar_h; py++) {
+        for (int px = bar_x; px < bar_x + bar_w; px++) {
+            vg_draw_pixel(px, py, px < bar_x + fill_w ? fill_color : 0x00333333);
+        }
+    }
+
+    // wave counter below the bar
+    char wave_str[16];
+    snprintf(wave_str, sizeof(wave_str), "wave %d", wave_number);
+    font_draw_string(10, 30, wave_str, 0x00FFFFFF);
+
+    // gold counter (top-right, unchanged)
     char gold_str[32];
     snprintf(gold_str, sizeof(gold_str), "gold %d", player_gold);
     uint16_t tw = font_string_width(gold_str);
     font_draw_string((uint16_t)(vg_get_x_res() - tw - 10), 10, gold_str, 0x00FFD700);
+}
+
+bool game_is_over(void) {
+    return game_over;
 }
 
 void game_update_cursor(int16_t dx, int16_t dy) {

@@ -87,7 +87,12 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 menu_draw();
               } else if (state == STATE_GAME) {
                 game_tick();
-                game_draw();
+                if (game_is_over()) {
+                  state = STATE_MENU;
+                  menu_reset();
+                } else {
+                  game_draw();
+                }
               }
 
               vg_refresh();
