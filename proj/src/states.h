@@ -3,7 +3,8 @@
 
 typedef enum {
     STATE_MENU,
-    STATE_GAME
+    STATE_GAME,
+    STATE_INSTRUCTIONS  
 } app_state_t;
 
 #endif

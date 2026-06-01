@@ -10,6 +10,7 @@
 #include "states.h"
 #include "menu.h"
 #include "game.h"
+#include "instructions.h"
 
 
 int main(int argc, char *argv[]) {
@@ -88,6 +89,8 @@ int(proj_main_loop)(int argc, char* argv[]) {
               } else if (state == STATE_GAME) {
                 game_tick();
                 game_draw();
+              } else if (state == STATE_INSTRUCTIONS) {
+                instructions_draw();
               }
 
               vg_refresh();
@@ -117,6 +120,10 @@ int(proj_main_loop)(int argc, char* argv[]) {
                       running = false;
                       break;
 
+                    case MENU_INSTRUCTIONS:
+                      state = STATE_INSTRUCTIONS;
+                      break;
+
                     // INSTRUCTIONS / SETTINGS / HIGH_SCORES:
                     // placeholders — stay on menu for now
                     default:
@@ -132,7 +139,12 @@ int(proj_main_loop)(int argc, char* argv[]) {
                   state = STATE_MENU;
                   menu_reset();
                 }
-              }
+              } else if (state == STATE_INSTRUCTIONS) {
+                  if (scancode_byte == ESC_BREAKCODE) {
+                    state = STATE_MENU;
+                    menu_reset();
+                  }
+                }
             }
           }
 
