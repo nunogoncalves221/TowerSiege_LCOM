@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "game.h"
 #include "instructions.h"
+#include "pause.h"
 
 
 int main(int argc, char *argv[]) {
@@ -91,6 +92,9 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 game_draw();
               } else if (state == STATE_INSTRUCTIONS) {
                 instructions_draw();
+              } else if (state == STATE_PAUSE) {
+                  game_draw();
+                  pause_draw();
               }
 
               vg_refresh();
@@ -132,13 +136,28 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 }
 
               } else if (state == STATE_GAME) {
-                game_handle_key(scancode_byte);
+                  game_handle_key(scancode_byte);
 
-                // ESC from game returns to menu
-                if (scancode_byte == ESC_BREAKCODE) {
-                  state = STATE_MENU;
-                  menu_reset();
-                }
+                  if (scancode_byte == 0x01) {
+                      state = STATE_PAUSE;
+                      pause_reset();
+                  }
+
+              } else if (state == STATE_PAUSE) {
+                  if (pause_handle_key(scancode_byte)) {
+                      switch (pause_get_selected()) {
+                          case PAUSE_CONTINUE:
+                              state = STATE_GAME;
+                              break;
+                          case PAUSE_QUIT:
+                              state = STATE_MENU;
+                              menu_reset();
+                              break;
+                          default:
+                              break;
+                      }
+                      pause_reset();
+                  }
               } else if (state == STATE_INSTRUCTIONS) {
                   if (scancode_byte == ESC_BREAKCODE) {
                     state = STATE_MENU;
