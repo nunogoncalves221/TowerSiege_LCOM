@@ -12,6 +12,7 @@
 #include "game.h"
 #include "instructions.h"
 
+#define KEY_P_MAKE 0x19
 
 int main(int argc, char *argv[]) {
   lcf_set_language("EN-US");
@@ -28,20 +29,17 @@ int(proj_main_loop)(int argc, char* argv[]) {
 
   uint8_t timer_bit, kbd_bit, mouse_bit;
 
-  // timer
   if (timer_subscribe_int(&timer_bit) != 0) {
     vg_exit();
     return 1;
   }
 
-  // keyboard
   if (keyboard_subscribe_int(&kbd_bit) != 0) {
     timer_unsubscribe_int();
     vg_exit();
     return 1;
   }
 
-  // enable mouse data reporting
   if (mouse_write_command(ENABLE_DATA_REPORTING) != 0) {
     keyboard_unsubscribe_int();
     timer_unsubscribe_int();
@@ -49,7 +47,6 @@ int(proj_main_loop)(int argc, char* argv[]) {
     return 1;
   }
 
-  // mouse subscribe
   if (mouse_subscribe_int(&mouse_bit) != 0) {
     mouse_write_command(DISABLE_DATA_REPORTING);
     keyboard_unsubscribe_int();
@@ -58,13 +55,12 @@ int(proj_main_loop)(int argc, char* argv[]) {
     return 1;
   }
 
-  // bit masks
   uint32_t timer_irq = BIT(timer_bit);
   uint32_t kbd_irq   = BIT(kbd_bit);
   uint32_t mouse_irq = BIT(mouse_bit);
 
   app_state_t state = STATE_MENU;
-  menu_reset();  // initialise menu (loads logo sprite, resets selection)
+  menu_reset();
 
   int ipc_status;
   message msg;
@@ -91,6 +87,8 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 game_draw();
               } else if (state == STATE_INSTRUCTIONS) {
                 instructions_draw();
+              } else if (state == STATE_PAUSE) {
+                game_draw(); // freeze the game, just redraw without updating
               }
 
               vg_refresh();
@@ -103,29 +101,21 @@ int(proj_main_loop)(int argc, char* argv[]) {
 
             if (!kbc_error) {
               if (state == STATE_MENU) {
-                // ESC always quits
                 if (scancode_byte == ESC_BREAKCODE) {
                   running = false;
                 }
-                // forward all other keys to the menu handler
                 else if (menu_handle_key(scancode_byte)) {
-                  // Enter was pressed — act on the selected option
                   switch (menu_get_selected()) {
                     case MENU_PLAY:
                       state = STATE_GAME;
                       game_reset();
                       break;
-
                     case MENU_QUIT:
                       running = false;
                       break;
-
                     case MENU_INSTRUCTIONS:
                       state = STATE_INSTRUCTIONS;
                       break;
-
-                    // INSTRUCTIONS / SETTINGS / HIGH_SCORES:
-                    // placeholders — stay on menu for now
                     default:
                       break;
                   }
@@ -134,17 +124,33 @@ int(proj_main_loop)(int argc, char* argv[]) {
               } else if (state == STATE_GAME) {
                 game_handle_key(scancode_byte);
 
-                // ESC from game returns to menu
+                // P pauses the game
+                if (scancode_byte == KEY_P_MAKE) {
+                  state = STATE_PAUSE;
+                }
+                // ESC returns to menu
                 if (scancode_byte == ESC_BREAKCODE) {
                   state = STATE_MENU;
                   menu_reset();
                 }
-              } else if (state == STATE_INSTRUCTIONS) {
-                  if (scancode_byte == ESC_BREAKCODE) {
-                    state = STATE_MENU;
-                    menu_reset();
-                  }
+
+              } else if (state == STATE_PAUSE) {
+                // P resumes the game
+                if (scancode_byte == KEY_P_MAKE) {
+                  state = STATE_GAME;
                 }
+                // ESC returns to menu
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_MENU;
+                  menu_reset();
+                }
+
+              } else if (state == STATE_INSTRUCTIONS) {
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_MENU;
+                  menu_reset();
+                }
+              }
             }
           }
 
@@ -170,7 +176,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
     }
   }
 
-  // cleanup
+  // Cleanup
   vg_free();
   mouse_unsubscribe_int();
   mouse_write_command(DISABLE_DATA_REPORTING);
