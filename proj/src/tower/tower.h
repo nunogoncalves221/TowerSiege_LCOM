@@ -33,7 +33,7 @@ typedef struct {
 } tower_slot_t;
 
 void tower_init(void);
-void tower_handle_click(int col, int row, int *gold);
+void tower_handle_click(int col, int row);
 // receives the enemies from the main game loop
 void tower_tick(enemy_t **enemies, int enemy_count); 
 void tower_draw(void);

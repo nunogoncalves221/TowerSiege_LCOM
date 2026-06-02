@@ -60,4 +60,8 @@ int  game_gameover_click(void);              // handles mouse clicks on the game
 bool game_gameover_handle_key(uint8_t sc);  // handles key presses on the game over screen (true on enter)
 int  game_gameover_get_selected(void);       // gets the currently selected game over option (0=retry, 1=menu)
 
+// gold
+int get_player_gold();
+void add_player_gold(int amount);
+
 #endif

@@ -1,5 +1,6 @@
 #include "tower.h"
 #include "sprite.h"
+#include "game.h"
 #include "../enemy/enemy.h"
 #include "../assets/archer_1.xpm"
 #include "../assets/mage_1.xpm"
@@ -43,7 +44,7 @@ void tower_init(void) {
     }
 }
 
-void tower_handle_click(int col, int row, int *gold) {
+void tower_handle_click(int col, int row) {
     // check ui selection (original team code)
     if (row == 8 && col == 5) { selected_tower_type = TOWER_ARCHER; return; }
     if (row == 8 && col == 6) { selected_tower_type = TOWER_MAGE;   return; }
@@ -53,13 +54,13 @@ void tower_handle_click(int col, int row, int *gold) {
         if (slots[i].col == col && slots[i].row == row && slots[i].tower != NULL) {
             tower_t *t = slots[i].tower;
             
-            // only upgrade if it is currently level 1
+            // only upgrade if it's currently level 1
             if (t->level == 1) {
                 int upg_cost = (t->type == TOWER_ARCHER) ? TOWER_ARCHER_UPG_COST : TOWER_MAGE_UPG_COST;
                 
-                // check if we have enough gold
-                if (*gold >= upg_cost) {
-                    *gold -= upg_cost;
+                // check if we can actually afford the upgrade
+                if (get_player_gold() >= upg_cost) {
+                    add_player_gold(-upg_cost); // pay up!
                     t->level = 2;
                     
                     // apply stats and new sprite
@@ -86,11 +87,17 @@ void tower_handle_click(int col, int row, int *gold) {
     // build logic 
     if (selected_tower_type != TOWER_NONE && tower_count < MAX_TOWERS) {
         int cost = (selected_tower_type == TOWER_ARCHER) ? TOWER_ARCHER_COST : TOWER_MAGE_COST;
-        if (*gold < cost) { selected_tower_type = TOWER_NONE; return; }
+        
+        // cancel if we dont have gold for this
+        if (get_player_gold() < cost) { 
+            selected_tower_type = TOWER_NONE; 
+            return; 
+        }
 
         for (int i = 0; i < slot_count; i++) {
             if (slots[i].col == col && slots[i].row == row && slots[i].tower == NULL) {
-                *gold -= cost;
+                add_player_gold(-cost); // deduct the build cost
+                
                 tower_t *t = &towers[tower_count++];
                 t->type = selected_tower_type;
                 t->level = 1;
@@ -159,6 +166,12 @@ void tower_tick(enemy_t **enemies, int enemy_count) {
         if (target != NULL) {
             target->hp -= t->damage;
             t->attack_timer = t->attack_cooldown; // reset the reload timer
+            
+            // check if this shot was fatal
+            if (target->hp <= 0) {
+                target->active = false; // mark as dead so game_tick can clean it up
+                add_player_gold(25);    // gold reward to the player
+            }
         }
     }
 }

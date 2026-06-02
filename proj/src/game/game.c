@@ -71,6 +71,20 @@ static int enemies_to_spawn = 0;
 static int spawn_timer = 0;
 static int wave_delay = 0;
 
+// gold getter
+int get_player_gold() {
+    return player_gold;
+}
+
+// gold setter
+void add_player_gold(int amount) {
+    player_gold += amount;
+    
+    if (player_gold < 0) {
+        player_gold = 0;
+    }
+}
+
 static void start_wave(int wave) {
     wave_number = wave;
     enemies_to_spawn = 5 + (wave - 1) * 3; // wave 1->5, 2->8, 3->11, …
@@ -436,5 +450,6 @@ void game_update_cursor(int16_t dx, int16_t dy) {
 }
 
 void game_handle_click(void) {
-    tower_handle_click(cursor_x / TILE_SIZE, cursor_y / TILE_SIZE, &player_gold);
+    // let the tower manager handle the grid click
+    tower_handle_click(cursor_x / TILE_SIZE, cursor_y / TILE_SIZE);
 }
