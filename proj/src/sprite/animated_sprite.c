@@ -86,16 +86,20 @@ int draw_animated_sprite(AnimSprite *as, uint16_t x, uint16_t y) {
 void animate_sprite_once(AnimSprite *as) {
   if (as == NULL) return;
 
+  // if the animation is completely done (last frame AND timer hit 0), stop decrementing
+  if (as->cur_fig == as->num_fig - 1 && as->cur_aspeed == 0) {
+    return; 
+  }
+
   as->cur_aspeed--;
   
-  if (as->cur_aspeed <= 0) {
-    as->cur_fig++;
-    // clamp it at the last frame so it doesn't loop
-    if (as->cur_fig >= as->num_fig) {
-      as->cur_fig = as->num_fig - 1; 
-    } else {
+  if (as->cur_aspeed == 0) {
+    // if we haven't reached the last frame yet, move to the next one and reset timer
+    if (as->cur_fig < as->num_fig - 1) {
+      as->cur_fig++;
       as->cur_aspeed = as->aspeed;
     }
+    // if it is the last frame, the timer just stays at 0, signaling it has finished
   }
 }
 
@@ -112,4 +116,16 @@ void animate_sprite_loop(AnimSprite *as) {
     }
     as->cur_aspeed = as->aspeed;
   }
+}
+
+bool animated_sprite_finished(AnimSprite *as) {
+  if (as == NULL) return true;
+  // it's only finished when we are on the last frame AND its duration has passed
+  return (as->cur_fig == as->num_fig - 1) && (as->cur_aspeed == 0);
+}
+
+void reset_animated_sprite(AnimSprite *as) {
+  if (as == NULL) return;
+  as->cur_fig = 0;
+  as->cur_aspeed = as->aspeed;
 }

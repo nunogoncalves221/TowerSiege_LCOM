@@ -3,6 +3,7 @@
 
 #include <lcom/lcf.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include "sprite.h"
 
 typedef struct {
@@ -23,5 +24,11 @@ void animate_sprite_once(AnimSprite *as);
 
 // loops back to the first frame (great for walking or idle)
 void animate_sprite_loop(AnimSprite *as);
+
+// returns true if the "once" animation has fully completed
+bool animated_sprite_finished(AnimSprite *as);
+
+// resets the animation back to the first frame
+void reset_animated_sprite(AnimSprite *as);
 
 #endif
