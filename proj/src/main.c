@@ -139,10 +139,17 @@ int(proj_main_loop)(int argc, char* argv[]) {
                   menu_reset();
                 }
               } else if (state == STATE_GAMEOVER) {
-                // ESC from game over screen returns to menu
                 if (scancode_byte == ESC_BREAKCODE) {
                   state = STATE_MENU;
                   menu_reset();
+                } else if (game_gameover_handle_key(scancode_byte)) {
+                  if (game_gameover_get_selected() == 0) {
+                    game_reset();
+                    state = STATE_GAME;
+                  } else {
+                    state = STATE_MENU;
+                    menu_reset();
+                  }
                 }
               }
             }
@@ -158,9 +165,15 @@ int(proj_main_loop)(int argc, char* argv[]) {
               if (pp.lb && !lb_prev) {
                 if (state == STATE_GAME) {
                   game_handle_click();
-                } else if (state == STATE_GAMEOVER && game_gameover_click()) {
-                  state = STATE_MENU;
-                  menu_reset();
+                } else if (state == STATE_GAMEOVER) {
+                  int btn = game_gameover_click();
+                  if (btn == 1) {       // retry
+                    game_reset();
+                    state = STATE_GAME;
+                  } else if (btn == 2) { // menu
+                    state = STATE_MENU;
+                    menu_reset();
+                  }
                 }
               }
               lb_prev = pp.lb;

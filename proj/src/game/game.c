@@ -34,6 +34,9 @@ static bool key_d = false;
 static int player_gold = 500;
 static int player_lives = MAX_LIVES;
 static bool game_over = false;
+static int go_selected = 0; // 0=retry, 1=menu
+
+static const char *go_labels[2] = { "retry", "menu" };
 
 // cached spawn position calculated once from sprite dimensions
 static int16_t enemy_start_x = 0;
@@ -136,6 +139,7 @@ void game_tick(void) {
                 if (player_lives <= 0) {
                     player_lives = 0;
                     game_over = true;
+                    go_selected = 0;
                 }
             }
             // safety: deactivate if out of bounds in any other direction
@@ -234,66 +238,76 @@ bool game_is_over(void) {
     return game_over;
 }
 
-void game_draw_gameover(void) {
-    game_draw(); // render the frozen game state underneath
+#define GO_ITEM_GAP  32   // 16px text + 16px spacing, same rhythm as the menu
+#define GO_OPTS_Y    0    // options start at screen centre (added to cy at runtime)
+#define GO_DOT_SIZE  6
+#define GO_DOT_PAD   14   // px between dot right edge and text left edge
 
-    int cx = (int) vg_get_x_res() / 2;
+#define GO_COLOR_SELECTED 0x00E94560
+#define GO_COLOR_NORMAL   0x00B0B0C0
+
+void game_draw_gameover(void) {
+    uint16_t sw = (uint16_t) vg_get_x_res();
+    int cx = (int) sw / 2;
     int cy = (int) vg_get_y_res() / 2;
 
-    // semi-transparent dark overlay: every other pixel is blacked out
-    int ov_w = 400, ov_h = 130;
-    int ov_x = cx - ov_w / 2;
-    int ov_y = cy - ov_h / 2;
-    for (int py = ov_y; py < ov_y + ov_h; py++) {
-        for (int px = ov_x; px < ov_x + ov_w; px++) {
-            if ((px + py) % 2 == 0)
-                vg_draw_pixel(px, py, 0x00000000);
-        }
-    }
-
-    // solid 1px border around the box
-    for (int px = ov_x; px < ov_x + ov_w; px++) {
-        vg_draw_pixel(px, ov_y,              0x00888888);
-        vg_draw_pixel(px, ov_y + ov_h - 1,  0x00888888);
-    }
-    for (int py = ov_y; py < ov_y + ov_h; py++) {
-        vg_draw_pixel(ov_x,              py, 0x00888888);
-        vg_draw_pixel(ov_x + ov_w - 1,  py, 0x00888888);
-    }
-
-    // "game over" text
+    // "game over" at 3x scale with drop shadow
     const char *go_str = "game over";
-    uint16_t go_w = font_string_width(go_str);
-    font_draw_string((uint16_t)(cx - go_w / 2), (uint16_t)(cy - 35), go_str, 0x00FF4444);
+    uint16_t go_w = font_string_width_scaled(go_str, 3);
+    uint16_t go_x = (uint16_t)(cx - go_w / 2);
+    uint16_t go_y = (uint16_t)(cy - 100);
+    font_draw_string_scaled(go_x + 3, go_y + 3, go_str, 0x00660000, 3);
+    font_draw_string_scaled(go_x,     go_y,     go_str, 0x00FF3333, 3);
 
-    // menu button
-    int btn_w = 110, btn_h = 28;
-    int btn_x = cx - btn_w / 2;
-    int btn_y = cy + 15;
-    for (int py = btn_y; py < btn_y + btn_h; py++)
-        for (int px = btn_x; px < btn_x + btn_w; px++)
-            vg_draw_pixel(px, py, 0x00444444);
-    for (int px = btn_x; px < btn_x + btn_w; px++) {
-        vg_draw_pixel(px, btn_y,              0x00AAAAAA);
-        vg_draw_pixel(px, btn_y + btn_h - 1, 0x00AAAAAA);
+    // vertical option list — same style as the main menu
+    for (int i = 0; i < 2; i++) {
+        uint16_t iw    = font_string_width(go_labels[i]);
+        uint16_t ix    = (uint16_t)((sw - iw) / 2);
+        uint16_t iy    = (uint16_t)(cy + i * GO_ITEM_GAP);
+        uint32_t color = (i == go_selected) ? GO_COLOR_SELECTED : GO_COLOR_NORMAL;
+
+        if (i == go_selected) {
+            uint16_t dot_x = ix - GO_DOT_PAD - GO_DOT_SIZE;
+            uint16_t dot_y = (uint16_t)(iy + 8 - GO_DOT_SIZE / 2);
+            for (int dy = 0; dy < GO_DOT_SIZE; dy++)
+                for (int dx = 0; dx < GO_DOT_SIZE; dx++)
+                    vg_draw_pixel(dot_x + dx, dot_y + dy, GO_COLOR_SELECTED);
+        }
+
+        font_draw_string(ix, iy, go_labels[i], color);
     }
-    for (int py = btn_y; py < btn_y + btn_h; py++) {
-        vg_draw_pixel(btn_x,              py, 0x00AAAAAA);
-        vg_draw_pixel(btn_x + btn_w - 1, py, 0x00AAAAAA);
-    }
-    const char *btn_str = "menu";
-    uint16_t btn_tw = font_string_width(btn_str);
-    font_draw_string((uint16_t)(cx - btn_tw / 2), (uint16_t)(btn_y + (btn_h - 16) / 2), btn_str, 0x00FFFFFF);
 }
 
-bool game_gameover_click(void) {
-    int cx = (int) vg_get_x_res() / 2;
+int game_gameover_click(void) {
     int cy = (int) vg_get_y_res() / 2;
-    int btn_w = 110, btn_h = 28;
-    int btn_x = cx - btn_w / 2;
-    int btn_y = cy + 15;
-    return cursor_x >= btn_x && cursor_x < btn_x + btn_w &&
-           cursor_y >= btn_y && cursor_y < btn_y + btn_h;
+    for (int i = 0; i < 2; i++) {
+        int iy = cy + i * GO_ITEM_GAP;
+        if (cursor_y >= iy - 4 && cursor_y < iy + 20)
+            return i + 1; // 1=retry, 2=menu
+    }
+    return 0;
+}
+
+bool game_gameover_handle_key(uint8_t sc) {
+    switch (sc) {
+        case KEY_UP_MAKE:
+        case KEY_W_MAKE:
+            if (go_selected > 0) go_selected--;
+            break;
+        case KEY_DOWN_MAKE:
+        case KEY_S_MAKE:
+            if (go_selected < 1) go_selected++;
+            break;
+        case KEY_ENTER_MAKE:
+            return true;
+        default:
+            break;
+    }
+    return false;
+}
+
+int game_gameover_get_selected(void) {
+    return go_selected;
 }
 
 void game_update_cursor(int16_t dx, int16_t dy) {
