@@ -1,5 +1,6 @@
 #include "game.h"
 #include "sprite.h"
+#include "animated_sprite.h"
 #include "video.h"
 #include "map.h"
 #include "enemy.h"
@@ -9,15 +10,31 @@
 #include "../assets/hero.xpm"
 #include "../assets/orc.xpm"
 #include "../assets/cursor.xpm"
+#include "../assets/hero_walk_1.xpm"
+#include "../assets/hero_walk_2.xpm"
+#include "../assets/hero_walk_3.xpm"
+#include "../assets/hero_atk_1.xpm"
+#include "../assets/hero_atk_2.xpm"
+#include "../assets/hero_atk_3.xpm"
 
-#define MAX_ENEMIES 20
-#define MAX_LIVES   20
-#define WAVE_DELAY  150  // frames between waves
+#define MAX_ENEMIES 20 // ready for waves
 
-static sprite_t *hero_sprite = NULL;
+// define where the base is located on your specific map
+#define HERO_BASE_X 750
+#define HERO_BASE_Y 550
+
+typedef enum { HERO_IDLE, HERO_WALK, HERO_ATTACK } hero_state_t;
+
+static hero_state_t current_hero_state = HERO_IDLE;
+static AnimSprite *hero_idle = NULL;
+static AnimSprite *hero_walk = NULL;
+static AnimSprite *hero_attack = NULL;
+
+// hero position
 static int16_t hero_x = 0;
 static int16_t hero_y = 0;
 
+// cursor
 static sprite_t *cursor_sprite = NULL;
 static int16_t cursor_x = 0;
 static int16_t cursor_y = 0;
@@ -26,11 +43,14 @@ static int16_t cursor_y = 0;
 static enemy_t *enemies[MAX_ENEMIES];
 static int enemy_count = 0;
 
+// keyboard state (added spacebar for attacking)
 static bool key_w = false;
 static bool key_a = false;
 static bool key_s = false;
 static bool key_d = false;
+static bool key_space = false;
 
+// player economy
 static int player_gold = 500;
 static int player_lives = MAX_LIVES;
 static int player_score = 0;
@@ -60,18 +80,31 @@ void game_reset(void) {
     tower_init();
     map_init();
 
-    destroy_sprite(hero_sprite);
-    hero_sprite = create_sprite((xpm_map_t) hero);
-
+    // clean up old resources
+    destroy_animated_sprite(hero_idle);
+    destroy_animated_sprite(hero_walk);
+    destroy_animated_sprite(hero_attack);
     destroy_sprite(cursor_sprite);
+
+    // setup cursor
     cursor_sprite = create_sprite((xpm_map_t) cursor);
     cursor_x = vg_get_x_res() / 2;
     cursor_y = vg_get_y_res() / 2; // start cursor in center of screen
 
-    if (hero_sprite != NULL) {
-        hero_x = (int16_t)((vg_get_x_res() - hero_sprite->width)  / 2);
-        hero_y = (int16_t)((vg_get_y_res() - hero_sprite->height) / 2);
-    }
+    // setup animated hero ( replace xpm later )
+    xpm_map_t idle_frames[] = { (xpm_map_t) hero }; // using base for idle
+    xpm_map_t walk_frames[] = { (xpm_map_t) hero_walk_1, (xpm_map_t) hero_walk_2, (xpm_map_t) hero_walk_3 };
+    xpm_map_t atk_frames[]  = { (xpm_map_t) hero_atk_1, (xpm_map_t) hero_atk_2, (xpm_map_t) hero_atk_3 };
+
+    // create the animations (frames array, number of frames, ticks per frame)
+    hero_idle = create_animated_sprite(idle_frames, 1, 15);
+    hero_walk = create_animated_sprite(walk_frames, 3, 10);
+    hero_attack = create_animated_sprite(atk_frames, 3, 8);
+
+    // spawn hero at the base
+    hero_x = HERO_BASE_X;
+    hero_y = HERO_BASE_Y;
+    current_hero_state = HERO_IDLE;
 
     // clean up any remaining enemies from previous games
     for (int i = 0; i < enemy_count; i++) {
@@ -105,31 +138,93 @@ void game_handle_key(uint8_t scancode) {
         case KEY_S_BREAK: key_s = false; break;
         case KEY_D_MAKE:  key_d = true;  break;
         case KEY_D_BREAK: key_d = false; break;
+
+        // spacebar for attacking
+        case KEY_F_MAKE: key_space = true; break;
+        case KEY_F_BREAK: key_space = false; break; 
+
         default: break;
     }
 }
 
 void game_tick(void) {
-    if (hero_sprite == NULL || game_over) return;
+    if (hero_idle == NULL) return; // safety check
 
-    // HERO MOVEMENT
     int16_t screen_w = (int16_t) vg_get_x_res();
     int16_t screen_h = (int16_t) vg_get_y_res();
 
-    if (key_w) hero_y -= HERO_SPEED;
-    if (key_s) hero_y += HERO_SPEED;
-    if (key_a) hero_x -= HERO_SPEED;
-    if (key_d) hero_x += HERO_SPEED;
+    // --- HERO MOVEMENT ---
+    bool is_moving = false;
+
+    if (key_w) { hero_y -= HERO_SPEED; is_moving = true; }
+    if (key_s) { hero_y += HERO_SPEED; is_moving = true; }
+    if (key_a) { hero_x -= HERO_SPEED; is_moving = true; }
+    if (key_d) { hero_x += HERO_SPEED; is_moving = true; }
 
     // clamp to screen bounds
+    int16_t hw = (int16_t) hero_idle->sp->width;
+    int16_t hh = (int16_t) hero_idle->sp->height;
     if (hero_x < 0) hero_x = 0;
     if (hero_y < 0) hero_y = 0;
-    if (hero_x > screen_w - (int16_t) hero_sprite->width)
-        hero_x = screen_w - (int16_t) hero_sprite->width;
-    if (hero_y > screen_h - (int16_t) hero_sprite->height)
-        hero_y = screen_h - (int16_t) hero_sprite->height;
+    if (hero_x > screen_w - hw) hero_x = screen_w - hw;
+    if (hero_y > screen_h - hh) hero_y = screen_h - hh;
 
-    // ENEMY MANAGER
+    // --- HERO STATE MACHINE & ATTACKS ---
+    // trigger attack if space is pressed and we aren't already attacking
+    if (key_space && current_hero_state != HERO_ATTACK) {
+        current_hero_state = HERO_ATTACK;
+        reset_animated_sprite(hero_attack);
+    }
+
+    //process the current state
+    if (current_hero_state == HERO_ATTACK) {
+        animate_sprite_once(hero_attack);
+        
+        // if attack animation finished
+        if (animated_sprite_finished(hero_attack)) {
+            
+            // calculate the exact center of our hero
+            int h_center_x = hero_x + (hero_attack->sp->width / 2);
+            int h_center_y = hero_y + (hero_attack->sp->height / 2);
+
+            // scan all enemies
+            for (int i = 0; i < enemy_count; i++) {
+                if (enemies[i] != NULL && enemies[i]->active) {
+                    
+                    // calculate the exact center of this enemy
+                    int e_center_x = enemies[i]->x + (enemies[i]->sp->width / 2);
+                    int e_center_y = enemies[i]->y + (enemies[i]->sp->height / 2);
+                    
+                    int dx = e_center_x - h_center_x;
+                    int dy = e_center_y - h_center_y;
+                    
+                    // check distance ( range to 100 pixels )
+                    if ((dx * dx) + (dy * dy) <= (100 * 100)) {
+                        enemies[i]->hp -= 50; // smash
+
+                        if (enemies[i]->hp <= 0) {
+                            enemies[i]->active = false;
+                            player_gold += 25; // reward the player in gold for the kill
+                        }
+                    }
+                }
+            }
+
+            // revert state back depending on whether the player is currently walking
+            current_hero_state = is_moving ? HERO_WALK : HERO_IDLE;
+        }
+    } else {
+        // only update walk/idle animations if we are NOT in the middle of an attack
+        if (is_moving) {
+            current_hero_state = HERO_WALK;
+            animate_sprite_loop(hero_walk);
+        } else {
+            current_hero_state = HERO_IDLE;
+            animate_sprite_loop(hero_idle);
+        }
+    }
+
+     // --- ENEMY MOVEMENT ---
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
             enemy_update(enemies[i]);
@@ -207,8 +302,15 @@ void game_draw(void) {
         }
     }
 
-    if (hero_sprite != NULL) {
-        draw_sprite(hero_sprite, hero_x, hero_y);
+    // draw the hero based on current state
+    if (current_hero_state == HERO_ATTACK && hero_attack != NULL) {
+        draw_animated_sprite(hero_attack, hero_x, hero_y);
+    } 
+    else if (current_hero_state == HERO_WALK && hero_walk != NULL) {
+        draw_animated_sprite(hero_walk, hero_x, hero_y);
+    } 
+    else if (hero_idle != NULL) {
+        draw_animated_sprite(hero_idle, hero_x, hero_y);
     }
 
     if (cursor_sprite != NULL) {
