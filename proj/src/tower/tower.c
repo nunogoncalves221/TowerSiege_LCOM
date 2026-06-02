@@ -60,19 +60,19 @@ void tower_handle_click(int col, int row) {
                 
                 // check if we can actually afford the upgrade
                 if (get_player_gold() >= upg_cost) {
-                    add_player_gold(-upg_cost); // pay up!
+                    add_player_gold(-upg_cost); // pay up
                     t->level = 2;
                     
                     // apply stats and new sprite
                     if (t->type == TOWER_ARCHER) {
                         t->sp = archer_2_sprite;
-                        t->damage += 15;
-                        t->range += 50;
-                        t->attack_cooldown -= 10;
+                        t->damage += TOWER_ARCHER_UPG_DMG_INC;
+                        t->range += TOWER_ARCHER_UPG_RANGE_INC;
+                        t->attack_cooldown -= TOWER_ARCHER_UPG_CD_DEC;
                     } else {
                         t->sp = mage_2_sprite;
-                        t->damage += 35;
-                        t->range += 30;
+                        t->damage += TOWER_MAGE_UPG_DMG_INC;
+                        t->range += TOWER_MAGE_UPG_RANGE_INC;
                     }
                     
                     // tell the game to redraw the map cache so the new sprite appears
@@ -105,10 +105,15 @@ void tower_handle_click(int col, int row) {
                 t->row   = row;
                 t->sp    = (selected_tower_type == TOWER_ARCHER) ? archer_sprite : mage_sprite;
                 
+                // apply base stats
                 if (selected_tower_type == TOWER_ARCHER) {
-                    t->range = 200; t->damage = 10; t->attack_cooldown = 30;
+                    t->range = TOWER_ARCHER_BASE_RANGE; 
+                    t->damage = TOWER_ARCHER_BASE_DMG; 
+                    t->attack_cooldown = TOWER_ARCHER_BASE_COOLDOWN;
                 } else {
-                    t->range = 150; t->damage = 25; t->attack_cooldown = 60;
+                    t->range = TOWER_MAGE_BASE_RANGE; 
+                    t->damage = TOWER_MAGE_BASE_DMG; 
+                    t->attack_cooldown = TOWER_MAGE_BASE_COOLDOWN;
                 }
                 
                 t->attack_timer = 0;

@@ -2,40 +2,67 @@
 #define TOWER_H
 
 #include <lcom/lcf.h>
-#include "../sprite/sprite.h"
-#include "../map/map.h"
-#include "../enemy/enemy.h"
+#include "sprite.h"
+#include "map.h"
+#include "enemy.h"
+
+// --- types ---
 
 typedef enum { TOWER_NONE, TOWER_ARCHER, TOWER_MAGE } tower_type_t;
 typedef enum { UI_NONE, UI_BUILD, UI_UPGRADE } ui_state_t;
 
+// --- constants ---
+
+// tower costs
 #define TOWER_ARCHER_COST 200
 #define TOWER_MAGE_COST   350
-
-// upgrade costs
 #define TOWER_ARCHER_UPG_COST 150
 #define TOWER_MAGE_UPG_COST   250
 
+// archer tower stats (level 1)
+#define TOWER_ARCHER_BASE_DMG       10
+#define TOWER_ARCHER_BASE_RANGE     200
+#define TOWER_ARCHER_BASE_COOLDOWN  30
+
+// mage tower stats (level 1)
+#define TOWER_MAGE_BASE_DMG         25
+#define TOWER_MAGE_BASE_RANGE       150
+#define TOWER_MAGE_BASE_COOLDOWN    60
+
+// archer tower upgrade (level 2)
+#define TOWER_ARCHER_UPG_DMG_INC    15
+#define TOWER_ARCHER_UPG_RANGE_INC  50
+#define TOWER_ARCHER_UPG_CD_DEC     10
+
+// mage tower upgrade (level 2)
+#define TOWER_MAGE_UPG_DMG_INC      35
+#define TOWER_MAGE_UPG_RANGE_INC    30
+
+// --- data structures ---
+
+// represents a single tower instance on the map
 typedef struct {
     tower_type_t type;
-    int level;    // level of upgrade (1 or 2)
-    sprite_t *sp;
-    int col, row; // position on the grid
-    int range; // attack range
-    int damage; // amount of damage per shot
-    int attack_cooldown; // frames between shots
-    int attack_timer; // timer to shoot
+    int level;           // level of the tower (1 or 2)
+    sprite_t *sp;        // sprite for the current level
+    int col, row;        // grid position (column, row)
+    int range;           // attack range in pixels
+    int damage;          // damage per shot
+    int attack_cooldown; // frames between shots (cooldown)
+    int attack_timer;    // countdown timer for the next shot
 } tower_t;
 
+// represents a grid location where a tower can be built
 typedef struct {
-    int col, row; // position
-    tower_t *tower; // NULL = empty slot
+    int col, row;   // grid position (column, row)
+    tower_t *tower; // pointer to the tower in this slot, or null if empty
 } tower_slot_t;
 
+// --- function prototypes ---
+
 void tower_init(void);
-void tower_handle_click(int col, int row);
-// receives the enemies from the main game loop
-void tower_tick(enemy_t **enemies, int enemy_count); 
+void tower_handle_click(int col, int row);           // handles tower logic based on player clicks
+void tower_tick(enemy_t **enemies, int enemy_count); // updates tower state, including target acquisition and firing
 void tower_draw(void);
 
 #endif
