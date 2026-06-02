@@ -140,3 +140,44 @@ uint16_t font_string_width(const char *s) {
     }
     return w;
 }
+
+static void draw_xpm_tinted_scaled(xpm_map_t xpm, uint16_t x, uint16_t y, uint32_t color, uint8_t scale) {
+    xpm_image_t img;
+    uint32_t *map = (uint32_t *) xpm_load(xpm, XPM_8_8_8_8, &img);
+    if (map == NULL) return;
+
+    uint32_t transparent = xpm_transparency_color(XPM_8_8_8_8);
+    uint16_t sw = (uint16_t) vg_get_x_res();
+    uint16_t sh = (uint16_t) vg_get_y_res();
+
+    for (uint16_t row = 0; row < (uint16_t) img.height; row++) {
+        for (uint16_t col = 0; col < (uint16_t) img.width; col++) {
+            if (map[(uint32_t) row * img.width + col] == transparent) continue;
+            for (uint8_t dy = 0; dy < scale; dy++) {
+                for (uint8_t dx = 0; dx < scale; dx++) {
+                    uint16_t px = x + (uint16_t)(col * scale + dx);
+                    uint16_t py = y + (uint16_t)(row * scale + dy);
+                    if (px < sw && py < sh)
+                        vg_draw_pixel(px, py, color);
+                }
+            }
+        }
+    }
+
+    free(map);
+}
+
+uint16_t font_draw_string_scaled(uint16_t x, uint16_t y, const char *s, uint32_t color, uint8_t scale) {
+    uint16_t cx = x;
+    while (*s) {
+        xpm_map_t xpm = get_xpm(*s);
+        if (xpm != NULL) draw_xpm_tinted_scaled(xpm, cx, y, color, scale);
+        cx += (uint16_t)(char_advance(*s) * scale);
+        s++;
+    }
+    return cx - x;
+}
+
+uint16_t font_string_width_scaled(const char *s, uint8_t scale) {
+    return (uint16_t)(font_string_width(s) * scale);
+}

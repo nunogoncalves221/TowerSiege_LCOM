@@ -85,7 +85,13 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 menu_draw();
               } else if (state == STATE_GAME) {
                 game_tick();
-                game_draw();
+                if (game_is_over()) {
+                  state = STATE_GAMEOVER;
+                } else {
+                  game_draw();
+                }
+              } else if (state == STATE_GAMEOVER) {
+                game_draw_gameover();
               } else if (state == STATE_INSTRUCTIONS) {
                 instructions_draw();
               } else if (state == STATE_PAUSE) {
@@ -152,6 +158,19 @@ int(proj_main_loop)(int argc, char* argv[]) {
                     menu_reset();
                   }
                 }
+              } else if (state == STATE_GAMEOVER) {
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_MENU;
+                  menu_reset();
+                } else if (game_gameover_handle_key(scancode_byte)) {
+                  if (game_gameover_get_selected() == 0) {
+                    game_reset();
+                    state = STATE_GAME;
+                  } else {
+                    state = STATE_MENU;
+                    menu_reset();
+                  }
+                }
               }
             }
 
@@ -163,7 +182,18 @@ int(proj_main_loop)(int argc, char* argv[]) {
               parse_mouse_packet(&pp);
               static bool lb_prev = false;
               if (pp.lb && !lb_prev) {
-                game_handle_click();
+                if (state == STATE_GAME) {
+                  game_handle_click();
+                } else if (state == STATE_GAMEOVER) {
+                  int btn = game_gameover_click();
+                  if (btn == 1) {       // retry
+                    game_reset();
+                    state = STATE_GAME;
+                  } else if (btn == 2) { // menu
+                    state = STATE_MENU;
+                    menu_reset();
+                  }
+                }
               }
               lb_prev = pp.lb;
               game_update_cursor(pp.delta_x, pp.delta_y);

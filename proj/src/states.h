@@ -4,6 +4,7 @@
 typedef enum {
     STATE_MENU,
     STATE_GAME,
+    STATE_GAMEOVER,
     STATE_INSTRUCTIONS,
     STATE_PAUSE,
 } app_state_t;
