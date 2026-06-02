@@ -24,5 +24,7 @@ void game_handle_key(uint8_t scancode);
 void game_update_cursor(int16_t dx, int16_t dy);
 void game_handle_click(void);
 bool game_is_over(void);
+void game_draw_gameover(void);
+bool game_gameover_click(void);
 
 #endif

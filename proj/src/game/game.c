@@ -11,7 +11,7 @@
 #include "../assets/cursor.xpm"
 
 #define MAX_ENEMIES 20
-#define MAX_LIVES   20
+#define MAX_LIVES   2
 #define WAVE_DELAY  150  // frames between waves
 
 static sprite_t *hero_sprite = NULL;
@@ -232,6 +232,68 @@ void game_draw(void) {
 
 bool game_is_over(void) {
     return game_over;
+}
+
+void game_draw_gameover(void) {
+    game_draw(); // render the frozen game state underneath
+
+    int cx = (int) vg_get_x_res() / 2;
+    int cy = (int) vg_get_y_res() / 2;
+
+    // semi-transparent dark overlay: every other pixel is blacked out
+    int ov_w = 400, ov_h = 130;
+    int ov_x = cx - ov_w / 2;
+    int ov_y = cy - ov_h / 2;
+    for (int py = ov_y; py < ov_y + ov_h; py++) {
+        for (int px = ov_x; px < ov_x + ov_w; px++) {
+            if ((px + py) % 2 == 0)
+                vg_draw_pixel(px, py, 0x00000000);
+        }
+    }
+
+    // solid 1px border around the box
+    for (int px = ov_x; px < ov_x + ov_w; px++) {
+        vg_draw_pixel(px, ov_y,              0x00888888);
+        vg_draw_pixel(px, ov_y + ov_h - 1,  0x00888888);
+    }
+    for (int py = ov_y; py < ov_y + ov_h; py++) {
+        vg_draw_pixel(ov_x,              py, 0x00888888);
+        vg_draw_pixel(ov_x + ov_w - 1,  py, 0x00888888);
+    }
+
+    // "game over" text
+    const char *go_str = "game over";
+    uint16_t go_w = font_string_width(go_str);
+    font_draw_string((uint16_t)(cx - go_w / 2), (uint16_t)(cy - 35), go_str, 0x00FF4444);
+
+    // menu button
+    int btn_w = 110, btn_h = 28;
+    int btn_x = cx - btn_w / 2;
+    int btn_y = cy + 15;
+    for (int py = btn_y; py < btn_y + btn_h; py++)
+        for (int px = btn_x; px < btn_x + btn_w; px++)
+            vg_draw_pixel(px, py, 0x00444444);
+    for (int px = btn_x; px < btn_x + btn_w; px++) {
+        vg_draw_pixel(px, btn_y,              0x00AAAAAA);
+        vg_draw_pixel(px, btn_y + btn_h - 1, 0x00AAAAAA);
+    }
+    for (int py = btn_y; py < btn_y + btn_h; py++) {
+        vg_draw_pixel(btn_x,              py, 0x00AAAAAA);
+        vg_draw_pixel(btn_x + btn_w - 1, py, 0x00AAAAAA);
+    }
+    const char *btn_str = "menu";
+    uint16_t btn_tw = font_string_width(btn_str);
+    font_draw_string((uint16_t)(cx - btn_tw / 2), (uint16_t)(btn_y + (btn_h - 16) / 2), btn_str, 0x00FFFFFF);
+}
+
+bool game_gameover_click(void) {
+    int cx = (int) vg_get_x_res() / 2;
+    int cy = (int) vg_get_y_res() / 2;
+    int btn_w = 110, btn_h = 28;
+    int btn_x = cx - btn_w / 2;
+    int btn_y = cy + 15;
+    return cursor_x >= btn_x && cursor_x < btn_x + btn_w &&
+           cursor_y >= btn_y && cursor_y < btn_y + btn_h;
 }
 
 void game_update_cursor(int16_t dx, int16_t dy) {

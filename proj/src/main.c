@@ -88,11 +88,12 @@ int(proj_main_loop)(int argc, char* argv[]) {
               } else if (state == STATE_GAME) {
                 game_tick();
                 if (game_is_over()) {
-                  state = STATE_MENU;
-                  menu_reset();
+                  state = STATE_GAMEOVER;
                 } else {
                   game_draw();
                 }
+              } else if (state == STATE_GAMEOVER) {
+                game_draw_gameover();
               }
 
               vg_refresh();
@@ -137,6 +138,12 @@ int(proj_main_loop)(int argc, char* argv[]) {
                   state = STATE_MENU;
                   menu_reset();
                 }
+              } else if (state == STATE_GAMEOVER) {
+                // ESC from game over screen returns to menu
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_MENU;
+                  menu_reset();
+                }
               }
             }
           }
@@ -149,7 +156,12 @@ int(proj_main_loop)(int argc, char* argv[]) {
               parse_mouse_packet(&pp);
               static bool lb_prev = false;
               if (pp.lb && !lb_prev) {
-                game_handle_click();
+                if (state == STATE_GAME) {
+                  game_handle_click();
+                } else if (state == STATE_GAMEOVER && game_gameover_click()) {
+                  state = STATE_MENU;
+                  menu_reset();
+                }
               }
               lb_prev = pp.lb;
               game_update_cursor(pp.delta_x, pp.delta_y);
