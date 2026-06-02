@@ -3,7 +3,7 @@ PROG = proj
 
 # APENAS os ficheiros que estão fisicamente na pasta proj/src
 
-SRCS = main.c menu.c game.c sprite.c map.c enemy.c font.c tower.c instructions.c
+SRCS = main.c menu.c game.c sprite.c map.c enemy.c font.c tower.c instructions.c animated_sprite.c
 
 # Procurar os .c nas subpastas
 .PATH: menu game sprite map enemy font tower

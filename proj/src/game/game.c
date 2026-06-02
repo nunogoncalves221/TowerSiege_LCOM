@@ -1,5 +1,6 @@
 #include "game.h"
 #include "sprite.h"
+#include "animated_sprite.h"
 #include "video.h"
 #include "map.h"
 #include "enemy.h"
@@ -12,10 +13,22 @@
 
 #define MAX_ENEMIES 20 // ready for waves
 
-static sprite_t *hero_sprite = NULL;
+// define where the base is located on your specific map
+#define HERO_BASE_X 750
+#define HERO_BASE_Y 550
+
+typedef enum { HERO_IDLE, HERO_WALK, HERO_ATTACK } hero_state_t;
+
+static hero_state_t current_hero_state = HERO_IDLE;
+static AnimSprite *hero_idle = NULL;
+static AnimSprite *hero_walk = NULL;
+static AnimSprite *hero_attack = NULL;
+
+// hero position
 static int16_t hero_x = 0;
 static int16_t hero_y = 0;
 
+// cursor
 static sprite_t *cursor_sprite = NULL;
 static int16_t cursor_x = 0;
 static int16_t cursor_y = 0;
@@ -24,29 +37,45 @@ static int16_t cursor_y = 0;
 static enemy_t *enemies[MAX_ENEMIES];
 static int enemy_count = 0;
 
+// keyboard state (added spacebar for attacking)
 static bool key_w = false;
 static bool key_a = false;
 static bool key_s = false;
 static bool key_d = false;
+static bool key_space = false;
 
+// player economy
 static int player_gold = 500;
 
 void game_reset(void) {
     tower_init();
     map_init();
 
-    destroy_sprite(hero_sprite);
-    hero_sprite = create_sprite((xpm_map_t) hero);
-
+    // clean up old resources
+    destroy_animated_sprite(hero_idle);
+    destroy_animated_sprite(hero_walk);
+    destroy_animated_sprite(hero_attack);
     destroy_sprite(cursor_sprite);
+
+    // setup cursor
     cursor_sprite = create_sprite((xpm_map_t) cursor);
     cursor_x = vg_get_x_res() / 2;
     cursor_y = vg_get_y_res() / 2; // start cursor in center of screen
 
-    if (hero_sprite != NULL) {
-        hero_x = (int16_t)((vg_get_x_res() - hero_sprite->width)  / 2);
-        hero_y = (int16_t)((vg_get_y_res() - hero_sprite->height) / 2);
-    }
+    // setup animated hero ( replace with xpm later )
+    xpm_map_t idle_frames[] = { (xpm_map_t) hero }; 
+    xpm_map_t walk_frames[] = { (xpm_map_t) hero }; // add hero_walk_1, hero_walk_2, etc.
+    xpm_map_t atk_frames[]  = { (xpm_map_t) hero }; // add hero_atk_1, hero_atk_2, etc.
+
+    // create the animations (frames array, number of frames, ticks per frame)
+    hero_idle = create_animated_sprite(idle_frames, 1, 15);
+    hero_walk = create_animated_sprite(walk_frames, 1, 10);
+    hero_attack = create_animated_sprite(atk_frames, 1, 8);
+
+    // spawn hero at the base
+    hero_x = HERO_BASE_X;
+    hero_y = HERO_BASE_Y;
+    current_hero_state = HERO_IDLE;
 
     // clean up any remaining enemies from previous games
     for (int i = 0; i < enemy_count; i++) {
@@ -90,26 +119,66 @@ void game_handle_key(uint8_t scancode) {
 }
 
 void game_tick(void) {
-    if (hero_sprite == NULL) return;
+    if (hero_idle == NULL) return; // safety check
 
     // HERO MOVEMENT
     int16_t screen_w = (int16_t) vg_get_x_res();
     int16_t screen_h = (int16_t) vg_get_y_res();
 
-    if (key_w) hero_y -= HERO_SPEED;
-    if (key_s) hero_y += HERO_SPEED;
-    if (key_a) hero_x -= HERO_SPEED;
-    if (key_d) hero_x += HERO_SPEED;
+    // --- HERO STATE MACHINE & MOVEMENT ---
+    bool is_moving = false;
 
-    // clamp to screen bounds
+    // trigger attack if space is pressed and we aren't already attacking
+    if (key_space && current_hero_state != HERO_ATTACK) {
+        current_hero_state = HERO_ATTACK;
+        hero_attack->cur_fig = 0; // reset animation to frame 0
+        hero_attack->cur_aspeed = hero_attack->aspeed;
+    }
+
+    if (current_hero_state == HERO_ATTACK) {
+        animate_sprite_once(hero_attack);
+        
+        // if attack animation finished
+        if (hero_attack->cur_fig == hero_attack->num_fig - 1) {
+            // check for hits (50 pixel range)
+            for (int i = 0; i < enemy_count; i++) {
+                if (enemies[i] != NULL && enemies[i]->active) {
+                    int dx = enemies[i]->x - hero_x;
+                    int dy = enemies[i]->y - hero_y;
+                    if ((dx * dx) + (dy * dy) < (50 * 50)) {
+                        enemies[i]->hp -= 20; // deal damage
+                    }
+                }
+            }
+            // revert state
+            current_hero_state = HERO_IDLE; 
+        }
+    } else {
+        // normal movement
+        if (key_w) { hero_y -= HERO_SPEED; is_moving = true; }
+        if (key_s) { hero_y += HERO_SPEED; is_moving = true; }
+        if (key_a) { hero_x -= HERO_SPEED; is_moving = true; }
+        if (key_d) { hero_x += HERO_SPEED; is_moving = true; }
+
+        if (is_moving) {
+            current_hero_state = HERO_WALK;
+            animate_sprite_loop(hero_walk);
+        } else {
+            current_hero_state = HERO_IDLE;
+            animate_sprite_loop(hero_idle);
+        }
+    }
+
+    // clamp hero to screen bounds (using idle sprite dimensions)
+    int16_t hw = (int16_t) hero_idle->sp->width;
+    int16_t hh = (int16_t) hero_idle->sp->height;
+    
     if (hero_x < 0) hero_x = 0;
     if (hero_y < 0) hero_y = 0;
-    if (hero_x > screen_w - (int16_t) hero_sprite->width)
-        hero_x = screen_w - (int16_t) hero_sprite->width;
-    if (hero_y > screen_h - (int16_t) hero_sprite->height)
-        hero_y = screen_h - (int16_t) hero_sprite->height;
+    if (hero_x > screen_w - hw) hero_x = screen_w - hw;
+    if (hero_y > screen_h - hh) hero_y = screen_h - hh;
 
-    // ENEMY MANAGER
+    // ENEMY MOVEMENT
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
             enemy_update(enemies[i]);
@@ -154,8 +223,15 @@ void game_draw(void) {
         }
     }
 
-    if (hero_sprite != NULL) {
-        draw_sprite(hero_sprite, hero_x, hero_y);
+    // draw the hero based on current state
+    if (current_hero_state == HERO_ATTACK && hero_attack != NULL) {
+        draw_animated_sprite(hero_attack, hero_x, hero_y);
+    } 
+    else if (current_hero_state == HERO_WALK && hero_walk != NULL) {
+        draw_animated_sprite(hero_walk, hero_x, hero_y);
+    } 
+    else if (hero_idle != NULL) {
+        draw_animated_sprite(hero_idle, hero_x, hero_y);
     }
 
     if (cursor_sprite != NULL) {
