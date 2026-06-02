@@ -11,7 +11,7 @@
 #include "../assets/cursor.xpm"
 
 #define MAX_ENEMIES 20
-#define MAX_LIVES   2
+#define MAX_LIVES   20
 #define WAVE_DELAY  150  // frames between waves
 
 static sprite_t *hero_sprite = NULL;
