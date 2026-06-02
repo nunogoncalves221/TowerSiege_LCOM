@@ -10,6 +10,12 @@
 #include "../assets/hero.xpm"
 #include "../assets/orc.xpm"
 #include "../assets/cursor.xpm"
+#include "../assets/hero_walk_1.xpm"
+#include "../assets/hero_walk_2.xpm"
+#include "../assets/hero_walk_3.xpm"
+#include "../assets/hero_atk_1.xpm"
+#include "../assets/hero_atk_2.xpm"
+#include "../assets/hero_atk_3.xpm"
 
 #define MAX_ENEMIES 20 // ready for waves
 
@@ -62,15 +68,15 @@ void game_reset(void) {
     cursor_x = vg_get_x_res() / 2;
     cursor_y = vg_get_y_res() / 2; // start cursor in center of screen
 
-    // setup animated hero ( replace with xpm later )
-    xpm_map_t idle_frames[] = { (xpm_map_t) hero }; 
-    xpm_map_t walk_frames[] = { (xpm_map_t) hero }; // add hero_walk_1, hero_walk_2, etc.
-    xpm_map_t atk_frames[]  = { (xpm_map_t) hero }; // add hero_atk_1, hero_atk_2, etc.
+    // setup animated hero ( replace xpm later )
+    xpm_map_t idle_frames[] = { (xpm_map_t) hero }; // using base for idle
+    xpm_map_t walk_frames[] = { (xpm_map_t) hero_walk_1, (xpm_map_t) hero_walk_2, (xpm_map_t) hero_walk_3 };
+    xpm_map_t atk_frames[]  = { (xpm_map_t) hero_atk_1, (xpm_map_t) hero_atk_2, (xpm_map_t) hero_atk_3 };
 
     // create the animations (frames array, number of frames, ticks per frame)
     hero_idle = create_animated_sprite(idle_frames, 1, 15);
-    hero_walk = create_animated_sprite(walk_frames, 1, 10);
-    hero_attack = create_animated_sprite(atk_frames, 1, 8);
+    hero_walk = create_animated_sprite(walk_frames, 3, 10);
+    hero_attack = create_animated_sprite(atk_frames, 3, 8);
 
     // spawn hero at the base
     hero_x = HERO_BASE_X;
@@ -121,6 +127,8 @@ void game_handle_key(uint8_t scancode) {
 void game_tick(void) {
     if (hero_idle == NULL) return; // safety check
 
+    printf("X: %d, Y: %d\n", hero_x, hero_y);
+
     // HERO MOVEMENT
     int16_t screen_w = (int16_t) vg_get_x_res();
     int16_t screen_h = (int16_t) vg_get_y_res();
@@ -131,15 +139,14 @@ void game_tick(void) {
     // trigger attack if space is pressed and we aren't already attacking
     if (key_space && current_hero_state != HERO_ATTACK) {
         current_hero_state = HERO_ATTACK;
-        hero_attack->cur_fig = 0; // reset animation to frame 0
-        hero_attack->cur_aspeed = hero_attack->aspeed;
+        reset_animated_sprite(hero_attack);
     }
 
     if (current_hero_state == HERO_ATTACK) {
         animate_sprite_once(hero_attack);
         
         // if attack animation finished
-        if (hero_attack->cur_fig == hero_attack->num_fig - 1) {
+        if (animated_sprite_finished(hero_attack)) {
             // check for hits (50 pixel range)
             for (int i = 0; i < enemy_count; i++) {
                 if (enemies[i] != NULL && enemies[i]->active) {
