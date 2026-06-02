@@ -31,6 +31,11 @@ void enemy_destroy(enemy_t *e) {
 void enemy_update(enemy_t *e) {
     if (e == NULL || !e->active || e->sp == NULL) return;
 
+    if (e->hp <= 0) {
+        e->active = false;
+        return; 
+    }
+
     // calculate the exact center point of the enemy sprite
     int16_t center_x = e->x + (int16_t)(e->sp->width / 2);
     int16_t center_y = e->y + (int16_t)(e->sp->height / 2);

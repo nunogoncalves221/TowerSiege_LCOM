@@ -1,7 +1,10 @@
 #include "tower.h"
 #include "sprite.h"
+#include "../enemy/enemy.h"
 #include "../assets/archer_1.xpm"
 #include "../assets/mage_1.xpm"
+#include "../assets/archer_2.xpm"
+#include "../assets/mage_2.xpm"
 
 #define MAX_SLOTS  11
 #define MAX_TOWERS 11
@@ -14,32 +17,73 @@ static int tower_count = 0;
 
 static tower_type_t selected_tower_type = TOWER_NONE;
 
+// sprites for both levels
 static sprite_t *archer_sprite = NULL;
 static sprite_t *mage_sprite   = NULL;
+static sprite_t *archer_2_sprite = NULL;
+static sprite_t *mage_2_sprite   = NULL;
 
 void tower_init(void) {
     slot_count  = 0;
     tower_count = 0;
     selected_tower_type = TOWER_NONE;
 
-    if (archer_sprite == NULL)
-        archer_sprite = create_sprite((xpm_map_t) archer_1);
-    if (mage_sprite == NULL)
-        mage_sprite = create_sprite((xpm_map_t) mage_1);
+    // load all sprites into memory safely
+    if (archer_sprite == NULL) archer_sprite = create_sprite((xpm_map_t) archer_1);
+    if (mage_sprite == NULL)   mage_sprite = create_sprite((xpm_map_t) mage_1);
+    if (archer_2_sprite == NULL) archer_2_sprite = create_sprite((xpm_map_t) archer_2);
+    if (mage_2_sprite == NULL)   mage_2_sprite = create_sprite((xpm_map_t) mage_2);
 
     for (int r = 0; r < MAP_ROWS; r++) {
         for (int c = 0; c < MAP_COLS; c++) {
             if (map_get_tile(c, r) != TILE_BLANK) continue;
-            if (r == 8 && (c == 5 || c == 6)) continue;
+            if (r == 8 && (c == 5 || c == 6)) continue; // ignore ui area
             slots[slot_count++] = (tower_slot_t){c, r, NULL};
         }
     }
 }
 
 void tower_handle_click(int col, int row, int *gold) {
+    // check ui selection (original team code)
     if (row == 8 && col == 5) { selected_tower_type = TOWER_ARCHER; return; }
     if (row == 8 && col == 6) { selected_tower_type = TOWER_MAGE;   return; }
 
+    // upgrade logic: check if we clicked an existing tower to upgrade it
+    for (int i = 0; i < slot_count; i++) {
+        if (slots[i].col == col && slots[i].row == row && slots[i].tower != NULL) {
+            tower_t *t = slots[i].tower;
+            
+            // only upgrade if it is currently level 1
+            if (t->level == 1) {
+                int upg_cost = (t->type == TOWER_ARCHER) ? TOWER_ARCHER_UPG_COST : TOWER_MAGE_UPG_COST;
+                
+                // check if we have enough gold
+                if (*gold >= upg_cost) {
+                    *gold -= upg_cost;
+                    t->level = 2;
+                    
+                    // apply stats and new sprite
+                    if (t->type == TOWER_ARCHER) {
+                        t->sp = archer_2_sprite;
+                        t->damage += 15;
+                        t->range += 50;
+                        t->attack_cooldown -= 10;
+                    } else {
+                        t->sp = mage_2_sprite;
+                        t->damage += 35;
+                        t->range += 30;
+                    }
+                    
+                    // tell the game to redraw the map cache so the new sprite appears
+                    map_mark_dirty(); 
+                }
+            }
+            selected_tower_type = TOWER_NONE;
+            return;
+        }
+    }
+
+    // build logic 
     if (selected_tower_type != TOWER_NONE && tower_count < MAX_TOWERS) {
         int cost = (selected_tower_type == TOWER_ARCHER) ? TOWER_ARCHER_COST : TOWER_MAGE_COST;
         if (*gold < cost) { selected_tower_type = TOWER_NONE; return; }
@@ -53,11 +97,13 @@ void tower_handle_click(int col, int row, int *gold) {
                 t->col   = col;
                 t->row   = row;
                 t->sp    = (selected_tower_type == TOWER_ARCHER) ? archer_sprite : mage_sprite;
+                
                 if (selected_tower_type == TOWER_ARCHER) {
                     t->range = 200; t->damage = 10; t->attack_cooldown = 30;
                 } else {
                     t->range = 150; t->damage = 25; t->attack_cooldown = 60;
                 }
+                
                 t->attack_timer = 0;
                 slots[i].tower = t;
                 selected_tower_type = TOWER_NONE;
@@ -70,7 +116,52 @@ void tower_handle_click(int col, int row, int *gold) {
     selected_tower_type = TOWER_NONE;
 }
 
-void tower_tick(void) {}
+void tower_tick(enemy_t **enemies, int enemy_count) {
+    // scan all active towers and make them shoot
+    for (int i = 0; i < tower_count; i++) {
+        tower_t *t = &towers[i];
+
+        // if the tower is still reloading, just count down and move to the next one
+        if (t->attack_timer > 0) {
+            t->attack_timer--;
+            continue; 
+        }
+
+        // calculate the exact center pixel of the tower for accurate measuring
+        int tower_x = t->col * TILE_SIZE + (TILE_SIZE / 2);
+        int tower_y = t->row * TILE_SIZE + (TILE_SIZE / 2);
+
+        enemy_t *target = NULL;
+        
+        // use long to prevent overflow with large ranges on 16-bit int systems
+        long min_dist_sq = (long)t->range * t->range;
+
+        // find the closest active enemy within range
+        for (int j = 0; j < enemy_count; j++) {
+            enemy_t *e = enemies[j];
+            if (e == NULL || !e->active) continue;
+
+            int enemy_x = e->x + (e->sp->width / 2);
+            int enemy_y = e->y + (e->sp->height / 2);
+
+            int dx = enemy_x - tower_x;
+            int dy = enemy_y - tower_y;
+            long dist_sq = (long)dx * dx + (long)dy * dy;
+
+            // lock onto the first enemy found that is closest
+            if (dist_sq < min_dist_sq) {
+                min_dist_sq = dist_sq;
+                target = e;
+            }
+        }
+
+        // if we find a target, fire
+        if (target != NULL) {
+            target->hp -= t->damage;
+            t->attack_timer = t->attack_cooldown; // reset the reload timer
+        }
+    }
+}
 
 void tower_draw(void) {
     for (int i = 0; i < tower_count; i++) {

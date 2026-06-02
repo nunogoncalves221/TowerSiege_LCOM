@@ -136,7 +136,8 @@ void game_tick(void) {
             }
         }
     }
-    tower_tick();
+
+    tower_tick(enemies, enemy_count);
 }
 
 void game_draw(void) {
