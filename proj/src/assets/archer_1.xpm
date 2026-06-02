@@ -63,7 +63,7 @@ static char *archer_1[] = {
 "C	c #E5E5E7",
 "X	c #38272B",
 "Z	c #434655",
-"A	c #000000",
+"A	c None",
 "S	c #6D7885",
 "D	c #372E37",
 /* pixels */
