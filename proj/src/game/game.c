@@ -164,6 +164,27 @@ void game_tick(void) {
         }
     }
 
+    // WAVE MANAGER
+    if (enemies_to_spawn > 0) {
+        // still releasing enemies for this wave
+        spawn_timer--;
+        if (spawn_timer <= 0 && enemy_count < MAX_ENEMIES) {
+            enemy_t *e = enemy_create((xpm_map_t) orc, enemy_start_x, enemy_start_y, 100, 2);
+            if (e != NULL) {
+                enemies[enemy_count++] = e;
+                enemies_to_spawn--;
+                int interval = 90 - (wave_number - 1) * 5;
+                spawn_timer = interval < 45 ? 45 : interval;
+            }
+        }
+    } else if (enemy_count == 0) {
+        // all enemies dealt with — count up to the inter-wave pause
+        wave_delay++;
+        if (wave_delay >= WAVE_DELAY) {
+            start_wave(wave_number + 1);
+        }
+    }
+
     tower_tick(enemies, enemy_count);
 }
 
