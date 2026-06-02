@@ -147,16 +147,29 @@ void game_tick(void) {
         
         // if attack animation finished
         if (animated_sprite_finished(hero_attack)) {
-            // check for hits (50 pixel range)
+            
+            // calculate the exact center of our hero
+            int h_center_x = hero_x + (hero_attack->sp->width / 2);
+            int h_center_y = hero_y + (hero_attack->sp->height / 2);
+
+            // scan all enemies
             for (int i = 0; i < enemy_count; i++) {
                 if (enemies[i] != NULL && enemies[i]->active) {
-                    int dx = enemies[i]->x - hero_x;
-                    int dy = enemies[i]->y - hero_y;
-                    if ((dx * dx) + (dy * dy) < (50 * 50)) {
-                        enemies[i]->hp -= 20; // deal damage
+                    
+                    // calculate the exact center of this enemy
+                    int e_center_x = enemies[i]->x + (enemies[i]->sp->width / 2);
+                    int e_center_y = enemies[i]->y + (enemies[i]->sp->height / 2);
+                    
+                    int dx = e_center_x - h_center_x;
+                    int dy = e_center_y - h_center_y;
+                    
+                    // check distance ( range to 80 pixels )
+                    if ((dx * dx) + (dy * dy) <= (80 * 80)) {
+                        enemies[i]->hp -= 20; // smash
                     }
                 }
             }
+
             // revert state
             current_hero_state = HERO_IDLE; 
         }
