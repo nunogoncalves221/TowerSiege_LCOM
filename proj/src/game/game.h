@@ -20,6 +20,10 @@
 #define KEY_DOWN_MAKE  0x50
 #define KEY_ENTER_MAKE 0x1C
 
+// spacebar for attacking
+#define KEY_F_MAKE 0x21
+#define KEY_F_BREAK 0xA1
+
 void game_reset(void);
 void game_tick(void);
 void game_draw(void);

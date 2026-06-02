@@ -138,6 +138,11 @@ void game_handle_key(uint8_t scancode) {
         case KEY_S_BREAK: key_s = false; break;
         case KEY_D_MAKE:  key_d = true;  break;
         case KEY_D_BREAK: key_d = false; break;
+
+        // spacebar for attacking
+        case KEY_F_MAKE: key_space = true; break;
+        case KEY_F_BREAK: key_space = false; break; 
+
         default: break;
     }
 }
@@ -145,21 +150,33 @@ void game_handle_key(uint8_t scancode) {
 void game_tick(void) {
     if (hero_idle == NULL) return; // safety check
 
-    printf("X: %d, Y: %d\n", hero_x, hero_y);
-
-    // HERO MOVEMENT
     int16_t screen_w = (int16_t) vg_get_x_res();
     int16_t screen_h = (int16_t) vg_get_y_res();
 
-    // --- HERO STATE MACHINE & MOVEMENT ---
+    // --- HERO MOVEMENT ---
     bool is_moving = false;
 
+    if (key_w) { hero_y -= HERO_SPEED; is_moving = true; }
+    if (key_s) { hero_y += HERO_SPEED; is_moving = true; }
+    if (key_a) { hero_x -= HERO_SPEED; is_moving = true; }
+    if (key_d) { hero_x += HERO_SPEED; is_moving = true; }
+
+    // clamp to screen bounds
+    int16_t hw = (int16_t) hero_idle->sp->width;
+    int16_t hh = (int16_t) hero_idle->sp->height;
+    if (hero_x < 0) hero_x = 0;
+    if (hero_y < 0) hero_y = 0;
+    if (hero_x > screen_w - hw) hero_x = screen_w - hw;
+    if (hero_y > screen_h - hh) hero_y = screen_h - hh;
+
+    // --- HERO STATE MACHINE & ATTACKS ---
     // trigger attack if space is pressed and we aren't already attacking
     if (key_space && current_hero_state != HERO_ATTACK) {
         current_hero_state = HERO_ATTACK;
         reset_animated_sprite(hero_attack);
     }
 
+    //process the current state
     if (current_hero_state == HERO_ATTACK) {
         animate_sprite_once(hero_attack);
         
@@ -181,23 +198,23 @@ void game_tick(void) {
                     int dx = e_center_x - h_center_x;
                     int dy = e_center_y - h_center_y;
                     
-                    // check distance ( range to 80 pixels )
-                    if ((dx * dx) + (dy * dy) <= (80 * 80)) {
-                        enemies[i]->hp -= 20; // smash
+                    // check distance ( range to 100 pixels )
+                    if ((dx * dx) + (dy * dy) <= (100 * 100)) {
+                        enemies[i]->hp -= 50; // smash
+
+                        if (enemies[i]->hp <= 0) {
+                            enemies[i]->active = false;
+                            player_gold += 25; // reward the player in gold for the kill
+                        }
                     }
                 }
             }
 
-            // revert state
-            current_hero_state = HERO_IDLE; 
+            // revert state back depending on whether the player is currently walking
+            current_hero_state = is_moving ? HERO_WALK : HERO_IDLE;
         }
     } else {
-        // normal movement
-        if (key_w) { hero_y -= HERO_SPEED; is_moving = true; }
-        if (key_s) { hero_y += HERO_SPEED; is_moving = true; }
-        if (key_a) { hero_x -= HERO_SPEED; is_moving = true; }
-        if (key_d) { hero_x += HERO_SPEED; is_moving = true; }
-
+        // only update walk/idle animations if we are NOT in the middle of an attack
         if (is_moving) {
             current_hero_state = HERO_WALK;
             animate_sprite_loop(hero_walk);
@@ -207,16 +224,7 @@ void game_tick(void) {
         }
     }
 
-    // clamp hero to screen bounds (using idle sprite dimensions)
-    int16_t hw = (int16_t) hero_idle->sp->width;
-    int16_t hh = (int16_t) hero_idle->sp->height;
-    
-    if (hero_x < 0) hero_x = 0;
-    if (hero_y < 0) hero_y = 0;
-    if (hero_x > screen_w - hw) hero_x = screen_w - hw;
-    if (hero_y > screen_h - hh) hero_y = screen_h - hh;
-
-    // ENEMY MOVEMENT
+     // --- ENEMY MOVEMENT ---
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
             enemy_update(enemies[i]);
