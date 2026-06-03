@@ -6,6 +6,7 @@
 #include "enemy.h"
 #include "tower.h"
 #include "font.h"
+#include "rtc.h"
 #include <stdio.h>
 #include "../assets/hero.xpm"
 #include "../assets/orc.xpm"
@@ -32,6 +33,15 @@
 #define HERO_HP_COLOR_GOOD 0x0000FF00 // green
 #define HERO_HP_COLOR_BG   0x00FF0000 // red
 #define HERO_HP_COLOR_BORDER 0x00000000 // black
+
+// rtc ui constants
+#define RTC_STR_MAX_LEN 64
+#define RTC_UI_PAD_X 10
+#define RTC_UI_PAD_Y 30
+#define RTC_TEXT_COLOR 0x00FFFFFF // white text
+#define RTC_BG_COLOR   0x00000000 // black background
+#define RTC_FONT_H     14         // standard height of our pixel font
+#define RTC_BG_PAD     4          // padding around the text box 
 
 // hero mortality stats
 #define HERO_MAX_HP 100
@@ -85,6 +95,9 @@ static int wave_number = 0;
 static int enemies_to_spawn = 0;
 static int spawn_timer = 0;
 static int wave_delay = 0;
+
+// rtc
+static rtc_date start_time;
 
 // gold getter
 int get_player_gold() {
@@ -159,6 +172,9 @@ void game_reset(void) {
     game_over = false;
     start_wave(1);
     key_w = key_a = key_s = key_d = false;
+
+    // read the exact time the match started
+    rtc_read_date(&start_time);
 }
 
 void game_handle_key(uint8_t scancode) {
@@ -443,6 +459,32 @@ void game_draw(void) {
     snprintf(gold_str, sizeof(gold_str), "gold %d", player_gold);
     uint16_t tw = font_string_width(gold_str);
     font_draw_string((uint16_t)(vg_get_x_res() - tw - 10), 10, gold_str, 0x00FFD700);
+
+    // rtc clock — bottom-left (showing match start time for testing)
+    // format the time string with spaces
+    char time_str[RTC_STR_MAX_LEN];
+    snprintf(time_str, sizeof(time_str), "%02d %02d 20%02d   %02d %02d", 
+             start_time.day, start_time.month, start_time.year, 
+             start_time.hours, start_time.minutes);
+             
+    uint16_t time_w = font_string_width(time_str);
+    
+    // figure out bottom-left placement
+    uint16_t rtc_x = RTC_UI_PAD_X;
+    uint16_t rtc_y = (uint16_t)(vg_get_y_res() - RTC_UI_PAD_Y);
+    
+    // draw the dark background box first
+    for (int py = rtc_y - RTC_BG_PAD; py < rtc_y + RTC_FONT_H + RTC_BG_PAD; py++) {
+        for (int px = rtc_x - RTC_BG_PAD; px < rtc_x + time_w + RTC_BG_PAD; px++) {
+            // always bound check to avoid screen overflow crashes
+            if (px >= 0 && px < (int)vg_get_x_res() && py >= 0 && py < (int)vg_get_y_res()) {
+                vg_draw_pixel(px, py, RTC_BG_COLOR); 
+            }
+        }
+    }
+    
+    // slap the text on top of the background
+    font_draw_string(rtc_x, rtc_y, time_str, RTC_TEXT_COLOR);
 }
 
 bool game_is_over(void) {
