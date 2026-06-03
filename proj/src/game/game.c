@@ -25,6 +25,13 @@
 #define GO_COLOR_SELECTED 0x00E94560
 #define GO_COLOR_NORMAL   0x00B0B0C0
 
+// hero mortality stats
+#define HERO_MAX_HP 100
+#define HERO_RESPAWN_TICKS 180 // 3 seconds 
+
+static int hero_hp = HERO_MAX_HP;
+static int hero_respawn_timer = 0; // if > 0, the hero is currently dead
+
 typedef enum { HERO_IDLE, HERO_WALK, HERO_ATTACK } hero_state_t;
 
 static hero_state_t current_hero_state = HERO_IDLE;
@@ -120,6 +127,8 @@ void game_reset(void) {
     // spawn hero at the base
     hero_x = HERO_BASE_X;
     hero_y = HERO_BASE_Y;
+    hero_hp = HERO_MAX_HP;
+    hero_respawn_timer = 0;
     current_hero_state = HERO_IDLE;
 
     // clean up any remaining enemies from previous games
@@ -244,6 +253,34 @@ void game_tick(void) {
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
             enemy_update(enemies[i]);
+
+            // --- HERO COLLISION DAMAGE ---
+            // only check collisions if the hero is actually alive
+            if (hero_respawn_timer == 0 && enemies[i]->active) {
+                int h_center_x = hero_x + (hero_idle->sp->width / 2);
+                int h_center_y = hero_y + (hero_idle->sp->height / 2);
+                int e_center_x = enemies[i]->x + (enemies[i]->sp->width / 2);
+                int e_center_y = enemies[i]->y + (enemies[i]->sp->height / 2);
+                
+                int dx = e_center_x - h_center_x;
+                int dy = e_center_y - h_center_y;
+                
+                // if they are practically touching (e.g. 30 pixels distance)
+                if ((dx * dx) + (dy * dy) <= (30 * 30)) {
+                    // hero takes a beating (1 damage per frame is 60 dmg per second)
+                    hero_hp -= 1; 
+                    
+                    if (hero_hp <= 0) {
+                        hero_hp = 0;
+                        hero_respawn_timer = HERO_RESPAWN_TICKS; // start the death timer
+                        add_player_gold(-50); // penalize the player for dying
+                        
+                        // throw the hero off-screen or back to base immediately so he disappears
+                        hero_x = HERO_BASE_X;
+                        hero_y = HERO_BASE_Y;
+                    }
+                }
+            }
 
             // enemy escaped through the right edge — costs a life
             if (enemies[i]->x > screen_w) {
