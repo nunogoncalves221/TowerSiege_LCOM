@@ -69,10 +69,14 @@ void tower_handle_click(int col, int row) {
                         t->damage += TOWER_ARCHER_UPG_DMG_INC;
                         t->range += TOWER_ARCHER_UPG_RANGE_INC;
                         t->attack_cooldown -= TOWER_ARCHER_UPG_CD_DEC;
+
+                        t->range_sq = t->range * t->range; // update the cache
                     } else {
                         t->sp = mage_2_sprite;
                         t->damage += TOWER_MAGE_UPG_DMG_INC;
                         t->range += TOWER_MAGE_UPG_RANGE_INC;
+                        
+                        t->range_sq = t->range * t->range; // update the cache
                     }
                     
                     // tell the game to redraw the map cache so the new sprite appears
@@ -116,6 +120,9 @@ void tower_handle_click(int col, int row) {
                     t->attack_cooldown = TOWER_MAGE_BASE_COOLDOWN;
                 }
                 
+                // pre-calculate the squared range once right after building
+                t->range_sq = t->range * t->range;
+
                 t->attack_timer = 0;
                 slots[i].tower = t;
                 selected_tower_type = TOWER_NONE;
@@ -146,7 +153,8 @@ void tower_tick(enemy_t **enemies, int enemy_count) {
         enemy_t *target = NULL;
         
         // use long to prevent overflow with large ranges on 16-bit int systems
-        long min_dist_sq = (long)t->range * t->range;
+        // just read the cached value
+        long min_dist_sq = (long)t->range_sq;
 
         // find the closest active enemy within range
         for (int j = 0; j < enemy_count; j++) {

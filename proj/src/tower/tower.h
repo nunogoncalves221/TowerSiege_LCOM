@@ -47,6 +47,7 @@ typedef struct {
     sprite_t *sp;        // sprite for the current level
     int col, row;        // grid position (column, row)
     int range;           // attack range in pixels
+    uint32_t range_sq;   // cached squared range to save CPU cycles
     int damage;          // damage per shot
     int attack_cooldown; // frames between shots (cooldown)
     int attack_timer;    // countdown timer for the next shot
