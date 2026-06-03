@@ -15,13 +15,6 @@
 #include "../assets/orc.xpm"
 #include "../assets/cursor.xpm"
 
-#define GO_ITEM_GAP  32   // 16px text + 16px spacing, same rhythm as the menu
-#define GO_OPTS_Y    0    // options start at screen centre (added to cy at runtime)
-#define GO_DOT_SIZE  6
-#define GO_DOT_PAD   14   // px between dot right edge and text left edge
-
-#define GO_COLOR_SELECTED 0x00E94560
-#define GO_COLOR_NORMAL   0x00B0B0C0
 
 // rtc ui constants
 #define RTC_STR_MAX_LEN 64
@@ -74,9 +67,6 @@ static int player_gold = 10000;
 static int player_lives = MAX_LIVES;
 static int player_score = 0;
 static bool game_over = false;
-static int go_selected = 0; // 0=retry, 1=menu
-
-static const char *go_labels[2] = { "retry", "menu" };
 
 // cached spawn position calculated once from sprite dimensions
 static int16_t enemy_start_x = 0;
@@ -188,7 +178,6 @@ void game_tick(void) {
                 if (player_lives <= 0) {
                     player_lives = 0;
                     game_over = true;
-                    go_selected = 0;
                 }
             }
             // safety: deactivate if out of bounds in any other direction
@@ -316,74 +305,12 @@ bool game_is_over(void) {
     return game_over;
 }
 
-void game_draw_gameover(void) {
-    uint16_t sw = (uint16_t) vg_get_x_res();
-    int cx = (int) sw / 2;
-    int cy = (int) vg_get_y_res() / 2;
-
-    // "game over" at 3x scale with drop shadow
-    const char *go_str = "game over";
-    uint16_t go_w = font_string_width_scaled(go_str, 3);
-    uint16_t go_x = (uint16_t)(cx - go_w / 2);
-    uint16_t go_y = (uint16_t)(cy - 100);
-    font_draw_string_scaled(go_x + 3, go_y + 3, go_str, 0x00660000, 3);
-    font_draw_string_scaled(go_x,     go_y,     go_str, 0x00FF3333, 3);
-
-    // final score
-    char score_str[32];
-    snprintf(score_str, sizeof(score_str), "score %d", player_score);
-    uint16_t sc_w = font_string_width(score_str);
-    font_draw_string((uint16_t)(cx - sc_w / 2), (uint16_t)(cy - 42), score_str, 0x00FFFFFF);
-
-    // vertical option list — same style as the main menu
-    for (int i = 0; i < 2; i++) {
-        uint16_t iw    = font_string_width(go_labels[i]);
-        uint16_t ix    = (uint16_t)((sw - iw) / 2);
-        uint16_t iy    = (uint16_t)(cy + i * GO_ITEM_GAP);
-        uint32_t color = (i == go_selected) ? GO_COLOR_SELECTED : GO_COLOR_NORMAL;
-
-        if (i == go_selected) {
-            uint16_t dot_x = ix - GO_DOT_PAD - GO_DOT_SIZE;
-            uint16_t dot_y = (uint16_t)(iy + 8 - GO_DOT_SIZE / 2);
-            for (int dy = 0; dy < GO_DOT_SIZE; dy++)
-                for (int dx = 0; dx < GO_DOT_SIZE; dx++)
-                    vg_draw_pixel(dot_x + dx, dot_y + dy, GO_COLOR_SELECTED);
-        }
-
-        font_draw_string(ix, iy, go_labels[i], color);
-    }
+int game_get_score(void) {
+    return player_score;
 }
 
-int game_gameover_click(void) {
-    int cy = (int) vg_get_y_res() / 2;
-    for (int i = 0; i < 2; i++) {
-        int iy = cy + i * GO_ITEM_GAP;
-        if (cursor_y >= iy - 4 && cursor_y < iy + 20)
-            return i + 1; // 1=retry, 2=menu
-    }
-    return 0;
-}
-
-bool game_gameover_handle_key(uint8_t sc) {
-    switch (sc) {
-        case KEY_UP_MAKE:
-        case KEY_W_MAKE:
-            if (go_selected > 0) go_selected--;
-            break;
-        case KEY_DOWN_MAKE:
-        case KEY_S_MAKE:
-            if (go_selected < 1) go_selected++;
-            break;
-        case KEY_ENTER_MAKE:
-            return true;
-        default:
-            break;
-    }
-    return false;
-}
-
-int game_gameover_get_selected(void) {
-    return go_selected;
+int16_t game_get_cursor_y(void) {
+    return cursor_y;
 }
 
 void game_update_cursor(int16_t dx, int16_t dy) {

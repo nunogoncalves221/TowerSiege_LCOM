@@ -54,11 +54,9 @@ void game_handle_key(uint8_t scancode);
 void game_update_cursor(int16_t dx, int16_t dy);
 void game_handle_click(void);
 
-// game over screen
-void game_draw_gameover(void);
-int  game_gameover_click(void);              // handles mouse clicks on the game over screen (1=retry, 2=menu)
-bool game_gameover_handle_key(uint8_t sc);  // handles key presses on the game over screen (true on enter)
-int  game_gameover_get_selected(void);       // gets the currently selected game over option (0=retry, 1=menu)
+// score and cursor accessors (used by gameovermenu)
+int    game_get_score(void);
+int16_t game_get_cursor_y(void);
 
 // gold
 int get_player_gold();
