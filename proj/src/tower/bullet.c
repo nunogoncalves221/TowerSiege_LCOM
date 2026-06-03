@@ -79,7 +79,7 @@ void bullet_tick(void) {
             bullets[i].target->hp -= bullets[i].damage;
             if (bullets[i].target->hp <= 0) {
                 bullets[i].target->active = false;
-                add_player_gold(25);
+                add_player_gold(bullets[i].target->gold_value);
             }
             bullets[i].active = false;
             continue;

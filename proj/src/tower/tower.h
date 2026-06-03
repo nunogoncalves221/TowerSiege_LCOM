@@ -14,29 +14,29 @@ typedef enum { UI_NONE, UI_BUILD, UI_UPGRADE } ui_state_t;
 // --- constants ---
 
 // tower costs
-#define TOWER_ARCHER_COST 200
-#define TOWER_MAGE_COST   350
-#define TOWER_ARCHER_UPG_COST 150
+#define TOWER_ARCHER_COST 150
+#define TOWER_MAGE_COST   300
+#define TOWER_ARCHER_UPG_COST 100
 #define TOWER_MAGE_UPG_COST   250
 
-// archer tower stats (level 1)
+// archer tower stats (level 1) — base dmg/cd unchanged per user
 #define TOWER_ARCHER_BASE_DMG       10
 #define TOWER_ARCHER_BASE_RANGE     200
-#define TOWER_ARCHER_BASE_COOLDOWN  30
+#define TOWER_ARCHER_BASE_COOLDOWN  55
 
-// mage tower stats (level 1)
-#define TOWER_MAGE_BASE_DMG         25
-#define TOWER_MAGE_BASE_RANGE       150
+// mage tower stats (level 1) — significantly stronger, faster
+#define TOWER_MAGE_BASE_DMG         40
+#define TOWER_MAGE_BASE_RANGE       160
 #define TOWER_MAGE_BASE_COOLDOWN    60
 
 // archer tower upgrade (level 2)
-#define TOWER_ARCHER_UPG_DMG_INC    15
+#define TOWER_ARCHER_UPG_DMG_INC    10
 #define TOWER_ARCHER_UPG_RANGE_INC  50
-#define TOWER_ARCHER_UPG_CD_DEC     10
+#define TOWER_ARCHER_UPG_CD_DEC     8
 
 // mage tower upgrade (level 2)
 #define TOWER_MAGE_UPG_DMG_INC      35
-#define TOWER_MAGE_UPG_RANGE_INC    30
+#define TOWER_MAGE_UPG_RANGE_INC    40
 
 // --- data structures ---
 

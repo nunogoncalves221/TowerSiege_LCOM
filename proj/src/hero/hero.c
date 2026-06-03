@@ -15,7 +15,8 @@
 // hero mortality stats
 #define HERO_MAX_HP 100
 #define HERO_RESPAWN_TICKS 180 // 3 sec
-#define HERO_SPEED 4
+#define HERO_SPEED 3
+#define HERO_ATTACK_COOLDOWN 40 // ticks between attacks (~1.3s at 30fps)
 
 // hero hp bar visual constants
 #define HERO_HP_BAR_WIDTH 40
@@ -35,7 +36,8 @@ static AnimSprite *hero_attack = NULL;
 static int16_t hero_x = 0;
 static int16_t hero_y = 0;
 static int hero_hp = HERO_MAX_HP;
-static int hero_respawn_timer = 0; 
+static int hero_respawn_timer = 0;
+static int hero_attack_cd = 0;
 
 // internal input state
 static bool key_w = false, key_a = false, key_s = false, key_d = false, key_space = false;
@@ -96,8 +98,10 @@ void hero_tick(enemy_t **enemies, int enemy_count) {
         if (hero_x > screen_w - hw) hero_x = screen_w - hw;
         if (hero_y > screen_h - hh) hero_y = screen_h - hh;
 
-        // trigger attack if space is pressed and we aren't already swinging
-        if (key_space && current_hero_state != HERO_ATTACK) {
+        if (hero_attack_cd > 0) hero_attack_cd--;
+
+        // trigger attack if space is pressed, not already swinging, and cooldown elapsed
+        if (key_space && current_hero_state != HERO_ATTACK && hero_attack_cd == 0) {
             current_hero_state = HERO_ATTACK;
             reset_animated_sprite(hero_attack);
         }
@@ -118,14 +122,15 @@ void hero_tick(enemy_t **enemies, int enemy_count) {
                         
                         // smash within 100 pixels
                         if ((dx * dx) + (dy * dy) <= (100 * 100)) {
-                            enemies[i]->hp -= 50; 
+                            enemies[i]->hp -= 15;
                             if (enemies[i]->hp <= 0) {
                                 enemies[i]->active = false;
-                                add_player_gold(25); 
+                                add_player_gold(enemies[i]->gold_value);
                             }
                         }
                     }
                 }
+                hero_attack_cd = HERO_ATTACK_COOLDOWN;
                 current_hero_state = is_moving ? HERO_WALK : HERO_IDLE;
             }
         } else {
@@ -156,7 +161,6 @@ void hero_tick(enemy_t **enemies, int enemy_count) {
                 if (hero_hp <= 0) {
                     hero_hp = 0;
                     hero_respawn_timer = HERO_RESPAWN_TICKS;
-                    add_player_gold(-50); // penalty for dying
                     
                     // throw him back to base
                     hero_x = HERO_BASE_X;

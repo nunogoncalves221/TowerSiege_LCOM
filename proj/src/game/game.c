@@ -103,7 +103,7 @@ void game_reset(void) {
     cursor_x = vg_get_x_res() / 2;
     cursor_y = vg_get_y_res() / 2; // start cursor in center of screen
 
-    player_gold = 10000;
+    player_gold = 500;
     player_lives = MAX_LIVES;
     player_score = 0;
     game_over = false;

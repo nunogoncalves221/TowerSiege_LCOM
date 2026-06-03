@@ -20,7 +20,7 @@ static int16_t goblin_start_y = 0;
 static void start_wave(int wave) {
     wave_number = wave;
     // each wave has 1.2x more enemies than the previous
-    float g = 3.0f, o = 2.0f;
+    float g = 3.6f, o = 2.4f;
     for (int i = 1; i < wave; i++) {
         g *= 1.2f;
         o *= 1.2f;
@@ -32,19 +32,19 @@ static void start_wave(int wave) {
 }
 
 void wave_init(void) {
-    enemy_t *probe = enemy_create((xpm_map_t) orc, 0, 0, 100, 2);
+    enemy_t *probe = enemy_create((xpm_map_t) orc, 0, 0, 150, 2);
     if (probe != NULL) {
         orc_start_x = -(int16_t)probe->sp->width;
         orc_start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (int16_t)(probe->sp->height / 2));
         enemy_destroy(probe);
     }
-    probe = enemy_create((xpm_map_t) goblin, 0, 0, 50, 4);
+    probe = enemy_create((xpm_map_t) goblin, 0, 0, 60, 3);
     if (probe != NULL) {
         goblin_start_x = -(int16_t)probe->sp->width;
         goblin_start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (int16_t)(probe->sp->height / 2));
         enemy_destroy(probe);
     }
-    start_wave(2);
+    start_wave(1);
 }
 
 void wave_tick(enemy_t **enemies, int *enemy_count) {
@@ -55,11 +55,11 @@ void wave_tick(enemy_t **enemies, int *enemy_count) {
             // pick randomly from whichever types still remain
             int total = goblins_to_spawn + orcs_to_spawn;
             if (orcs_to_spawn > 0 && (goblins_to_spawn == 0 || rand() % total < orcs_to_spawn)) {
-                e = enemy_create((xpm_map_t) orc, orc_start_x, orc_start_y, 100, 2);
-                if (e != NULL) orcs_to_spawn--;
+                e = enemy_create((xpm_map_t) orc, orc_start_x, orc_start_y, 150, 2);
+                if (e != NULL) { e->gold_value = 30; orcs_to_spawn--; }
             } else {
-                e = enemy_create((xpm_map_t) goblin, goblin_start_x, goblin_start_y, 50, 4);
-                if (e != NULL) goblins_to_spawn--;
+                e = enemy_create((xpm_map_t) goblin, goblin_start_x, goblin_start_y, 60, 3);
+                if (e != NULL) { e->gold_value = 20; goblins_to_spawn--; }
             }
             if (e != NULL) {
                 enemies[(*enemy_count)++] = e;
