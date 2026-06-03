@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "game.h"
 #include "sprite.h"
 #include "animated_sprite.h"
@@ -5,9 +7,10 @@
 #include "map.h"
 #include "enemy.h"
 #include "tower.h"
+#include "bullet.h"
 #include "font.h"
 #include "rtc.h"
-#include <stdio.h>
+
 #include "../assets/hero.xpm"
 #include "../assets/orc.xpm"
 #include "../assets/cursor.xpm"
@@ -94,7 +97,7 @@ static bool key_d = false;
 static bool key_space = false;
 
 // player economy
-static int player_gold = 500;
+static int player_gold = 10000;
 static int player_lives = MAX_LIVES;
 static int player_score = 0;
 static bool game_over = false;
@@ -182,7 +185,7 @@ void game_reset(void) {
         enemy_destroy(probe);
     }
 
-    player_gold = 500;
+    player_gold = 10000;
     player_lives = MAX_LIVES;
     player_score = 0;
     game_over = false;
@@ -390,6 +393,7 @@ void game_tick(void) {
     }
 
     tower_tick(enemies, enemy_count);
+    bullet_tick();
 }
 
 void game_draw(void) {
@@ -406,6 +410,8 @@ void game_draw(void) {
             enemy_draw(enemies[i]);
         }
     }
+
+    bullet_draw();
 
     // draw the hero based on current state (only if alive)
     if (hero_respawn_timer == 0) {

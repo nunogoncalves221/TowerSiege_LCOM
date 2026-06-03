@@ -1,0 +1,19 @@
+/* XPM */
+static const char *bullet[] = {
+/* columns rows colors chars-per-pixel */
+"7 7 6 1 ",
+"  c #303030",
+". c #201E1E",
+"X c #505050",
+"o c #6D6C6D",
+"O c #979697",
+"+ c None",
+/* pixels */
+"+oXXXo+",
+"oOOXXXX",
+"XOoXXX ",
+"XXXXXX ",
+" XXXX .",
+"X    .X",
+"+X...X+"
+};

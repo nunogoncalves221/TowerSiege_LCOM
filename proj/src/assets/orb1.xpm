@@ -1,0 +1,22 @@
+/* XPM */
+static const char *orb1[] = {
+/* columns rows colors chars-per-pixel */
+"7 7 9 1 ",
+"  c #385CB8",
+". c #465FB3",
+"X c #013BCE",
+"o c #075EE6",
+"O c #129CFE",
+"+ c #30D3FC",
+"@ c #49EAFD",
+"# c #67B3F2",
+"$ c None",
+/* pixels */
+"$ ooo $",
+" #$@Oo ",
+"o$$@+OX",
+"o@@@+Oo",
+"XO++OOX",
+".oOOOX.",
+"$.XoX.$"
+};

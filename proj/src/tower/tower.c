@@ -1,4 +1,5 @@
 #include "tower.h"
+#include "bullet.h"
 #include "sprite.h"
 #include "game.h"
 #include "../enemy/enemy.h"
@@ -6,6 +7,9 @@
 #include "../assets/mage_1.xpm"
 #include "../assets/archer_2.xpm"
 #include "../assets/mage_2.xpm"
+#include "../assets/bullet.xpm"
+#include "../assets/orb1.xpm"
+#include "../assets/orb2.xpm"
 
 #define MAX_SLOTS  11
 #define MAX_TOWERS 11
@@ -23,6 +27,9 @@ static sprite_t *archer_sprite = NULL;
 static sprite_t *mage_sprite   = NULL;
 static sprite_t *archer_2_sprite = NULL;
 static sprite_t *mage_2_sprite   = NULL;
+static sprite_t *bullet_sprite   = NULL;
+static sprite_t *orb1_sprite     = NULL;
+static sprite_t *orb2_sprite     = NULL;
 
 void tower_init(void) {
     slot_count  = 0;
@@ -30,10 +37,14 @@ void tower_init(void) {
     selected_tower_type = TOWER_NONE;
 
     // load all sprites into memory safely
-    if (archer_sprite == NULL) archer_sprite = create_sprite((xpm_map_t) archer_1);
-    if (mage_sprite == NULL)   mage_sprite = create_sprite((xpm_map_t) mage_1);
+    if (archer_sprite == NULL)   archer_sprite   = create_sprite((xpm_map_t) archer_1);
+    if (mage_sprite == NULL)     mage_sprite     = create_sprite((xpm_map_t) mage_1);
     if (archer_2_sprite == NULL) archer_2_sprite = create_sprite((xpm_map_t) archer_2);
-    if (mage_2_sprite == NULL)   mage_2_sprite = create_sprite((xpm_map_t) mage_2);
+    if (mage_2_sprite == NULL)   mage_2_sprite   = create_sprite((xpm_map_t) mage_2);
+    if (bullet_sprite == NULL) bullet_sprite = create_sprite((xpm_map_t) bullet);
+    if (orb1_sprite == NULL)   orb1_sprite   = create_sprite((xpm_map_t) orb1);
+    if (orb2_sprite == NULL)   orb2_sprite   = create_sprite((xpm_map_t) orb2);
+    bullet_init();
 
     for (int r = 0; r < MAP_ROWS; r++) {
         for (int c = 0; c < MAP_COLS; c++) {
@@ -177,14 +188,21 @@ void tower_tick(enemy_t **enemies, int enemy_count) {
 
         // if we find a target, fire
         if (target != NULL) {
-            target->hp -= t->damage;
-            t->attack_timer = t->attack_cooldown; // reset the reload timer
-            
-            // check if this shot was fatal
-            if (target->hp <= 0) {
-                target->active = false; // mark as dead so game_tick can clean it up
-                add_player_gold(25);    // gold reward to the player
+            if (t->type == TOWER_ARCHER) {
+                bullet_fire((int16_t)tower_x, (int16_t)tower_y,
+                            target, t->damage, bullet_sprite);
+            } else {
+                sprite_t *orb;
+                if (t->level == 2) {
+                    orb = orb2_sprite;
+                } else {
+                    orb = orb1_sprite;
+                }
+                bullet_fire((int16_t)tower_x, (int16_t)tower_y,
+                            target, t->damage, orb);
             }
+
+            t->attack_timer = t->attack_cooldown;
         }
     }
 }

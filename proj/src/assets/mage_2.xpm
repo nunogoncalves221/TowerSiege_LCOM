@@ -13,7 +13,7 @@ static char *mage_2[] = {
 "$	c #1B0C0B",
 "%	c #2C3142",
 "&	c #FEC439",
-"*	c #F8F8F8",
+"*	c None",
 "=	c #FBC94A",
 "-	c #F8CD6D",
 ";	c #A34506",
