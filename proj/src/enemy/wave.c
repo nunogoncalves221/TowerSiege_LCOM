@@ -67,9 +67,10 @@ void wave_tick(enemy_t **enemies, int *enemy_count) {
                 spawn_timer = interval < 20 ? 20 : interval;
             }
         }
-    } else if (*enemy_count == 0) {
+    } else {
+        // countdown starts when the last enemy spawns
         wave_delay++;
-        if (wave_delay >= WAVE_DELAY) {
+        if (*enemy_count == 0 || wave_delay >= WAVE_DELAY) {
             start_wave(wave_number + 1);
         }
     }
