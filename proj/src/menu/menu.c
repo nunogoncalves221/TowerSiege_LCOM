@@ -1,19 +1,11 @@
 #include "menu.h"
+#include "menu_nav.h"
 #include "../sprite/sprite.h"
 #include "../font/font.h"
 #include "video.h"
 #include "../assets/menus/logo_tower_siege.xpm"
 
-#define KEY_UP_MAKE    0x48
-#define KEY_DOWN_MAKE  0x50
-#define KEY_ENTER_MAKE 0x1C
-#define KEY_W_MAKE     0x11
-#define KEY_S_MAKE     0x1F
 #define ESC_BREAKCODE  0x81
-
-#define COLOR_BG       0xFF000000
-#define COLOR_SELECTED 0xFFE94560
-#define COLOR_NORMAL   0xFFB0B0C0
 
 static menu_option_t selected = MENU_PLAY;
 static sprite_t *logo_sprite  = NULL;
@@ -64,24 +56,7 @@ menu_option_t menu_get_selected(void) {
 }
 
 bool menu_handle_key(uint8_t scancode) {
-    switch (scancode) {
-        case KEY_UP_MAKE:
-        case KEY_W_MAKE:
-            if (selected > MENU_PLAY) selected--;
-            break;
-
-        case KEY_DOWN_MAKE:
-        case KEY_S_MAKE:
-            if (selected < MENU_OPTION_COUNT - 1) selected++;
-            break;
-
-        case KEY_ENTER_MAKE:
-            return true;   // caller checks menu_get_selected()
-
-        default:
-            break;
-    }
-    return false;
+    return menu_nav_handle_key(scancode, (int *)&selected, MENU_OPTION_COUNT);
 }
 
 void menu_draw(void) {
@@ -106,17 +81,9 @@ void menu_draw(void) {
     uint16_t menu_top   = logo_area_h + (sh - logo_area_h - menu_total) / 2;
 
     for (int i = 0; i < MENU_OPTION_COUNT; i++) {
-        uint16_t iw    = font_string_width(option_labels[i]);
-        uint16_t ix    = (sw - iw) / 2;
-        uint16_t iy    = menu_top + (uint16_t)(i * item_gap);
-        uint32_t color = (i == (int)selected) ? COLOR_SELECTED : COLOR_NORMAL;
-
-        if (i == (int)selected) {
-            uint16_t dot_x = ix - 14;
-            uint16_t dot_y = iy + item_h / 2 - 3;
-            fill_rect(dot_x, dot_y, 6, 6, COLOR_SELECTED);
-        }
-
-        font_draw_string(ix, iy, option_labels[i], color);
+        uint16_t iw = font_string_width(option_labels[i]);
+        uint16_t ix = (sw - iw) / 2;
+        uint16_t iy = menu_top + (uint16_t)(i * item_gap);
+        menu_nav_draw_item(ix, iy, option_labels[i], i == (int)selected);
     }
 }

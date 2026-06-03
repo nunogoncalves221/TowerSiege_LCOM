@@ -12,6 +12,7 @@
 #include "game.h"
 #include "instructions.h"
 #include "pause.h"
+#include "gameovermenu.h"
 
 #define KEY_P_MAKE 0x19
 
@@ -87,11 +88,12 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 game_tick();
                 if (game_is_over()) {
                   state = STATE_GAMEOVER;
+                  gameover_reset();
                 } else {
                   game_draw();
                 }
               } else if (state == STATE_GAMEOVER) {
-                game_draw_gameover();
+                gameover_draw(game_get_score());
               } else if (state == STATE_INSTRUCTIONS) {
                 instructions_draw();
               } else if (state == STATE_PAUSE) {
@@ -162,8 +164,8 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 if (scancode_byte == ESC_BREAKCODE) {
                   state = STATE_MENU;
                   menu_reset();
-                } else if (game_gameover_handle_key(scancode_byte)) {
-                  if (game_gameover_get_selected() == 0) {
+                } else if (gameover_handle_key(scancode_byte)) {
+                  if (gameover_get_selected() == GAMEOVER_RETRY) {
                     game_reset();
                     state = STATE_GAME;
                   } else {
@@ -185,7 +187,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 if (state == STATE_GAME) {
                   game_handle_click();
                 } else if (state == STATE_GAMEOVER) {
-                  int btn = game_gameover_click();
+                  int btn = gameover_click(game_get_cursor_y());
                   if (btn == 1) {       // retry
                     game_reset();
                     state = STATE_GAME;
