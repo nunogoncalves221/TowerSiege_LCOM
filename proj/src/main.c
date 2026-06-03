@@ -154,8 +154,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
                     state = STATE_MENU;
                     menu_reset();
                   }
-                }
-              } else if (state == STATE_GAMEOVER) {
+                } else if (state == STATE_GAMEOVER) {
                 if (scancode_byte == ESC_BREAKCODE) {
                   state = STATE_MENU;
                   menu_reset();
@@ -170,7 +169,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 }
               }
             }
-
+          }        
           // Mouse
           if (msg.m_notify.interrupts & mouse_irq) {
             mouse_ih();
