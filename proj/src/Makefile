@@ -6,11 +6,11 @@ PROG = proj
 SRCS = main.c menu.c game.c sprite.c map.c hero.c enemy.c wave.c font.c tower.c bullet.c instructions.c pause.c gameovermenu.c menu_nav.c animated_sprite.c
 
 # Procurar os .c nas subpastas
-.PATH: menu game sprite map hero enemy font tower rtc
+.PATH: menu game sprite map hero enemy font tower
 
 # Dizer ao compilador onde procurar os ficheiros .h
 CFLAGS += -I../../lab1 -I../../lab2 -I../../lab3 -I../../lab4 -I../../lab5
-CFLAGS += -Imenu -Igame -Isprite -Imap -Ihero -Ienemy -Ifont -Itower -Iinstructions -Irtc
+CFLAGS += -Imenu -Igame -Isprite -Imap -Ihero -Ienemy -Ifont -Itower -Iinstructions 
 
 CFLAGS += -pedantic -D__LCOM_OPTIMIZED__ -O2
 
