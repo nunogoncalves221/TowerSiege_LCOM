@@ -7,6 +7,7 @@ static pause_option_t selected = PAUSE_CONTINUE;
 
 static const char *option_labels[PAUSE_OPTION_COUNT] = {
     "continue",
+    "retry",
     "quit",
 };
 
@@ -34,7 +35,7 @@ void pause_draw(void) {
 
     // Dark overlay over the game
     uint16_t box_w = 300;
-    uint16_t box_h = 160;
+    uint16_t box_h = 195;
     uint16_t box_x = (sw - box_w) / 2;
     uint16_t box_y = (sh - box_h) / 2;
 

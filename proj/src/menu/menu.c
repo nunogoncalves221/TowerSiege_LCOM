@@ -31,12 +31,17 @@ static void draw_sprite_scaled(sprite_t *sp,
     uint32_t transparent = xpm_transparency_color(XPM_8_8_8_8);
     uint16_t sw = (uint16_t) vg_get_x_res();
     uint16_t sh = (uint16_t) vg_get_y_res();
+
+    // Map destination row back to source row
     for (uint16_t dy = 0; dy < dst_h; dy++) {
         uint16_t sy = (uint16_t)((uint32_t)dy * sp->height / dst_h);
         for (uint16_t dx = 0; dx < dst_w; dx++) {
+            // Map destination column back to source column
             uint16_t sx = (uint16_t)((uint32_t)dx * sp->width / dst_w);
             uint32_t color = sp->map[(uint32_t)sy * sp->width + sx];
+
             if (color == transparent) continue;
+            // Clamp to screen bounds before drawing
             uint16_t px = dst_x + dx;
             uint16_t py = dst_y + dy;
             if (px < sw && py < sh)
@@ -66,15 +71,20 @@ void menu_draw(void) {
     fill_rect(0, 0, sw, sh, 0xFF000000);
 
     uint16_t logo_area_h = sh / 3;
+
     if (logo_sprite != NULL) {
+        //Scale the logo to fill the area while preserving aspect ratio
         uint16_t pad_y = logo_area_h / 6;
         uint16_t logo_h = logo_area_h - 2 * pad_y;
         uint16_t logo_w = (uint16_t)((uint32_t)logo_h * logo_sprite->width / logo_sprite->height);
         if (logo_w > sw) logo_w = sw;
+
+        //Center horizontally
         uint16_t logo_x = (sw - logo_w) / 2;
         draw_sprite_scaled(logo_sprite, logo_x, pad_y, logo_w, logo_h);
     }
 
+    // Options are distributed evenly in the bottom two thirds
     uint16_t item_h     = 16;
     uint16_t item_gap   = item_h + 16;
     uint16_t menu_total = MENU_OPTION_COUNT * item_gap - 16;
