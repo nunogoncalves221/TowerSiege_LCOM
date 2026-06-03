@@ -184,15 +184,6 @@ int(proj_main_loop)(int argc, char* argv[]) {
               if (pp.lb && !lb_prev) {
                 if (state == STATE_GAME) {
                   game_handle_click();
-                } else if (state == STATE_GAMEOVER) {
-                  int btn = gameover_click(game_get_cursor_y());
-                  if (btn == 1) {       // retry
-                    game_reset();
-                    state = STATE_GAME;
-                  } else if (btn == 2) { // menu
-                    state = STATE_MENU;
-                    menu_reset();
-                  }
                 }
               }
               lb_prev = pp.lb;
