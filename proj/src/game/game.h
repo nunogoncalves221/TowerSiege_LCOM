@@ -17,7 +17,7 @@
 #define HERO_BASE_Y 550 // hero's starting y position
 
 // wave mechanics
-#define WAVE_DELAY 300 // ticks to wait between waves (5 seconds at 60hz)
+#define WAVE_DELAY 120 // ticks to wait between waves (2 seconds at 60hz)
 
 // --- keyboard scancodes ---
 // based on set 1 make codes; break codes are make | 0x80
