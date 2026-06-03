@@ -7,7 +7,8 @@
 #include "../assets/goblin.xpm"
 
 static int wave_number = 0;
-static int enemies_to_spawn = 0;
+static int goblins_to_spawn = 0;
+static int orcs_to_spawn = 0;
 static int spawn_timer = 0;
 static int wave_delay = 0;
 
@@ -18,8 +19,15 @@ static int16_t goblin_start_y = 0;
 
 static void start_wave(int wave) {
     wave_number = wave;
-    enemies_to_spawn = 5 + (wave - 1) * 3; // number of enemies per wave
-    spawn_timer = 30; // 0.5-second lead-in before first enemy of each wave
+    // each wave has 1.2x more enemies than the previous
+    float g = 3.0f, o = 2.0f;
+    for (int i = 1; i < wave; i++) {
+        g *= 1.2f;
+        o *= 1.2f;
+    }
+    goblins_to_spawn = (int)g; // wave 1:5  2:6  3:7  4:8  5:10  10:25 ...
+    orcs_to_spawn    = (int)o; // wave 1:3  2:3  3:4  4:5  5:6   10:15 ...
+    spawn_timer = 30;
     wave_delay = 0;
 }
 
@@ -36,26 +44,25 @@ void wave_init(void) {
         goblin_start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (int16_t)(probe->sp->height / 2));
         enemy_destroy(probe);
     }
-    start_wave(1);
+    start_wave(2);
 }
 
 void wave_tick(enemy_t **enemies, int *enemy_count) {
-    if (enemies_to_spawn > 0) {
+    if (goblins_to_spawn > 0 || orcs_to_spawn > 0) {
         spawn_timer--;
         if (spawn_timer <= 0 && *enemy_count < MAX_ENEMIES) {
-            // orc spawn chance grows 20% per wave, capped at 80%
-            int orc_chance = (wave_number - 1) * 20;
-            if (orc_chance > 80) orc_chance = 80;
-
             enemy_t *e;
-            if (rand() % 100 < orc_chance) {
+            // pick randomly from whichever types still remain
+            int total = goblins_to_spawn + orcs_to_spawn;
+            if (orcs_to_spawn > 0 && (goblins_to_spawn == 0 || rand() % total < orcs_to_spawn)) {
                 e = enemy_create((xpm_map_t) orc, orc_start_x, orc_start_y, 100, 2);
+                if (e != NULL) orcs_to_spawn--;
             } else {
                 e = enemy_create((xpm_map_t) goblin, goblin_start_x, goblin_start_y, 50, 4);
+                if (e != NULL) goblins_to_spawn--;
             }
             if (e != NULL) {
                 enemies[(*enemy_count)++] = e;
-                enemies_to_spawn--;
                 int interval = 50 - (wave_number - 1) * 3;
                 spawn_timer = interval < 20 ? 20 : interval;
             }
