@@ -6,13 +6,13 @@
 #include "video.h"
 #include "map.h"
 #include "enemy.h"
+#include "wave.h"
 #include "tower.h"
 #include "bullet.h"
 #include "font.h"
 #include "rtc.h"
 
 #include "../assets/hero.xpm"
-#include "../assets/orc.xpm"
 #include "../assets/cursor.xpm"
 #include "../assets/hero_walk_1.xpm"
 #include "../assets/hero_walk_2.xpm"
@@ -95,16 +95,6 @@ static int player_lives = MAX_LIVES;
 static int player_score = 0;
 static bool game_over = false;
 
-// cached spawn position calculated once from sprite dimensions
-static int16_t enemy_start_x = 0;
-static int16_t enemy_start_y = 0;
-
-// wave state
-static int wave_number = 0;
-static int enemies_to_spawn = 0;
-static int spawn_timer = 0;
-static int wave_delay = 0;
-
 // rtc
 static rtc_date start_time;
 
@@ -120,13 +110,6 @@ void add_player_gold(int amount) {
     if (player_gold < 0) {
         player_gold = 0;
     }
-}
-
-static void start_wave(int wave) {
-    wave_number = wave;
-    enemies_to_spawn = 5 + (wave - 1) * 3; // wave 1->5, 2->8, 3->11, …
-    spawn_timer = 60; // 2-second lead-in before first enemy of each wave
-    wave_delay = 0;
 }
 
 void game_reset(void) {
@@ -167,19 +150,11 @@ void game_reset(void) {
     }
     enemy_count = 0;
 
-    // probe a temporary enemy to measure sprite dimensions, then discard it
-    enemy_t *probe = enemy_create((xpm_map_t) orc, 0, 0, 100, 2);
-    if (probe != NULL) {
-        enemy_start_x = -(int16_t)probe->sp->width;
-        enemy_start_y = (int16_t)(TILE_SIZE * 1 + (TILE_SIZE / 2) - (int16_t)(probe->sp->height / 2));
-        enemy_destroy(probe);
-    }
-
     player_gold = 10000;
     player_lives = MAX_LIVES;
     player_score = 0;
     game_over = false;
-    start_wave(1);
+    wave_init();
     key_w = key_a = key_s = key_d = false;
 
     // read the exact time the match started
@@ -360,26 +335,7 @@ void game_tick(void) {
         }
     }
 
-    // WAVE MANAGER
-    if (enemies_to_spawn > 0) {
-        // still releasing enemies for this wave
-        spawn_timer--;
-        if (spawn_timer <= 0 && enemy_count < MAX_ENEMIES) {
-            enemy_t *e = enemy_create((xpm_map_t) orc, enemy_start_x, enemy_start_y, 100, 2);
-            if (e != NULL) {
-                enemies[enemy_count++] = e;
-                enemies_to_spawn--;
-                int interval = 90 - (wave_number - 1) * 5;
-                spawn_timer = interval < 45 ? 45 : interval;
-            }
-        }
-    } else if (enemy_count == 0) {
-        // all enemies dealt with — count up to the inter-wave pause
-        wave_delay++;
-        if (wave_delay >= WAVE_DELAY) {
-            start_wave(wave_number + 1);
-        }
-    }
+    wave_tick(enemies, &enemy_count);
 
     tower_tick(enemies, enemy_count);
     bullet_tick();
@@ -428,7 +384,7 @@ void game_draw(void) {
 
     // wave counter below the bar
     char wave_str[16];
-    snprintf(wave_str, sizeof(wave_str), "wave %d", wave_number);
+    snprintf(wave_str, sizeof(wave_str), "wave %d", wave_get_number());
     font_draw_string(10, 30, wave_str, 0x00FFFFFF);
 
     // score counter — top-centre
