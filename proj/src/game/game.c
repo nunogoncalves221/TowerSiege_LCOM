@@ -178,77 +178,89 @@ void game_tick(void) {
     int16_t screen_w = (int16_t) vg_get_x_res();
     int16_t screen_h = (int16_t) vg_get_y_res();
 
-    // --- HERO MOVEMENT ---
-    bool is_moving = false;
-
-    if (key_w) { hero_y -= HERO_SPEED; is_moving = true; }
-    if (key_s) { hero_y += HERO_SPEED; is_moving = true; }
-    if (key_a) { hero_x -= HERO_SPEED; is_moving = true; }
-    if (key_d) { hero_x += HERO_SPEED; is_moving = true; }
-
-    // clamp to screen bounds
-    int16_t hw = (int16_t) hero_idle->sp->width;
-    int16_t hh = (int16_t) hero_idle->sp->height;
-    if (hero_x < 0) hero_x = 0;
-    if (hero_y < 0) hero_y = 0;
-    if (hero_x > screen_w - hw) hero_x = screen_w - hw;
-    if (hero_y > screen_h - hh) hero_y = screen_h - hh;
-
-    // --- HERO STATE MACHINE & ATTACKS ---
-    // trigger attack if space is pressed and we aren't already attacking
-    if (key_space && current_hero_state != HERO_ATTACK) {
-        current_hero_state = HERO_ATTACK;
-        reset_animated_sprite(hero_attack);
+    // --- HERO RESPAWN TIMER ---
+    if (hero_respawn_timer > 0) {
+        hero_respawn_timer--; // tick down the clock
+        
+        if (hero_respawn_timer == 0) {
+            hero_hp = HERO_MAX_HP; // revive with full HP
+        }
     }
 
-    //process the current state
-    if (current_hero_state == HERO_ATTACK) {
-        animate_sprite_once(hero_attack);
-        
-        // if attack animation finished
-        if (animated_sprite_finished(hero_attack)) {
+    if (hero_respawn_timer == 0) {
+
+        // --- HERO MOVEMENT ---
+        bool is_moving = false;
+
+        if (key_w) { hero_y -= HERO_SPEED; is_moving = true; }
+        if (key_s) { hero_y += HERO_SPEED; is_moving = true; }
+        if (key_a) { hero_x -= HERO_SPEED; is_moving = true; }
+        if (key_d) { hero_x += HERO_SPEED; is_moving = true; }
+
+        // clamp to screen bounds
+        int16_t hw = (int16_t) hero_idle->sp->width;
+        int16_t hh = (int16_t) hero_idle->sp->height;
+        if (hero_x < 0) hero_x = 0;
+        if (hero_y < 0) hero_y = 0;
+        if (hero_x > screen_w - hw) hero_x = screen_w - hw;
+        if (hero_y > screen_h - hh) hero_y = screen_h - hh;
+
+        // --- HERO STATE MACHINE & ATTACKS ---
+        // trigger attack if space is pressed and we aren't already attacking
+        if (key_space && current_hero_state != HERO_ATTACK) {
+            current_hero_state = HERO_ATTACK;
+            reset_animated_sprite(hero_attack);
+        }
+
+        //process the current state
+        if (current_hero_state == HERO_ATTACK) {
+            animate_sprite_once(hero_attack);
             
-            // calculate the exact center of our hero
-            int h_center_x = hero_x + (hero_attack->sp->width / 2);
-            int h_center_y = hero_y + (hero_attack->sp->height / 2);
+            // if attack animation finished
+            if (animated_sprite_finished(hero_attack)) {
+                
+                // calculate the exact center of our hero
+                int h_center_x = hero_x + (hero_attack->sp->width / 2);
+                int h_center_y = hero_y + (hero_attack->sp->height / 2);
 
-            // scan all enemies
-            for (int i = 0; i < enemy_count; i++) {
-                if (enemies[i] != NULL && enemies[i]->active) {
-                    
-                    // calculate the exact center of this enemy
-                    int e_center_x = enemies[i]->x + (enemies[i]->sp->width / 2);
-                    int e_center_y = enemies[i]->y + (enemies[i]->sp->height / 2);
-                    
-                    int dx = e_center_x - h_center_x;
-                    int dy = e_center_y - h_center_y;
-                    
-                    // check distance ( range to 100 pixels )
-                    if ((dx * dx) + (dy * dy) <= (100 * 100)) {
-                        enemies[i]->hp -= 50; // smash
+                // scan all enemies
+                for (int i = 0; i < enemy_count; i++) {
+                    if (enemies[i] != NULL && enemies[i]->active) {
+                        
+                        // calculate the exact center of this enemy
+                        int e_center_x = enemies[i]->x + (enemies[i]->sp->width / 2);
+                        int e_center_y = enemies[i]->y + (enemies[i]->sp->height / 2);
+                        
+                        int dx = e_center_x - h_center_x;
+                        int dy = e_center_y - h_center_y;
+                        
+                        // check distance ( range to 100 pixels )
+                        if ((dx * dx) + (dy * dy) <= (100 * 100)) {
+                            enemies[i]->hp -= 50; // smash
 
-                        if (enemies[i]->hp <= 0) {
-                            enemies[i]->active = false;
-                            player_gold += 25; // reward the player in gold for the kill
+                            if (enemies[i]->hp <= 0) {
+                                enemies[i]->active = false;
+                                player_gold += 25; // reward the player in gold for the kill
+                            }
                         }
                     }
                 }
-            }
 
-            // revert state back depending on whether the player is currently walking
-            current_hero_state = is_moving ? HERO_WALK : HERO_IDLE;
-        }
-    } else {
-        // only update walk/idle animations if we are NOT in the middle of an attack
-        if (is_moving) {
-            current_hero_state = HERO_WALK;
-            animate_sprite_loop(hero_walk);
+                // revert state back depending on whether the player is currently walking
+                current_hero_state = is_moving ? HERO_WALK : HERO_IDLE;
+            }
         } else {
-            current_hero_state = HERO_IDLE;
-            animate_sprite_loop(hero_idle);
+            // only update walk/idle animations if we are NOT in the middle of an attack
+            if (is_moving) {
+                current_hero_state = HERO_WALK;
+                animate_sprite_loop(hero_walk);
+            } else {
+                current_hero_state = HERO_IDLE;
+                animate_sprite_loop(hero_idle);
+            }
         }
     }
-
+    
      // --- ENEMY MOVEMENT ---
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
