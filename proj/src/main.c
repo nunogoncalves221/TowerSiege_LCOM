@@ -14,8 +14,6 @@
 #include "pause.h"
 #include "gameovermenu.h"
 
-#define KEY_P_MAKE 0x19
-
 int main(int argc, char *argv[]) {
   lcf_set_language("EN-US");
   lcf_trace_calls("/home/lcom/labs/grupo_2leic16_2/proj/trace.txt");
@@ -111,10 +109,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
 
             if (!kbc_error) {
               if (state == STATE_MENU) {
-                if (scancode_byte == ESC_BREAKCODE) {
-                  running = false;
-                }
-                else if (menu_handle_key(scancode_byte)) {
+                if (menu_handle_key(scancode_byte)) {
                   switch (menu_get_selected()) {
                     case MENU_PLAY:
                       state = STATE_GAME;
