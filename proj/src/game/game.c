@@ -45,7 +45,23 @@
 
 // hero mortality stats
 #define HERO_MAX_HP 100
-#define HERO_RESPAWN_TICKS 180 // 3 seconds 
+#define HERO_RESPAWN_TICKS 180 // 3 seconds
+
+static void draw_hp_bar(int x, int y, int width, int height, int current, int max,
+                        uint32_t color_good, uint32_t color_bg, uint32_t color_border) {
+    int fill_w = (current * width) / max;
+    int scr_w = (int)vg_get_x_res();
+    int scr_h = (int)vg_get_y_res();
+    for (int py = y - 1; py <= y + height; py++) {
+        for (int px = x - 1; px <= x + width; px++) {
+            if (px < 0 || px >= scr_w || py < 0 || py >= scr_h) continue;
+            if (px == x - 1 || px == x + width || py == y - 1 || py == y + height)
+                vg_draw_pixel(px, py, color_border);
+            else
+                vg_draw_pixel(px, py, px < x + fill_w ? color_good : color_bg);
+        }
+    }
+}
 
 static int hero_hp = HERO_MAX_HP;
 static int hero_respawn_timer = 0; // if > 0, the hero is currently dead
@@ -404,44 +420,16 @@ void game_draw(void) {
         }
 
         // draw the floating hp bar above the hero
-        int hp_width = (hero_hp * HERO_HP_BAR_WIDTH) / HERO_MAX_HP;
-        
-        // center the bar using the hero's sprite width
         int sprite_w = hero_idle->sp->width;
         int bar_start_x = hero_x + (sprite_w / 2) - (HERO_HP_BAR_WIDTH / 2);
         int bar_start_y = hero_y - HERO_HP_BAR_Y_OFFSET;
-
-        // draw the bar with a 1-pixel black border
-        for (int py = bar_start_y - 1; py <= bar_start_y + HERO_HP_BAR_HEIGHT; py++) {
-            for (int px = bar_start_x - 1; px <= bar_start_x + HERO_HP_BAR_WIDTH; px++) {
-                
-                // bounds check to prevent crashing if drawing outside screen
-                if (px >= 0 && px < (int)vg_get_x_res() && py >= 0 && py < (int)vg_get_y_res()) {
-                    
-                    // if we are on the outer edges, draw black (0x00000000)
-                    if (px == bar_start_x - 1 || px == bar_start_x + HERO_HP_BAR_WIDTH || 
-                        py == bar_start_y - 1 || py == bar_start_y + HERO_HP_BAR_HEIGHT) {
-                        vg_draw_pixel(px, py, HERO_HP_COLOR_BORDER); 
-                    } 
-                    // if we are inside, draw the health (green or red)
-                    else {
-                        vg_draw_pixel(px, py, px < bar_start_x + hp_width ? HERO_HP_COLOR_GOOD : HERO_HP_COLOR_BG);
-                    }
-                }
-            }
-        }
+        draw_hp_bar(bar_start_x, bar_start_y, HERO_HP_BAR_WIDTH, HERO_HP_BAR_HEIGHT,
+                    hero_hp, HERO_MAX_HP, HERO_HP_COLOR_GOOD, HERO_HP_COLOR_BG, HERO_HP_COLOR_BORDER);
     }
 
-    // lives bar: filled rectangle that shrinks as lives are lost
-    int bar_x = 10, bar_y = 10;
-    int bar_w = 200, bar_h = 14;
-    int fill_w = (bar_w * player_lives) / MAX_LIVES;
-    uint32_t fill_color = player_lives > MAX_LIVES / 4 ? 0x00EE3333 : 0x00FF8800;
-    for (int py = bar_y; py < bar_y + bar_h; py++) {
-        for (int px = bar_x; px < bar_x + bar_w; px++) {
-            vg_draw_pixel(px, py, px < bar_x + fill_w ? fill_color : 0x00333333);
-        }
-    }
+    // lives bar: same visual style as the hero HP bar
+    draw_hp_bar(10, 10, 200, 14, player_lives, MAX_LIVES,
+                HERO_HP_COLOR_GOOD, HERO_HP_COLOR_BG, HERO_HP_COLOR_BORDER);
 
     // wave counter below the bar
     char wave_str[16];
@@ -485,6 +473,11 @@ void game_draw(void) {
     
     // slap the text on top of the background
     font_draw_string(rtc_x, rtc_y, time_str, RTC_TEXT_COLOR);
+
+    // cursor is always drawn last, on top of everything
+    if (cursor_sprite != NULL) {
+        draw_sprite(cursor_sprite, cursor_x, cursor_y);
+    }
 }
 
 bool game_is_over(void) {
