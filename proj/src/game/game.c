@@ -13,7 +13,6 @@
 #include "font.h"
 #include "rtc.h"
 
-#include "../assets/hero.xpm"
 #include "../assets/cursor.xpm"
 
 
@@ -103,29 +102,6 @@ void game_reset(void) {
     cursor_sprite = create_sprite((xpm_map_t) cursor);
     cursor_x = vg_get_x_res() / 2;
     cursor_y = vg_get_y_res() / 2; // start cursor in center of screen
-
-    // setup animated hero ( replace xpm later )
-    xpm_map_t idle_frames[] = { (xpm_map_t) hero }; // using base for idle
-    xpm_map_t walk_frames[] = { (xpm_map_t) hero_walk_1, (xpm_map_t) hero_walk_2, (xpm_map_t) hero_walk_3 };
-    xpm_map_t atk_frames[]  = { (xpm_map_t) hero_atk_1, (xpm_map_t) hero_atk_2, (xpm_map_t) hero_atk_3 };
-
-    // create the animations (frames array, number of frames, ticks per frame)
-    hero_idle = create_animated_sprite(idle_frames, 1, 15);
-    hero_walk = create_animated_sprite(walk_frames, 3, 10);
-    hero_attack = create_animated_sprite(atk_frames, 3, 8);
-
-    // spawn hero at the base
-    hero_x = HERO_BASE_X;
-    hero_y = HERO_BASE_Y;
-    hero_hp = HERO_MAX_HP;
-    hero_respawn_timer = 0;
-    current_hero_state = HERO_IDLE;
-
-    // clean up any remaining enemies from previous games
-    for (int i = 0; i < enemy_count; i++) {
-        enemy_destroy(enemies[i]);
-    }
-    enemy_count = 0;
 
     player_gold = 10000;
     player_lives = MAX_LIVES;
