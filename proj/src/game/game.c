@@ -25,6 +25,14 @@
 #define GO_COLOR_SELECTED 0x00E94560
 #define GO_COLOR_NORMAL   0x00B0B0C0
 
+// hero hp bar visual constants
+#define HERO_HP_BAR_WIDTH 40
+#define HERO_HP_BAR_HEIGHT 4
+#define HERO_HP_BAR_Y_OFFSET 10
+#define HERO_HP_COLOR_GOOD 0x0000FF00 // green
+#define HERO_HP_COLOR_BG   0x00FF0000 // red
+#define HERO_HP_COLOR_BORDER 0x00000000 // black
+
 // hero mortality stats
 #define HERO_MAX_HP 100
 #define HERO_RESPAWN_TICKS 180 // 3 seconds 
@@ -260,7 +268,7 @@ void game_tick(void) {
             }
         }
     }
-    
+
      // --- ENEMY MOVEMENT ---
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL) {
@@ -367,19 +375,45 @@ void game_draw(void) {
         }
     }
 
-    // draw the hero based on current state
-    if (current_hero_state == HERO_ATTACK && hero_attack != NULL) {
-        draw_animated_sprite(hero_attack, hero_x, hero_y);
-    } 
-    else if (current_hero_state == HERO_WALK && hero_walk != NULL) {
-        draw_animated_sprite(hero_walk, hero_x, hero_y);
-    } 
-    else if (hero_idle != NULL) {
-        draw_animated_sprite(hero_idle, hero_x, hero_y);
-    }
+    // draw the hero based on current state (only if alive)
+    if (hero_respawn_timer == 0) {
+        if (current_hero_state == HERO_ATTACK && hero_attack != NULL) {
+            draw_animated_sprite(hero_attack, hero_x, hero_y);
+        } 
+        else if (current_hero_state == HERO_WALK && hero_walk != NULL) {
+            draw_animated_sprite(hero_walk, hero_x, hero_y);
+        } 
+        else if (hero_idle != NULL) {
+            draw_animated_sprite(hero_idle, hero_x, hero_y);
+        }
 
-    if (cursor_sprite != NULL) {
-        draw_sprite(cursor_sprite, cursor_x, cursor_y);
+        // draw the floating hp bar above the hero
+        int hp_width = (hero_hp * HERO_HP_BAR_WIDTH) / HERO_MAX_HP;
+        
+        // center the bar using the hero's sprite width
+        int sprite_w = hero_idle->sp->width;
+        int bar_start_x = hero_x + (sprite_w / 2) - (HERO_HP_BAR_WIDTH / 2);
+        int bar_start_y = hero_y - HERO_HP_BAR_Y_OFFSET;
+
+        // draw the bar with a 1-pixel black border
+        for (int py = bar_start_y - 1; py <= bar_start_y + HERO_HP_BAR_HEIGHT; py++) {
+            for (int px = bar_start_x - 1; px <= bar_start_x + HERO_HP_BAR_WIDTH; px++) {
+                
+                // bounds check to prevent crashing if drawing outside screen
+                if (px >= 0 && px < (int)vg_get_x_res() && py >= 0 && py < (int)vg_get_y_res()) {
+                    
+                    // if we are on the outer edges, draw black (0x00000000)
+                    if (px == bar_start_x - 1 || px == bar_start_x + HERO_HP_BAR_WIDTH || 
+                        py == bar_start_y - 1 || py == bar_start_y + HERO_HP_BAR_HEIGHT) {
+                        vg_draw_pixel(px, py, HERO_HP_COLOR_BORDER); 
+                    } 
+                    // if we are inside, draw the health (green or red)
+                    else {
+                        vg_draw_pixel(px, py, px < bar_start_x + hp_width ? HERO_HP_COLOR_GOOD : HERO_HP_COLOR_BG);
+                    }
+                }
+            }
+        }
     }
 
     // lives bar: filled rectangle that shrinks as lives are lost
