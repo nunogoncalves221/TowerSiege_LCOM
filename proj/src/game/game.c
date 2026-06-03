@@ -17,11 +17,13 @@
 #include "../assets/hero_atk_2.xpm"
 #include "../assets/hero_atk_3.xpm"
 
-#define MAX_ENEMIES 20 // ready for waves
+#define GO_ITEM_GAP  32   // 16px text + 16px spacing, same rhythm as the menu
+#define GO_OPTS_Y    0    // options start at screen centre (added to cy at runtime)
+#define GO_DOT_SIZE  6
+#define GO_DOT_PAD   14   // px between dot right edge and text left edge
 
-// define where the base is located on your specific map
-#define HERO_BASE_X 750
-#define HERO_BASE_Y 550
+#define GO_COLOR_SELECTED 0x00E94560
+#define GO_COLOR_NORMAL   0x00B0B0C0
 
 typedef enum { HERO_IDLE, HERO_WALK, HERO_ATTACK } hero_state_t;
 
@@ -68,6 +70,20 @@ static int wave_number = 0;
 static int enemies_to_spawn = 0;
 static int spawn_timer = 0;
 static int wave_delay = 0;
+
+// gold getter
+int get_player_gold() {
+    return player_gold;
+}
+
+// gold setter
+void add_player_gold(int amount) {
+    player_gold += amount;
+    
+    if (player_gold < 0) {
+        player_gold = 0;
+    }
+}
 
 static void start_wave(int wave) {
     wave_number = wave;
@@ -350,14 +366,6 @@ bool game_is_over(void) {
     return game_over;
 }
 
-#define GO_ITEM_GAP  32   // 16px text + 16px spacing, same rhythm as the menu
-#define GO_OPTS_Y    0    // options start at screen centre (added to cy at runtime)
-#define GO_DOT_SIZE  6
-#define GO_DOT_PAD   14   // px between dot right edge and text left edge
-
-#define GO_COLOR_SELECTED 0x00E94560
-#define GO_COLOR_NORMAL   0x00B0B0C0
-
 void game_draw_gameover(void) {
     uint16_t sw = (uint16_t) vg_get_x_res();
     int cx = (int) sw / 2;
@@ -442,5 +450,6 @@ void game_update_cursor(int16_t dx, int16_t dy) {
 }
 
 void game_handle_click(void) {
-    tower_handle_click(cursor_x / TILE_SIZE, cursor_y / TILE_SIZE, &player_gold);
+    // let the tower manager handle the grid click
+    tower_handle_click(cursor_x / TILE_SIZE, cursor_y / TILE_SIZE);
 }

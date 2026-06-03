@@ -1,5 +1,6 @@
 #include "tower.h"
 #include "sprite.h"
+#include "game.h"
 #include "../enemy/enemy.h"
 #include "../assets/archer_1.xpm"
 #include "../assets/mage_1.xpm"
@@ -43,7 +44,7 @@ void tower_init(void) {
     }
 }
 
-void tower_handle_click(int col, int row, int *gold) {
+void tower_handle_click(int col, int row) {
     // check ui selection (original team code)
     if (row == 8 && col == 5) { selected_tower_type = TOWER_ARCHER; return; }
     if (row == 8 && col == 6) { selected_tower_type = TOWER_MAGE;   return; }
@@ -53,25 +54,29 @@ void tower_handle_click(int col, int row, int *gold) {
         if (slots[i].col == col && slots[i].row == row && slots[i].tower != NULL) {
             tower_t *t = slots[i].tower;
             
-            // only upgrade if it is currently level 1
+            // only upgrade if it's currently level 1
             if (t->level == 1) {
                 int upg_cost = (t->type == TOWER_ARCHER) ? TOWER_ARCHER_UPG_COST : TOWER_MAGE_UPG_COST;
                 
-                // check if we have enough gold
-                if (*gold >= upg_cost) {
-                    *gold -= upg_cost;
+                // check if we can actually afford the upgrade
+                if (get_player_gold() >= upg_cost) {
+                    add_player_gold(-upg_cost); // pay up
                     t->level = 2;
                     
                     // apply stats and new sprite
                     if (t->type == TOWER_ARCHER) {
                         t->sp = archer_2_sprite;
-                        t->damage += 15;
-                        t->range += 50;
-                        t->attack_cooldown -= 10;
+                        t->damage += TOWER_ARCHER_UPG_DMG_INC;
+                        t->range += TOWER_ARCHER_UPG_RANGE_INC;
+                        t->attack_cooldown -= TOWER_ARCHER_UPG_CD_DEC;
+
+                        t->range_sq = t->range * t->range; // update the cache
                     } else {
                         t->sp = mage_2_sprite;
-                        t->damage += 35;
-                        t->range += 30;
+                        t->damage += TOWER_MAGE_UPG_DMG_INC;
+                        t->range += TOWER_MAGE_UPG_RANGE_INC;
+                        
+                        t->range_sq = t->range * t->range; // update the cache
                     }
                     
                     // tell the game to redraw the map cache so the new sprite appears
@@ -86,11 +91,17 @@ void tower_handle_click(int col, int row, int *gold) {
     // build logic 
     if (selected_tower_type != TOWER_NONE && tower_count < MAX_TOWERS) {
         int cost = (selected_tower_type == TOWER_ARCHER) ? TOWER_ARCHER_COST : TOWER_MAGE_COST;
-        if (*gold < cost) { selected_tower_type = TOWER_NONE; return; }
+        
+        // cancel if we dont have gold for this
+        if (get_player_gold() < cost) { 
+            selected_tower_type = TOWER_NONE; 
+            return; 
+        }
 
         for (int i = 0; i < slot_count; i++) {
             if (slots[i].col == col && slots[i].row == row && slots[i].tower == NULL) {
-                *gold -= cost;
+                add_player_gold(-cost); // deduct the build cost
+                
                 tower_t *t = &towers[tower_count++];
                 t->type = selected_tower_type;
                 t->level = 1;
@@ -98,12 +109,20 @@ void tower_handle_click(int col, int row, int *gold) {
                 t->row   = row;
                 t->sp    = (selected_tower_type == TOWER_ARCHER) ? archer_sprite : mage_sprite;
                 
+                // apply base stats
                 if (selected_tower_type == TOWER_ARCHER) {
-                    t->range = 200; t->damage = 10; t->attack_cooldown = 30;
+                    t->range = TOWER_ARCHER_BASE_RANGE; 
+                    t->damage = TOWER_ARCHER_BASE_DMG; 
+                    t->attack_cooldown = TOWER_ARCHER_BASE_COOLDOWN;
                 } else {
-                    t->range = 150; t->damage = 25; t->attack_cooldown = 60;
+                    t->range = TOWER_MAGE_BASE_RANGE; 
+                    t->damage = TOWER_MAGE_BASE_DMG; 
+                    t->attack_cooldown = TOWER_MAGE_BASE_COOLDOWN;
                 }
                 
+                // pre-calculate the squared range once right after building
+                t->range_sq = t->range * t->range;
+
                 t->attack_timer = 0;
                 slots[i].tower = t;
                 selected_tower_type = TOWER_NONE;
@@ -134,7 +153,8 @@ void tower_tick(enemy_t **enemies, int enemy_count) {
         enemy_t *target = NULL;
         
         // use long to prevent overflow with large ranges on 16-bit int systems
-        long min_dist_sq = (long)t->range * t->range;
+        // just read the cached value
+        long min_dist_sq = (long)t->range_sq;
 
         // find the closest active enemy within range
         for (int j = 0; j < enemy_count; j++) {
@@ -159,6 +179,12 @@ void tower_tick(enemy_t **enemies, int enemy_count) {
         if (target != NULL) {
             target->hp -= t->damage;
             t->attack_timer = t->attack_cooldown; // reset the reload timer
+            
+            // check if this shot was fatal
+            if (target->hp <= 0) {
+                target->active = false; // mark as dead so game_tick can clean it up
+                add_player_gold(25);    // gold reward to the player
+            }
         }
     }
 }
