@@ -140,6 +140,10 @@ int(proj_main_loop)(int argc, char* argv[]) {
                           case PAUSE_CONTINUE:
                               state = STATE_GAME;
                               break;
+                          case PAUSE_RETRY:
+                              game_reset();
+                              state = STATE_GAME;
+                              break;
                           case PAUSE_QUIT:
                               state = STATE_MENU;
                               menu_reset();

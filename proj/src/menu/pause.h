@@ -6,6 +6,7 @@
 
 typedef enum {
     PAUSE_CONTINUE = 0,
+    PAUSE_RETRY,
     PAUSE_QUIT,
     PAUSE_OPTION_COUNT
 } pause_option_t;
