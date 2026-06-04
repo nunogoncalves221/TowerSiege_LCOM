@@ -3,6 +3,11 @@
 
 #include <stdint.h>
 
+#define FONT_LETTER_W 18
+#define FONT_DIGIT_W  17
+#define FONT_SPACE_W  8
+#define CHAR_SPACING  2
+
 // Draw a string at (x, y) tinted to the given AARRGGBB color.
 // Returns the total pixel width drawn.
 uint16_t font_draw_string(uint16_t x, uint16_t y, const char *s, uint32_t color);

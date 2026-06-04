@@ -45,10 +45,6 @@
 #include "../assets/font/char_underscore.xpm"
 #include "../assets/font/char_exclaim.xpm"
 
-#define FONT_LETTER_W 16
-#define FONT_DIGIT_W  15
-#define CHAR_SPACING  2
-#define SPACE_WIDTH   8
 
 static xpm_map_t get_xpm(char c) {
     switch (c) {
@@ -98,13 +94,13 @@ static xpm_map_t get_xpm(char c) {
 
 static uint16_t char_advance(char c) {
     if (c >= 'a' && c <= 'z')
-        return FONT_LETTER_W + CHAR_SPACING;
+        return FONT_LETTER_W;
     if (c >= '0' && c <= '9')
-        return FONT_DIGIT_W + CHAR_SPACING;
+        return FONT_DIGIT_W;
     if (c == ' ')
-        return SPACE_WIDTH;
+        return FONT_SPACE_W;
     if (c == ':' || c == '/' || c == '_' || c == '!')
-        return FONT_LETTER_W + CHAR_SPACING;
+        return FONT_LETTER_W;
     return 0;
 }
 

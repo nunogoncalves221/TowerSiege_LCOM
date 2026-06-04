@@ -9,8 +9,8 @@
 #define HS_MAX_NAME_LEN 8
 
 typedef struct {
-    char     name[HS_MAX_NAME_LEN + 1];
-    int      score;
+    char name[HS_MAX_NAME_LEN + 1];
+    int score;
     rtc_date date;
 } hs_entry_t;
 

@@ -1,7 +1,7 @@
 #include "player.h"
 
 #define STARTING_GOLD 500
-#define MAX_LIVES 2
+#define MAX_LIVES 20
 
 static int player_gold = STARTING_GOLD;
 static int player_lives = MAX_LIVES;

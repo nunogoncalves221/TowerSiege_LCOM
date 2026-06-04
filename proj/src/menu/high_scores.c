@@ -98,36 +98,21 @@ void hs_draw(void) {
                      y, "high scores", COLOR_TITLE);
     y += line + 6 * gap;
 
-    // build the widest possible row string to measure block_w accurately
-    // accounts for digits (15px) vs letters/punctuation (16px) having different widths
-    char widest_row[80]; int wr = 0;
+    // center table
     char max_rank_str[8];
     int_to_str(HS_MAX_ENTRIES, max_rank_str);
-    for (int k = 0; max_rank_str[k]; k++) widest_row[wr++] = max_rank_str[k];
-    widest_row[wr++]=' '; widest_row[wr++]=' '; widest_row[wr++]=' ';
-    widest_row[wr++]='9'; widest_row[wr++]='9'; widest_row[wr++]='9'; widest_row[wr++]='9'; widest_row[wr++]='9';
-    widest_row[wr++]=' '; widest_row[wr++]=' '; widest_row[wr++]=' ';
-    widest_row[wr++]='3'; widest_row[wr++]='1'; widest_row[wr++]='/'; widest_row[wr++]='1'; widest_row[wr++]='2'; widest_row[wr++]='/'; widest_row[wr++]='9'; widest_row[wr++]='9';
-    widest_row[wr++]=' '; widest_row[wr++]=' '; widest_row[wr++]=' ';
-    widest_row[wr++]='2'; widest_row[wr++]='3'; widest_row[wr++]=':'; widest_row[wr++]='5'; widest_row[wr++]='9';
-    widest_row[wr++]=' '; widest_row[wr++]=' '; widest_row[wr++]=' ';
-    for (int k = 0; k < HS_MAX_NAME_LEN; k++) widest_row[wr++] = 'a';
-    widest_row[wr] = '\0';
-
-    uint16_t block_w    = font_string_width(widest_row);
-    uint16_t left_x     = (sw - block_w) / 2;
+    uint16_t block_w = 17 * FONT_DIGIT_W + (HS_MAX_NAME_LEN + 3) * FONT_LETTER_W + 12 * FONT_SPACE_W - 2; // max width
+    uint16_t left_x = (sw - block_w) / 2;
     uint16_t max_rank_w = font_string_width(max_rank_str);
-    uint16_t space3     = font_string_width("0   ") - font_string_width("0"); // 3 space advances
-    uint16_t rank_w     = max_rank_w + space3;
+    uint16_t rank_w = max_rank_w + 3 * FONT_SPACE_W;
 
     for (int i = 0; i < HS_MAX_ENTRIES; i++) {
-        // red rank number — right-aligned so widest rank starts exactly at left_x
+        // rank number
         char rank_buf[8];
         int_to_str(i + 1, rank_buf);
         uint16_t rank_x = left_x + max_rank_w - font_string_width(rank_buf);
         font_draw_string(rank_x, y, rank_buf, COLOR_TITLE);
 
-        // grey value
         if (entries[i].name[0] != '\0') {
             char buf[64]; int p = 0;
 

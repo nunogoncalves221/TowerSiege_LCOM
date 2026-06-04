@@ -3,10 +3,10 @@
 #include "high_scores.h"
 #include <string.h>
 
-#define SC_ENTER     0x1C
+#define SC_ENTER 0x1C
 #define SC_BACKSPACE 0x0E
 
-// set 1 make codes → lowercase letter (0 means unmapped)
+// make codes
 static const char sc_to_char[128] = {
     [0x10]='q',[0x11]='w',[0x12]='e',[0x13]='r',[0x14]='t',
     [0x15]='y',[0x16]='u',[0x17]='i',[0x18]='o',[0x19]='p',
@@ -25,10 +25,8 @@ void nameentry_reset(void) {
 }
 
 bool nameentry_handle_key(uint8_t scancode) {
-    if (scancode >= 0x80) return false; // ignore break codes (key release)
-
+    if (scancode >= 0x80) return false; // ignore break codes
     if (scancode == SC_ENTER && name_len > 0) return true;
-
     if (scancode == SC_BACKSPACE && name_len > 0) {
         name[--name_len] = '\0';
         return false;
