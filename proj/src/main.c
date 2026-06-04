@@ -9,6 +9,7 @@
 
 #include "states.h"
 #include "menu.h"
+#include "difficulty.h"     
 #include "game.h"
 #include "instructions.h"
 #include "pause.h"
@@ -16,6 +17,8 @@
 #include "gameovermenu_hs.h"
 #include "nameentry.h"
 #include "high_scores.h"
+
+#define ESC_BREAKCODE 0x81
 
 int main(int argc, char *argv[]) {
   lcf_set_language("EN-US");
@@ -87,6 +90,8 @@ int(proj_main_loop)(int argc, char* argv[]) {
 
               if (state == STATE_MENU) {
                 menu_draw();
+              } else if (state == STATE_DIFFICULTY) { 
+                diff_draw();
               } else if (state == STATE_GAME) {
                 game_tick();
                 if (game_is_over()) {
@@ -109,8 +114,8 @@ int(proj_main_loop)(int argc, char* argv[]) {
               } else if (state == STATE_HIGH_SCORES) {
                 hs_draw();
               } else if (state == STATE_PAUSE) {
-                  game_draw();
-                  pause_draw();
+                game_draw();
+                pause_draw();
               }
 
               vg_refresh();
@@ -122,12 +127,13 @@ int(proj_main_loop)(int argc, char* argv[]) {
             kbc_ih();
 
             if (!kbc_error) {
+
               if (state == STATE_MENU) {
                 if (menu_handle_key(scancode_byte)) {
                   switch (menu_get_selected()) {
                     case MENU_PLAY:
-                      state = STATE_GAME;
-                      game_reset();
+                      state = STATE_DIFFICULTY;
+                      diff_reset();
                       break;
                     case MENU_QUIT:
                       running = false;
@@ -143,52 +149,64 @@ int(proj_main_loop)(int argc, char* argv[]) {
                   }
                 }
 
-              } else if (state == STATE_GAME) {
-                  game_handle_key(scancode_byte);
+              } else if (state == STATE_DIFFICULTY) {
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_MENU;
+                  menu_reset();
+                } else if (diff_handle_key(scancode_byte)) {
+                  game_reset();
+                  state = STATE_GAME;
+                }
 
-                  if (scancode_byte == ESC_BREAKCODE) {
-                      state = STATE_PAUSE;
-                      pause_reset();
-                  }
+              } else if (state == STATE_GAME) {
+                game_handle_key(scancode_byte);
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_PAUSE;
+                  pause_reset();
+                }
 
               } else if (state == STATE_PAUSE) {
-                  if (pause_handle_key(scancode_byte)) {
-                      switch (pause_get_selected()) {
-                          case PAUSE_CONTINUE:
-                              state = STATE_GAME;
-                              break;
-                          case PAUSE_RETRY:
-                              game_reset();
-                              state = STATE_GAME;
-                              break;
-                          case PAUSE_QUIT:
-                              state = STATE_MENU;
-                              menu_reset();
-                              break;
-                          default:
-                              break;
-                      }
-                      pause_reset();
+                if (pause_handle_key(scancode_byte)) {
+                  switch (pause_get_selected()) {
+                    case PAUSE_CONTINUE:
+                      state = STATE_GAME;
+                      break;
+                    case PAUSE_RETRY:
+                      game_reset();
+                      state = STATE_GAME;
+                      break;
+                    case PAUSE_QUIT:
+                      state = STATE_MENU;
+                      menu_reset();
+                      break;
+                    default:
+                      break;
                   }
+                  pause_reset();
+                }
+
               } else if (state == STATE_HIGH_SCORES) {
-                  if (scancode_byte == ESC_BREAKCODE) {
-                    state = STATE_MENU;
-                    menu_reset();
-                  }
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_MENU;
+                  menu_reset();
+                }
+
               } else if (state == STATE_GAMEOVER_HS) {
-                  if (scancode_byte == ESC_BREAKCODE) {
-                    state = STATE_MENU;
-                    menu_reset();
-                  } else if (gameover_hs_handle_key(scancode_byte)) {
-                    hs_insert(nameentry_get_name(), game_get_score(), game_get_start_time());
-                    state = STATE_HIGH_SCORES;
-                  }
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_MENU;
+                  menu_reset();
+                } else if (gameover_hs_handle_key(scancode_byte)) {
+                  hs_insert(nameentry_get_name(), game_get_score(), game_get_start_time());
+                  state = STATE_HIGH_SCORES;
+                }
+
               } else if (state == STATE_INSTRUCTIONS) {
-                  if (scancode_byte == ESC_BREAKCODE) {
-                    state = STATE_MENU;
-                    menu_reset();
-                  }
-                } else if (state == STATE_GAMEOVER) {
+                if (scancode_byte == ESC_BREAKCODE) {
+                  state = STATE_MENU;
+                  menu_reset();
+                }
+
+              } else if (state == STATE_GAMEOVER) {
                 if (scancode_byte == ESC_BREAKCODE) {
                   state = STATE_MENU;
                   menu_reset();
@@ -203,7 +221,8 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 }
               }
             }
-          }        
+          }
+
           // Mouse
           if (msg.m_notify.interrupts & mouse_irq) {
             mouse_ih();

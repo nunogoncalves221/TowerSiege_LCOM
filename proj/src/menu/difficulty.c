@@ -57,7 +57,7 @@ void diff_draw(void) {
     }
 
     // Hint
-    const char *hint = "esc - back";
+    const char *hint = "press esc to go back";
     uint16_t hw = font_string_width(hint);
-    font_draw_string((sw - hw) / 2, sh - 30, hint, 0xFF606070);
+    font_draw_string((sw - hw) / 2, sh * 3 / 4, hint, 0xFF606070);
 }
