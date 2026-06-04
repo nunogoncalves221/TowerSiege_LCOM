@@ -1,6 +1,7 @@
 #include "enemy_manager.h"
 #include "player.h"
 #include "video.h"
+#include "bullet.h"
 
 bool enemy_manager_tick(enemy_t **enemies, int *enemy_count) {
     int16_t screen_w = (int16_t) vg_get_x_res();
@@ -33,6 +34,7 @@ bool enemy_manager_tick(enemy_t **enemies, int *enemy_count) {
                 if (enemies[i]->hp <= 0) {
                     player_add_score(10);
                 }
+                bullet_invalidate_target(enemies[i]);
                 enemy_destroy(enemies[i]);
 
                 // shift array to maintain strict visual depth order

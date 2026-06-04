@@ -48,6 +48,12 @@ void bullet_fire(int16_t from_x, int16_t from_y, enemy_t *target, int damage, sp
     }
 }
 
+void bullet_invalidate_target(enemy_t *e) {
+    for (int i = 0; i < MAX_BULLETS; i++)
+        if (bullets[i].active && bullets[i].target == e)
+            bullets[i].target = NULL;
+}
+
 void bullet_tick(void) {
     int sw = (int)vg_get_x_res();
     int sh = (int)vg_get_y_res();
@@ -55,8 +61,8 @@ void bullet_tick(void) {
     for (int i = 0; i < MAX_BULLETS; i++) {
         if (!bullets[i].active) continue;
 
-        // if target is already dead, just let bullet fade out off-screen
-        if (!bullets[i].target->active) {
+        // if target was freed (invalidated) or already dead, let bullet fade off-screen
+        if (bullets[i].target == NULL || !bullets[i].target->active) {
             bullets[i].x += bullets[i].vx;
             bullets[i].y += bullets[i].vy;
             int bx = (int)bullets[i].x;
