@@ -8,7 +8,7 @@
 // core game mechanics
 #define TIMER_FREQ 60
 #define FPS 30
-#define MAX_LIVES 15   // starting lives for the player's base
+#define MAX_LIVES 1   // starting lives for the player's base
 #define MAX_ENEMIES 20 // maximum concurrent enemies on screen
 
 // hero attributes

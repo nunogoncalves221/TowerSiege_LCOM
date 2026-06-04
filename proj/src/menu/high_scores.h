@@ -6,7 +6,7 @@
 #include "rtc.h"
 
 #define HS_MAX_ENTRIES  10
-#define HS_MAX_NAME_LEN 15
+#define HS_MAX_NAME_LEN 8
 
 typedef struct {
     char     name[HS_MAX_NAME_LEN + 1];

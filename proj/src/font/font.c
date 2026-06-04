@@ -40,6 +40,11 @@
 #include "../assets/font/number_eight.xpm"
 #include "../assets/font/number_nine.xpm"
 
+#include "../assets/font/char_colon.xpm"
+#include "../assets/font/char_slash.xpm"
+#include "../assets/font/char_underscore.xpm"
+#include "../assets/font/char_exclaim.xpm"
+
 #define FONT_LETTER_W 16
 #define FONT_DIGIT_W  15
 #define CHAR_SPACING  2
@@ -83,6 +88,10 @@ static xpm_map_t get_xpm(char c) {
         case '7': return (xpm_map_t) number_seven_xpm;
         case '8': return (xpm_map_t) number_eight_xpm;
         case '9': return (xpm_map_t) number_nine_xpm;
+        case ':': return (xpm_map_t) colon_xpm;
+        case '/': return (xpm_map_t) slash_xpm;
+        case '_': return (xpm_map_t) underscore_xpm;
+        case '!': return (xpm_map_t) exclaim_xpm;
         default:  return NULL;
     }
 }
@@ -94,6 +103,8 @@ static uint16_t char_advance(char c) {
         return FONT_DIGIT_W + CHAR_SPACING;
     if (c == ' ')
         return SPACE_WIDTH;
+    if (c == ':' || c == '/' || c == '_' || c == '!')
+        return FONT_LETTER_W + CHAR_SPACING;
     return 0;
 }
 
