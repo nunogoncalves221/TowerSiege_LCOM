@@ -68,6 +68,8 @@ void game_reset(void) {
 }
 
 void game_handle_key(uint8_t scancode) {
+    if (tower_popup_handle_key(scancode)) return;
+
     switch (scancode) {
         case KEY_W_MAKE:  key_w = true;  break;
         case KEY_W_BREAK: key_w = false; break;
@@ -109,6 +111,9 @@ void game_draw(void) {
     hero_draw();
     hud_draw(&start_time);
 
+    // popup drawn over everything except the cursor
+    tower_popup_draw();
+
     // cursor is always drawn last
     if (cursor_sprite != NULL) {
         draw_sprite(cursor_sprite, cursor_x, cursor_y);
@@ -145,6 +150,6 @@ void game_update_cursor(int16_t dx, int16_t dy) {
 }
 
 void game_handle_click(void) {
-    // let the tower manager handle the grid click
-    tower_handle_click(cursor_x / TILE_SIZE, cursor_y / TILE_SIZE);
+    // use pixel-accurate handler so the popup buttons work correctly
+    tower_handle_click_px(cursor_x, cursor_y);
 }
