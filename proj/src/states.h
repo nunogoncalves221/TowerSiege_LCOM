@@ -3,6 +3,7 @@
 
 typedef enum {
     STATE_MENU,
+    STATE_DIFFICULTY,
     STATE_GAME,
     STATE_GAMEOVER,
     STATE_INSTRUCTIONS,
