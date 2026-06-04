@@ -12,13 +12,14 @@
 
 #include <lcom/lcf.h>
 #include "enemy.h"
+#include "difficulty.h"
 
 /**
  * @brief Resets wave state to the beginning of wave 1.
  *
  * Should be called once during game initialisation or on game reset.
  */
-void wave_init(void);
+void wave_init(difficulty_t diff);
 
 /**
  * @brief Advances the wave timer and spawns enemies when appropriate.
@@ -38,6 +39,7 @@ void wave_tick(enemy_t **enemies, int *enemy_count);
  *
  * @return The wave that is currently being played.
  */
-int wave_get_number(void);
+int  wave_get_number(void);
+bool wave_is_complete(void);
 
 #endif /* WAVE_H */

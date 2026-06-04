@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "game.h"
+#include "difficulty.h"
 #include "sprite.h"
 #include "animated_sprite.h"
 #include "video.h"
@@ -49,9 +50,10 @@ void game_reset(void) {
     enemy_count = 0;
     destroy_sprite(cursor_sprite);
 
-    player_init();
-    tower_init();
-    map_init();
+    difficulty_t diff = diff_get_selected();
+    player_init(diff);
+    map_init(diff);
+    tower_init(diff);
     hero_init();
 
     // setup cursor
@@ -60,7 +62,7 @@ void game_reset(void) {
     cursor_y = vg_get_y_res() / 2; // start cursor in center of screen
 
     game_over = false;
-    wave_init();
+    wave_init(diff);
     key_w = key_a = key_s = key_d = key_f = false;
 
     // read the exact time the match started
@@ -89,11 +91,20 @@ void game_handle_key(uint8_t scancode) {
 }
 
 void game_tick(void) {
+    if (game_over) return;
+
     hero_tick(enemies, enemy_count);
 
     if (enemy_manager_tick(enemies, &enemy_count)) game_over = true;
-    
+
     wave_tick(enemies, &enemy_count);
+
+    if (!game_over && wave_is_complete() && enemy_count == 0)
+        game_over = true;
+
+    if (game_over)
+        player_add_score(player_get_gold());
+
     tower_tick(enemies, enemy_count);
     bullet_tick();
 }

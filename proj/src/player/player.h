@@ -11,13 +11,14 @@
 #define _PLAYER_H_
 
 #include <stdbool.h>
+#include "difficulty.h"
 
 /**
  * @brief Resets all player resources to their initial values.
  *
  * Must be called once before a new game begins (e.g. from game_reset()).
  */
-void player_init(void);
+void player_init(difficulty_t diff);
 
 /* ------------------------------------------------------------------ */
 /** @name Gold management */

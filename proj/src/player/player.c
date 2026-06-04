@@ -1,15 +1,20 @@
 #include "player.h"
 
-#define STARTING_GOLD 500
-#define MAX_LIVES 20
+static int   player_gold  = 500;
+static int   player_lives = 20;
+static int   player_max_lives = 20;
+static int   player_score = 0;
+static float score_mult   = 1.0f;
 
-static int player_gold = STARTING_GOLD;
-static int player_lives = MAX_LIVES;
-static int player_score = 0;
-
-void player_init(void) {
-    player_gold = STARTING_GOLD;
-    player_lives = MAX_LIVES;
+void player_init(difficulty_t diff) {
+    if (diff == DIFF_MEDIUM) {
+        player_gold = 400; player_max_lives = 15; score_mult = 1.5f;
+    } else if (diff == DIFF_HARD) {
+        player_gold = 300; player_max_lives = 10; score_mult = 2.0f;
+    } else {
+        player_gold = 500; player_max_lives = 20; score_mult = 1.0f;
+    }
+    player_lives = player_max_lives;
     player_score = 0;
 }
 
@@ -39,7 +44,7 @@ int player_get_lives(void) {
 }
 
 int player_get_max_lives(void) {
-    return MAX_LIVES;
+    return player_max_lives;
 }
 
 void player_take_damage(int amount) {
@@ -59,5 +64,5 @@ int player_get_score(void) {
 }
 
 void player_add_score(int amount) {
-    player_score += amount;
+    player_score += (int)(amount * score_mult);
 }
