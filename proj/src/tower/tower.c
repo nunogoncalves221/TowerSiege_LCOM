@@ -36,6 +36,17 @@ static int popup_slot = -1;
 static int popup_selected = 0; // 0 = upgrade, 1 = remove
 static int popup_px = 0, popup_py = 0;
 
+#define COL_POPUP_BG       0x00222222
+#define COL_POPUP_BORDER   0x00AAAAAA
+#define COL_BTN_UPG        0x00116611
+#define COL_BTN_UPG_HOVER  0x0022AA22
+#define COL_BTN_DISABLED   0x00333333
+#define COL_BTN_REM        0x00771111
+#define COL_BTN_REM_HOVER  0x00AA2222
+#define COL_TEXT_GOLD      0x00FFD700
+#define COL_TEXT_GREY      0x00888888
+#define COL_TEXT_WHITE     0x00FFFFFF
+
 static void fill_rect(int x, int y, int w, int h, uint32_t c) {
     int sw = (int)vg_get_x_res(), sh = (int)vg_get_y_res();
     for (int py = y; py < y+h; py++)
@@ -113,6 +124,9 @@ bool tower_popup_handle_key(uint8_t scancode) {
                 map_mark_dirty();
             }
         } else if (popup_selected == 1 && t) { // remove
+            int refund = (t->type == TOWER_ARCHER) ? (int)(TOWER_ARCHER_COST * 0.3f)
+                                                   : (int)(TOWER_MAGE_COST   * 0.3f);
+            player_add_gold(refund);
             for (int i = 0; i < tower_count; i++) {
                 if (&towers[i] == t) {
                     towers[i] = towers[--tower_count];
@@ -145,7 +159,7 @@ void tower_handle_click_px(int px, int py) {
             popup_px = col * TILE_SIZE;
             popup_py = row * TILE_SIZE - 84;
             int sw = (int)vg_get_x_res(), sh = (int)vg_get_y_res();
-            if (popup_px + 160 > sw) popup_px = sw - 162;
+            if (popup_px + 260 > sw) popup_px = sw - 262;
             if (popup_px < 0) popup_px = 2;
             if (popup_py < 0) popup_py = row * TILE_SIZE + TILE_SIZE + 4;
             if (popup_py + 80 > sh) popup_py = sh - 82;
@@ -225,37 +239,41 @@ void tower_popup_draw(void) {
     tower_t *t = slots[popup_slot].tower;
     if (!t) { popup_slot = -1; return; }
 
-    fill_rect(popup_px, popup_py, 160, 80, 0x00222222);
-    border_rect(popup_px, popup_py, 160, 80, 0x00AAAAAA);
+    fill_rect(popup_px, popup_py, 260, 80, COL_POPUP_BG);
+    border_rect(popup_px, popup_py, 260, 80, COL_POPUP_BORDER);
 
-    int bx = popup_px + 8, bw = 144;
+    int bx = popup_px + 8, bw = 244;
     int uy = popup_py + 8, ry = uy + 36;
 
     // upgrade button
     bool can_upg    = (t->level == 1);
     int  upg_cost   = (t->type == TOWER_ARCHER) ? TOWER_ARCHER_UPG_COST : TOWER_MAGE_UPG_COST;
     bool can_afford = (player_get_gold() >= upg_cost);
-    fill_rect(bx, uy, bw, 28, (!can_upg || !can_afford) ? 0x00333333
-                              : (popup_selected == 0    ? 0x0022AA22 : 0x00116611));
-    border_rect(bx, uy, bw, 28, 0x00AAAAAA);
+    fill_rect(bx, uy, bw, 28, (!can_upg || !can_afford) ? COL_BTN_DISABLED
+                              : (popup_selected == 0    ? COL_BTN_UPG_HOVER : COL_BTN_UPG));
+    border_rect(bx, uy, bw, 28, COL_POPUP_BORDER);
     if (!can_upg) {
         uint16_t lw = font_string_width("max level");
-        font_draw_string((uint16_t)(bx+(bw-lw)/2), (uint16_t)(uy+7), "max level", 0x00888888);
+        font_draw_string((uint16_t)(bx+(bw-lw)/2), (uint16_t)(uy+7), "max level", COL_TEXT_GREY);
     } else {
         char label[24];
-        snprintf(label, sizeof(label), "upgrade %d g", upg_cost);
+        snprintf(label, sizeof(label), "upgrade -%d g", upg_cost);
         uint16_t lw = font_string_width(label);
         font_draw_string((uint16_t)(bx+(bw-lw)/2), (uint16_t)(uy+7),
-                         label, can_afford ? 0x00FFD700 : 0x00888888);
+                         label, can_afford ? COL_TEXT_GOLD : COL_TEXT_GREY);
     }
     if (popup_selected == 0)
         menu_nav_draw_item((uint16_t)(bx+4), (uint16_t)(uy+7), "", true);
 
     // remove button
-    fill_rect(bx, ry, bw, 28, popup_selected == 1 ? 0x00AA2222 : 0x00771111);
-    border_rect(bx, ry, bw, 28, 0x00AAAAAA);
-    uint16_t rw = font_string_width("remove");
-    font_draw_string((uint16_t)(bx+(bw-rw)/2), (uint16_t)(ry+7), "remove", 0x00FFFFFF);
+    int refund = (t->type == TOWER_ARCHER) ? (int)(TOWER_ARCHER_COST * 0.3f)
+                                           : (int)(TOWER_MAGE_COST   * 0.3f);
+    fill_rect(bx, ry, bw, 28, popup_selected == 1 ? COL_BTN_REM_HOVER : COL_BTN_REM);
+    border_rect(bx, ry, bw, 28, COL_POPUP_BORDER);
+    char rem_label[32];
+    snprintf(rem_label, sizeof(rem_label), "remove +%d g", refund);
+    uint16_t rw = font_string_width(rem_label);
+    font_draw_string((uint16_t)(bx+(bw-rw)/2), (uint16_t)(ry+7), rem_label, COL_TEXT_WHITE);
     if (popup_selected == 1)
         menu_nav_draw_item((uint16_t)(bx+4), (uint16_t)(ry+7), "", true);
 }
