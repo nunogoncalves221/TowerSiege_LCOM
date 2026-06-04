@@ -2,6 +2,7 @@
 #include "game.h"
 #include "player.h"
 #include "video.h"
+#include "hud.h"
 
 #include "animated_sprite.h"
 

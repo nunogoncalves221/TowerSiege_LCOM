@@ -3,14 +3,14 @@ PROG = proj
 
 # APENAS os ficheiros que estão fisicamente na pasta proj/src
 
-SRCS = main.c menu.c game.c sprite.c map.c hero.c enemy.c wave.c font.c tower.c bullet.c instructions.c pause.c gameovermenu.c menu_nav.c animated_sprite.c player.c
+SRCS = main.c menu.c game.c sprite.c map.c hero.c enemy.c wave.c font.c tower.c bullet.c instructions.c pause.c gameovermenu.c menu_nav.c animated_sprite.c player.c hud.c
 
 # Procurar os .c nas subpastas
-.PATH: menu game sprite map hero enemy font tower player
+.PATH: menu game sprite map hero enemy font tower player hud
 
 # Dizer ao compilador onde procurar os ficheiros .h
 CFLAGS += -I../../lab1 -I../../lab2 -I../../lab3 -I../../lab4 -I../../lab5
-CFLAGS += -Imenu -Igame -Isprite -Imap -Ihero -Ienemy -Ifont -Itower -Iinstructions -Iplayer
+CFLAGS += -Imenu -Igame -Isprite -Imap -Ihero -Ienemy -Ifont -Itower -Iinstructions -Iplayer -Ihud
 
 CFLAGS += -pedantic -D__LCOM_OPTIMIZED__ -O2
 
