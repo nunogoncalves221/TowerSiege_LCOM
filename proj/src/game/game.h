@@ -58,11 +58,7 @@ void game_handle_click(void);
 int    game_get_score(void);
 int16_t game_get_cursor_y(void);
 
-// gold
-int get_player_gold();
-void add_player_gold(int amount);
-
-// ui function for hero module
+// ui helper function shared with the hero module
 void draw_hp_bar(int x, int y, int width, int height, int current, int max, uint32_t color_good, uint32_t color_bg, uint32_t color_border);
 
 #endif

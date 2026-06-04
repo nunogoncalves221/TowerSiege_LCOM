@@ -2,6 +2,8 @@
 #include "bullet.h"
 #include "sprite.h"
 #include "game.h"
+#include "player.h"
+
 #include "../enemy/enemy.h"
 #include "../assets/archer_1.xpm"
 #include "../assets/mage_1.xpm"
@@ -70,8 +72,7 @@ void tower_handle_click(int col, int row) {
                 int upg_cost = (t->type == TOWER_ARCHER) ? TOWER_ARCHER_UPG_COST : TOWER_MAGE_UPG_COST;
                 
                 // check if we can actually afford the upgrade
-                if (get_player_gold() >= upg_cost) {
-                    add_player_gold(-upg_cost); // pay up
+                if (player_spend_gold(upg_cost)) {
                     t->level = 2;
                     
                     // apply stats and new sprite
@@ -104,14 +105,14 @@ void tower_handle_click(int col, int row) {
         int cost = (selected_tower_type == TOWER_ARCHER) ? TOWER_ARCHER_COST : TOWER_MAGE_COST;
         
         // cancel if we dont have gold for this
-        if (get_player_gold() < cost) { 
+        if (player_get_gold() < cost) { 
             selected_tower_type = TOWER_NONE; 
             return; 
         }
 
         for (int i = 0; i < slot_count; i++) {
             if (slots[i].col == col && slots[i].row == row && slots[i].tower == NULL) {
-                add_player_gold(-cost); // deduct the build cost
+                player_add_gold(-cost); // deduct the build cost
                 
                 tower_t *t = &towers[tower_count++];
                 t->type = selected_tower_type;
