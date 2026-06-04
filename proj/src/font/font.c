@@ -44,6 +44,8 @@
 #include "../assets/font/char_slash.xpm"
 #include "../assets/font/char_underscore.xpm"
 #include "../assets/font/char_exclaim.xpm"
+#include "../assets/font/char_plus.xpm"
+#include "../assets/font/char_minus.xpm"
 
 
 static xpm_map_t get_xpm(char c) {
@@ -88,6 +90,8 @@ static xpm_map_t get_xpm(char c) {
         case '/': return (xpm_map_t) slash_xpm;
         case '_': return (xpm_map_t) underscore_xpm;
         case '!': return (xpm_map_t) exclaim_xpm;
+        case '+': return (xpm_map_t) plus_xpm;
+        case '-': return (xpm_map_t) minus_xpm;
         default:  return NULL;
     }
 }
@@ -99,7 +103,7 @@ static uint16_t char_advance(char c) {
         return FONT_DIGIT_W;
     if (c == ' ')
         return FONT_SPACE_W;
-    if (c == ':' || c == '/' || c == '_' || c == '!')
+    if (c == ':' || c == '/' || c == '_' || c == '!' || c == '+' || c == '-')
         return FONT_LETTER_W;
     return 0;
 }
