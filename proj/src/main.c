@@ -13,6 +13,8 @@
 #include "instructions.h"
 #include "pause.h"
 #include "gameovermenu.h"
+#include "gameovermenu_hs.h"
+#include "nameentry.h"
 #include "high_scores.h"
 
 int main(int argc, char *argv[]) {
@@ -88,13 +90,20 @@ int(proj_main_loop)(int argc, char* argv[]) {
               } else if (state == STATE_GAME) {
                 game_tick();
                 if (game_is_over()) {
-                  state = STATE_GAMEOVER;
-                  gameover_reset();
+                  if (hs_qualifies(game_get_score())) {
+                    state = STATE_GAMEOVER_HS;
+                    gameover_hs_reset();
+                  } else {
+                    state = STATE_GAMEOVER;
+                    gameover_reset();
+                  }
                 } else {
                   game_draw();
                 }
               } else if (state == STATE_GAMEOVER) {
                 gameover_draw(game_get_score());
+              } else if (state == STATE_GAMEOVER_HS) {
+                gameover_hs_draw(game_get_score());
               } else if (state == STATE_INSTRUCTIONS) {
                 instructions_draw();
               } else if (state == STATE_HIGH_SCORES) {
@@ -165,6 +174,16 @@ int(proj_main_loop)(int argc, char* argv[]) {
                   if (scancode_byte == ESC_BREAKCODE) {
                     state = STATE_MENU;
                     menu_reset();
+                  }
+              } else if (state == STATE_GAMEOVER_HS) {
+                  if (scancode_byte == ESC_BREAKCODE) {
+                    state = STATE_MENU;
+                    menu_reset();
+                  } else if (gameover_hs_handle_key(scancode_byte)) {
+                    rtc_date now;
+                    rtc_read_date(&now);
+                    hs_insert(nameentry_get_name(), game_get_score(), now);
+                    state = STATE_HIGH_SCORES;
                   }
               } else if (state == STATE_INSTRUCTIONS) {
                   if (scancode_byte == ESC_BREAKCODE) {

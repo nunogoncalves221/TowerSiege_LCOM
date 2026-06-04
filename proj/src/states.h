@@ -8,6 +8,7 @@ typedef enum {
     STATE_INSTRUCTIONS,
     STATE_PAUSE,
     STATE_HIGH_SCORES,
+    STATE_GAMEOVER_HS,
 } app_state_t;
 
 #endif

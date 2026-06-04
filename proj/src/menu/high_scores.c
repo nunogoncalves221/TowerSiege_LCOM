@@ -33,6 +33,30 @@ void hs_save(void) {
     fclose(f);
 }
 
+bool hs_qualifies(int score) {
+    for (int i = 0; i < HS_MAX_ENTRIES; i++)
+        if (score > entries[i].score) return true;
+    return false;
+}
+
+void hs_insert(const char *name, int score, rtc_date date) {
+    int pos = HS_MAX_ENTRIES;
+    for (int i = 0; i < HS_MAX_ENTRIES; i++) {
+        if (score > entries[i].score) { pos = i; break; }
+    }
+    if (pos == HS_MAX_ENTRIES) return;
+    for (int i = HS_MAX_ENTRIES - 1; i > pos; i--)
+        entries[i] = entries[i - 1];
+    strncpy(entries[pos].name, name, HS_MAX_NAME_LEN);
+    entries[pos].name[HS_MAX_NAME_LEN] = '\0';
+    entries[pos].score = score;
+    entries[pos].date  = date;
+    hs_save();
+}
+
+const hs_entry_t *hs_get_entries(void) {
+    return entries;
+}
 
 // draw helpers
 
