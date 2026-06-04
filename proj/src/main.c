@@ -13,6 +13,7 @@
 #include "instructions.h"
 #include "pause.h"
 #include "gameovermenu.h"
+#include "high_scores.h"
 
 int main(int argc, char *argv[]) {
   lcf_set_language("EN-US");
@@ -26,6 +27,8 @@ int main(int argc, char *argv[]) {
 
 int(proj_main_loop)(int argc, char* argv[]) {
   if (vg_init(0x14C) == NULL) return 1;
+
+  hs_load();
 
   uint8_t timer_bit, kbd_bit, mouse_bit;
 
@@ -94,6 +97,8 @@ int(proj_main_loop)(int argc, char* argv[]) {
                 gameover_draw(game_get_score());
               } else if (state == STATE_INSTRUCTIONS) {
                 instructions_draw();
+              } else if (state == STATE_HIGH_SCORES) {
+                hs_draw();
               } else if (state == STATE_PAUSE) {
                   game_draw();
                   pause_draw();
@@ -120,6 +125,9 @@ int(proj_main_loop)(int argc, char* argv[]) {
                       break;
                     case MENU_INSTRUCTIONS:
                       state = STATE_INSTRUCTIONS;
+                      break;
+                    case MENU_HIGH_SCORES:
+                      state = STATE_HIGH_SCORES;
                       break;
                     default:
                       break;
@@ -152,6 +160,11 @@ int(proj_main_loop)(int argc, char* argv[]) {
                               break;
                       }
                       pause_reset();
+                  }
+              } else if (state == STATE_HIGH_SCORES) {
+                  if (scancode_byte == ESC_BREAKCODE) {
+                    state = STATE_MENU;
+                    menu_reset();
                   }
               } else if (state == STATE_INSTRUCTIONS) {
                   if (scancode_byte == ESC_BREAKCODE) {
