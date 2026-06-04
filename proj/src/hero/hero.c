@@ -10,10 +10,8 @@
 #include "../assets/hero.xpm"
 #include "../assets/hero_walk_1.xpm"
 #include "../assets/hero_walk_2.xpm"
-#include "../assets/hero_walk_3.xpm"
 #include "../assets/hero_atk_1.xpm"
 #include "../assets/hero_atk_2.xpm"
-#include "../assets/hero_atk_3.xpm"
 
 // hero mortality stats
 #define HERO_MAX_HP 100
@@ -47,12 +45,12 @@ static bool key_w = false, key_a = false, key_s = false, key_d = false, key_f = 
 
 void hero_init(void) {
     xpm_map_t idle_frames[] = { (xpm_map_t) hero }; 
-    xpm_map_t walk_frames[] = { (xpm_map_t) hero_walk_1, (xpm_map_t) hero_walk_2, (xpm_map_t) hero_walk_3 };
-    xpm_map_t atk_frames[]  = { (xpm_map_t) hero_atk_1, (xpm_map_t) hero_atk_2, (xpm_map_t) hero_atk_3 };
+    xpm_map_t walk_frames[] = { (xpm_map_t) hero_walk_1, (xpm_map_t) hero_walk_2 };
+    xpm_map_t atk_frames[]  = { (xpm_map_t) hero_atk_1, (xpm_map_t) hero_atk_2 };
 
     hero_idle = create_animated_sprite(idle_frames, 1, 15);
-    hero_walk = create_animated_sprite(walk_frames, 3, 10);
-    hero_attack = create_animated_sprite(atk_frames, 3, 8);
+    hero_walk = create_animated_sprite(walk_frames, 2, 10);
+    hero_attack = create_animated_sprite(atk_frames, 2, 8);
 
     hero_x = HERO_BASE_X;
     hero_y = HERO_BASE_Y;
@@ -153,8 +151,8 @@ void hero_tick(enemy_t **enemies, int enemy_count) {
     // handle getting hit by enemies
     for (int i = 0; i < enemy_count; i++) {
         if (enemies[i] != NULL && enemies[i]->active && hero_respawn_timer == 0) {
-            int h_center_x = hero_x + (hero_idle->sp->width / 2);
-            int h_center_y = hero_y + (hero_idle->sp->height / 2);
+            int h_center_x = hero_x + (hero_attack->sp->width / 2);
+            int h_center_y = hero_y + (hero_attack->sp->height / 2);
             int e_center_x = enemies[i]->x + (enemies[i]->sp->width / 2);
             int e_center_y = enemies[i]->y + (enemies[i]->sp->height / 2);
             
