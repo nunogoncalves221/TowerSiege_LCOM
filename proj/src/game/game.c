@@ -49,6 +49,7 @@ void game_reset(void) {
     enemy_count = 0;
     destroy_sprite(cursor_sprite);
 
+    player_init();
     tower_init();
     map_init();
     hero_init();
@@ -124,6 +125,10 @@ int game_get_score(void) {
 
 int16_t game_get_cursor_y(void) {
     return cursor_y;
+}
+
+rtc_date game_get_start_time(void) {
+    return start_time;
 }
 
 void game_update_cursor(int16_t dx, int16_t dy) {

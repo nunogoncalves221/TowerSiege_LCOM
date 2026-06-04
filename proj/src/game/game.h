@@ -2,13 +2,14 @@
 #define GAME_H
 
 #include <lcom/lcf.h>
+#include "rtc.h"
 
 // --- constants ---
 
 // core game mechanics
 #define TIMER_FREQ 60
 #define FPS 30
-#define MAX_LIVES 1   // starting lives for the player's base
+#define MAX_LIVES 15   // starting lives for the player's base
 #define MAX_ENEMIES 20 // maximum concurrent enemies on screen
 
 // hero attributes
@@ -55,7 +56,8 @@ void game_update_cursor(int16_t dx, int16_t dy);
 void game_handle_click(void);
 
 // score and cursor accessors (used by gameovermenu)
-int    game_get_score(void);
-int16_t game_get_cursor_y(void);
+int      game_get_score(void);
+int16_t  game_get_cursor_y(void);
+rtc_date game_get_start_time(void);
 
 #endif

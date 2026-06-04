@@ -180,9 +180,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
                     state = STATE_MENU;
                     menu_reset();
                   } else if (gameover_hs_handle_key(scancode_byte)) {
-                    rtc_date now;
-                    rtc_read_date(&now);
-                    hs_insert(nameentry_get_name(), game_get_score(), now);
+                    hs_insert(nameentry_get_name(), game_get_score(), game_get_start_time());
                     state = STATE_HIGH_SCORES;
                   }
               } else if (state == STATE_INSTRUCTIONS) {

@@ -5,9 +5,9 @@
 #include "video.h"
 #include "high_scores.h"
 
-#define COLOR_BG   0xFF000000
-#define COLOR_GOLD 0xFFFFD700
-#define COLOR_TEXT 0xFFB0B0C0
+#define COLOR_BG    0xFF000000
+#define COLOR_TEXT  0xFFB0B0C0
+#define COLOR_TITLE 0xFFE94560
 
 static void fill_rect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint32_t color) {
     for (uint16_t dy = 0; dy < h; dy++)
@@ -63,24 +63,24 @@ void gameover_hs_draw(int score) {
     // "new high score!"
     const char *hs_label = "new high score!";
     uint16_t hs_w = font_string_width(hs_label);
-    uint16_t hs_y = score_y + 35;
-    font_draw_string((sw - hs_w) / 2, hs_y, hs_label, COLOR_GOLD);
+    uint16_t hs_y = score_y + 75;
+    font_draw_string((sw - hs_w) / 2, hs_y, hs_label, COLOR_TITLE);
 
     // "enter your name:" prompt
     const char *prompt = "enter your name:";
     uint16_t prompt_w = font_string_width(prompt);
-    uint16_t prompt_y = hs_y + 40;
+    uint16_t prompt_y = hs_y + 45;
     font_draw_string((sw - prompt_w) / 2, prompt_y, prompt, COLOR_TEXT);
 
     // name input field — centered based on max name length + cursor
-    uint16_t char_w     = font_string_width("a");
+    uint16_t char_w       = font_string_width("a");
     uint16_t name_field_w = (HS_MAX_NAME_LEN + 1) * char_w;
-    uint16_t name_x     = (sw - name_field_w) / 2;
-    uint16_t name_y     = prompt_y + 30;
-    nameentry_draw(name_x, name_y, MENU_NAV_COLOR_SELECTED);
+    uint16_t name_x       = (sw - name_field_w) / 2;
+    uint16_t name_y       = prompt_y + 35;
+    nameentry_draw(name_x, name_y, 0xFFFFFFFF);
 
-    // hint at the bottom
+    // hint — placed just below the name field, not pinned to the bottom
     const char *hint = "press enter to confirm";
     uint16_t hint_w = font_string_width(hint);
-    font_draw_string((sw - hint_w) / 2, sh - 40, hint, COLOR_TEXT);
+    font_draw_string((sw - hint_w) / 2, name_y + 80, hint, COLOR_TEXT);
 }
