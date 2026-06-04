@@ -76,8 +76,8 @@ void hud_draw(rtc_date *start_time) {
 
     // rtc clock 
     char time_str[RTC_STR_MAX_LEN];
-    snprintf(time_str, sizeof(time_str), "%02d %02d 20%02d   %02d %02d", 
-             start_time->day, start_time->month, start_time->year, 
+    snprintf(time_str, sizeof(time_str), "%02d/%02d/20%02d   %02d:%02d",
+             start_time->day, start_time->month, start_time->year,
              start_time->hours, start_time->minutes);
              
     uint16_t time_w = font_string_width(time_str);
