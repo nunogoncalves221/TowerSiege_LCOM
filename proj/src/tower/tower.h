@@ -9,22 +9,14 @@
 // types 
 
 typedef enum { TOWER_NONE, TOWER_ARCHER, TOWER_MAGE } tower_type_t;
-typedef enum { UI_NONE, UI_BUILD, UI_UPGRADE } ui_state_t;
-
-// which button is highlighted in the tower popup
-typedef enum {
-    POPUP_NONE,      // popup is closed
-    POPUP_UPGRADE,   // "Upgrade" button
-    POPUP_REMOVE     // "Remove" button
-} tower_popup_btn_t;
 
 // constants
 
 // tower costs
-#define TOWER_ARCHER_COST 150
-#define TOWER_MAGE_COST   300
-#define TOWER_ARCHER_UPG_COST 100
-#define TOWER_MAGE_UPG_COST   250
+#define TOWER_ARCHER_COST 200
+#define TOWER_MAGE_COST   250
+#define TOWER_ARCHER_UPG_COST 250
+#define TOWER_MAGE_UPG_COST   300
 
 // archer tower stats (level 1)
 #define TOWER_ARCHER_BASE_DMG       10

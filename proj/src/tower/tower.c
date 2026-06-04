@@ -47,6 +47,20 @@ static int popup_px = 0, popup_py = 0;
 #define COL_TEXT_GREY      0x00888888
 #define COL_TEXT_WHITE     0x00FFFFFF
 
+static int tower_refund(const tower_t *t) {
+    int base, upg;
+    if (t->type == TOWER_ARCHER) {
+        base = TOWER_ARCHER_COST;
+        if (t->level == 2) upg = TOWER_ARCHER_UPG_COST;
+        else upg = 0;
+    } else {
+        base = TOWER_MAGE_COST;
+        if (t->level == 2) upg = TOWER_MAGE_UPG_COST;
+        else upg = 0;
+    }
+    return (int)((base + upg) * 0.3f);
+}
+
 static void fill_rect(int x, int y, int w, int h, uint32_t c) {
     int sw = (int)vg_get_x_res(), sh = (int)vg_get_y_res();
     for (int py = y; py < y+h; py++)
@@ -124,8 +138,7 @@ bool tower_popup_handle_key(uint8_t scancode) {
                 map_mark_dirty();
             }
         } else if (popup_selected == 1 && t) { // remove
-            int refund = (t->type == TOWER_ARCHER) ? (int)(TOWER_ARCHER_COST * 0.3f)
-                                                   : (int)(TOWER_MAGE_COST   * 0.3f);
+            int refund = tower_refund(t);
             player_add_gold(refund);
             for (int i = 0; i < tower_count; i++) {
                 if (&towers[i] == t) {
@@ -266,8 +279,7 @@ void tower_popup_draw(void) {
         menu_nav_draw_item((uint16_t)(bx+4), (uint16_t)(uy+7), "", true);
 
     // remove button
-    int refund = (t->type == TOWER_ARCHER) ? (int)(TOWER_ARCHER_COST * 0.3f)
-                                           : (int)(TOWER_MAGE_COST   * 0.3f);
+    int refund = tower_refund(t);
     fill_rect(bx, ry, bw, 28, popup_selected == 1 ? COL_BTN_REM_HOVER : COL_BTN_REM);
     border_rect(bx, ry, bw, 28, COL_POPUP_BORDER);
     char rem_label[32];

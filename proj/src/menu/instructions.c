@@ -38,10 +38,10 @@ void instructions_draw(void) {
         "esc           back to menu",
     };
     const char *towers[] = {
-        "archer   cost -150 g   upgrade -100 g",
-        "mage     cost -300 g   upgrade -250 g",
+        "archer   cost -200 g   upgrade -250 g",
+        "mage     cost -250 g   upgrade -300 g",
         "click a tower to upgrade or remove it",
-        "removing returns 30 percent of the build cost",
+        "removing returns 30 percent of total cost paid",
     };
 
     uint16_t total_h = line + gap             // title
