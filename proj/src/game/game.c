@@ -12,9 +12,9 @@
 #include "bullet.h"
 #include "font.h"
 #include "rtc.h"
+#include "player.h"
 
 #include "../assets/cursor.xpm"
-
 
 // rtc ui constants
 #define RTC_STR_MAX_LEN 64
@@ -62,28 +62,11 @@ static bool key_s = false;
 static bool key_d = false;
 static bool key_space = false;
 
-// player economy
-static int player_gold = 10000;
-static int player_lives = MAX_LIVES;
-static int player_score = 0;
+// core game state
 static bool game_over = false;
 
 // rtc
 static rtc_date start_time;
-
-// gold getter
-int get_player_gold() {
-    return player_gold;
-}
-
-// gold setter
-void add_player_gold(int amount) {
-    player_gold += amount;
-    
-    if (player_gold < 0) {
-        player_gold = 0;
-    }
-}
 
 void game_reset(void) {
     // clean up old resources
@@ -103,9 +86,6 @@ void game_reset(void) {
     cursor_x = vg_get_x_res() / 2;
     cursor_y = vg_get_y_res() / 2; // start cursor in center of screen
 
-    player_gold = 500;
-    player_lives = MAX_LIVES;
-    player_score = 0;
     game_over = false;
     wave_init();
     key_w = key_a = key_s = key_d = key_space = false;
@@ -149,9 +129,10 @@ void game_tick(void) {
             // enemy escaped through the right edge — costs a life
             if (enemies[i]->x > screen_w) {
                 enemies[i]->active = false;
-                player_lives--;
-                if (player_lives <= 0) {
-                    player_lives = 0;
+               
+                player_take_damage(1);
+                
+                if (player_is_dead()) {
                     game_over = true;
                 }
             }
@@ -165,7 +146,7 @@ void game_tick(void) {
             // if the enemy is inactive (dead or off-screen), destroy it
             if (!enemies[i]->active) {
                 if (enemies[i]->hp <= 0)
-                    player_score += 10;
+                    player_add_score(10);
                 enemy_destroy(enemies[i]);
 
                 // shift array to maintain strict visual depth order
@@ -180,7 +161,6 @@ void game_tick(void) {
     }
 
     wave_tick(enemies, &enemy_count);
-
     tower_tick(enemies, enemy_count);
     bullet_tick();
 }
@@ -201,11 +181,10 @@ void game_draw(void) {
     }
 
     bullet_draw();
-
     hero_draw();
 
     // lives bar: filled rectangle that shrinks as lives are lost
-    draw_hp_bar(10, 10, 200, 14, player_lives, MAX_LIVES,
+    draw_hp_bar(10, 10, 200, 14, player_get_lives(), player_get_max_lives(),
                 UI_HP_COLOR_GOOD, UI_HP_COLOR_BG, UI_HP_COLOR_BORDER);
 
     // wave counter below the bar
@@ -215,13 +194,13 @@ void game_draw(void) {
 
     // score counter — top-centre
     char score_str[32];
-    snprintf(score_str, sizeof(score_str), "score %d", player_score);
+    snprintf(score_str, sizeof(score_str), "score %d", player_get_score());
     uint16_t stw = font_string_width(score_str);
     font_draw_string((uint16_t)((vg_get_x_res() - stw) / 2), 10, score_str, 0x00FFFFFF);
 
     // gold counter — top-right
     char gold_str[32];
-    snprintf(gold_str, sizeof(gold_str), "gold %d", player_gold);
+    snprintf(gold_str, sizeof(gold_str), "gold %d", player_get_gold());
     uint16_t tw = font_string_width(gold_str);
     font_draw_string((uint16_t)(vg_get_x_res() - tw - 10), 10, gold_str, 0x00FFD700);
 
@@ -262,7 +241,7 @@ bool game_is_over(void) {
 }
 
 int game_get_score(void) {
-    return player_score;
+    return player_get_score();
 }
 
 int16_t game_get_cursor_y(void) {

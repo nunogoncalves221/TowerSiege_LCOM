@@ -2,7 +2,7 @@
 #define _HERO_H_
 
 #include <stdbool.h>
-#include "../enemy/enemy.h"
+#include "enemy.h"
 
 // sets up the hero's initial position, health and animations
 void hero_init(void);

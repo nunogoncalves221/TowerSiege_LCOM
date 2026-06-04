@@ -2,6 +2,7 @@
 #include "sprite.h"
 #include "video.h"
 #include "game.h"
+#include "player.h"
 
 #define MAX_BULLETS  64
 #define BULLET_SPEED 10
@@ -79,7 +80,7 @@ void bullet_tick(void) {
             bullets[i].target->hp -= bullets[i].damage;
             if (bullets[i].target->hp <= 0) {
                 bullets[i].target->active = false;
-                add_player_gold(bullets[i].target->gold_value);
+                player_add_gold(bullets[i].target->gold_value);
             }
             bullets[i].active = false;
             continue;

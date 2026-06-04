@@ -1,6 +1,8 @@
 #include "hero.h"
-#include "game.h" // to call add_player_gold()
+#include "game.h"
+#include "player.h"
 #include "video.h"
+
 #include "animated_sprite.h"
 
 // hero assets
@@ -125,7 +127,7 @@ void hero_tick(enemy_t **enemies, int enemy_count) {
                             enemies[i]->hp -= 15;
                             if (enemies[i]->hp <= 0) {
                                 enemies[i]->active = false;
-                                add_player_gold(enemies[i]->gold_value);
+                                player_add_gold(enemies[i]->gold_value);
                             }
                         }
                     }
