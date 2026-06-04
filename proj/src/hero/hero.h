@@ -11,7 +11,7 @@ void hero_init(void);
 void hero_destroy(void);
 
 // passes the current keyboard state from the main game loop to the hero
-void hero_update_input(bool w, bool a, bool s, bool d, bool space);
+void hero_update_input(bool w, bool a, bool s, bool d, bool f);
 
 // handles movement, attack state machine, and collisions with enemies
 void hero_tick(enemy_t **enemies, int enemy_count);

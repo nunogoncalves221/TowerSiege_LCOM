@@ -43,7 +43,7 @@ static int hero_respawn_timer = 0;
 static int hero_attack_cd = 0;
 
 // internal input state
-static bool key_w = false, key_a = false, key_s = false, key_d = false, key_space = false;
+static bool key_w = false, key_a = false, key_s = false, key_d = false, key_f = false;
 
 void hero_init(void) {
     xpm_map_t idle_frames[] = { (xpm_map_t) hero }; 
@@ -67,8 +67,8 @@ void hero_destroy(void) {
     destroy_animated_sprite(hero_attack);
 }
 
-void hero_update_input(bool w, bool a, bool s, bool d, bool space) {
-    key_w = w; key_a = a; key_s = s; key_d = d; key_space = space;
+void hero_update_input(bool w, bool a, bool s, bool d, bool f) {
+    key_w = w; key_a = a; key_s = s; key_d = d; key_f = f;
 }
 
 void hero_tick(enemy_t **enemies, int enemy_count) {
@@ -93,7 +93,7 @@ void hero_tick(enemy_t **enemies, int enemy_count) {
         if (key_a) { hero_x -= HERO_SPEED; is_moving = true; }
         if (key_d) { hero_x += HERO_SPEED; is_moving = true; }
 
-        // clamp hero to screen bounds so he doesn't walk off into the void
+        // clamp hero to screen bounds 
         int16_t hw = (int16_t) hero_idle->sp->width;
         int16_t hh = (int16_t) hero_idle->sp->height;
         if (hero_x < 0) hero_x = 0;
@@ -103,36 +103,39 @@ void hero_tick(enemy_t **enemies, int enemy_count) {
 
         if (hero_attack_cd > 0) hero_attack_cd--;
 
-        // trigger attack if space is pressed, not already swinging, and cooldown elapsed
-        if (key_space && current_hero_state != HERO_ATTACK && hero_attack_cd == 0) {
+        // trigger attack if f is pressed
+        if (key_f && current_hero_state != HERO_ATTACK && hero_attack_cd == 0) {
             current_hero_state = HERO_ATTACK;
             reset_animated_sprite(hero_attack);
+            
+            // DAMAGE IS APPLIED IMMEDIATELY UPON PRESSING THE ATTACK BUTTON
+            int h_center_x = hero_x + (hero_attack->sp->width / 2);
+            int h_center_y = hero_y + (hero_attack->sp->height / 2);
+
+            for (int i = 0; i < enemy_count; i++) {
+                if (enemies[i] != NULL && enemies[i]->active) {
+                    int e_center_x = enemies[i]->x + (enemies[i]->sp->width / 2);
+                    int e_center_y = enemies[i]->y + (enemies[i]->sp->height / 2);
+                    int dx = e_center_x - h_center_x;
+                    int dy = e_center_y - h_center_y;
+                    
+                    // smash within 100 pixels
+                    if ((dx * dx) + (dy * dy) <= (100 * 100)) {
+                        enemies[i]->hp -= 15;
+                        if (enemies[i]->hp <= 0) {
+                            enemies[i]->active = false;
+                            player_add_gold(enemies[i]->gold_value);
+                        }
+                    }
+                }
+            }
         }
 
+        // state machine only handles visuals and reverting to idle/walk now
         if (current_hero_state == HERO_ATTACK) {
             animate_sprite_once(hero_attack);
             
             if (animated_sprite_finished(hero_attack)) {
-                int h_center_x = hero_x + (hero_attack->sp->width / 2);
-                int h_center_y = hero_y + (hero_attack->sp->height / 2);
-
-                for (int i = 0; i < enemy_count; i++) {
-                    if (enemies[i] != NULL && enemies[i]->active) {
-                        int e_center_x = enemies[i]->x + (enemies[i]->sp->width / 2);
-                        int e_center_y = enemies[i]->y + (enemies[i]->sp->height / 2);
-                        int dx = e_center_x - h_center_x;
-                        int dy = e_center_y - h_center_y;
-                        
-                        // smash within 100 pixels
-                        if ((dx * dx) + (dy * dy) <= (100 * 100)) {
-                            enemies[i]->hp -= 15;
-                            if (enemies[i]->hp <= 0) {
-                                enemies[i]->active = false;
-                                player_add_gold(enemies[i]->gold_value);
-                            }
-                        }
-                    }
-                }
                 hero_attack_cd = HERO_ATTACK_COOLDOWN;
                 current_hero_state = is_moving ? HERO_WALK : HERO_IDLE;
             }
