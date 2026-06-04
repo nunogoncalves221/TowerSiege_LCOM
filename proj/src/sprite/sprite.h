@@ -19,4 +19,7 @@ void destroy_sprite(sprite_t *sp);
 // draws the sprite at the given coordinates, ignoring the transparent color
 int draw_sprite(sprite_t *sp, int16_t x, int16_t y);
 
+// draws the sprite mirrored horizontally (for right-facing direction)
+int draw_sprite_flipped(sprite_t *sp, int16_t x, int16_t y);
+
 #endif

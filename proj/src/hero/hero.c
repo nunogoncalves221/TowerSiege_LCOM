@@ -42,6 +42,7 @@ static int hero_attack_cd = 0;
 
 // internal input state
 static bool key_w = false, key_a = false, key_s = false, key_d = false, key_f = false;
+static bool hero_facing_right = false;
 
 void hero_init(void) {
     xpm_map_t idle_frames[] = { (xpm_map_t) hero }; 
@@ -88,8 +89,8 @@ void hero_tick(enemy_t **enemies, int enemy_count) {
 
         if (key_w) { hero_y -= HERO_SPEED; is_moving = true; }
         if (key_s) { hero_y += HERO_SPEED; is_moving = true; }
-        if (key_a) { hero_x -= HERO_SPEED; is_moving = true; }
-        if (key_d) { hero_x += HERO_SPEED; is_moving = true; }
+        if (key_a) { hero_x -= HERO_SPEED; is_moving = true; hero_facing_right = false; }
+        if (key_d) { hero_x += HERO_SPEED; is_moving = true; hero_facing_right = true; }
 
         // clamp hero to screen bounds 
         int16_t hw = (int16_t) hero_idle->sp->width;
@@ -179,13 +180,16 @@ void hero_draw(void) {
     if (hero_respawn_timer > 0) return; // safety check
 
     if (current_hero_state == HERO_ATTACK && hero_attack != NULL) {
-        draw_animated_sprite(hero_attack, hero_x, hero_y);
-    } 
+        if (hero_facing_right) draw_animated_sprite_flipped(hero_attack, hero_x, hero_y);
+        else draw_animated_sprite(hero_attack, hero_x, hero_y);
+    }
     else if (current_hero_state == HERO_WALK && hero_walk != NULL) {
-        draw_animated_sprite(hero_walk, hero_x, hero_y);
-    } 
+        if (hero_facing_right) draw_animated_sprite_flipped(hero_walk, hero_x, hero_y);
+        else draw_animated_sprite(hero_walk, hero_x, hero_y);
+    }
     else if (hero_idle != NULL) {
-        draw_animated_sprite(hero_idle, hero_x, hero_y);
+        if (hero_facing_right) draw_animated_sprite_flipped(hero_idle, hero_x, hero_y);
+        else draw_animated_sprite(hero_idle, hero_x, hero_y);
     }
 
     // grab the ui helper function from game.c to draw the hp bar

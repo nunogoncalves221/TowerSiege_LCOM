@@ -18,6 +18,7 @@ typedef struct {
 AnimSprite *create_animated_sprite(xpm_map_t *xpm_array, uint8_t no_pic, int aspeed);
 void destroy_animated_sprite(AnimSprite *as);
 int draw_animated_sprite(AnimSprite *as, uint16_t x, uint16_t y);
+int draw_animated_sprite_flipped(AnimSprite *as, uint16_t x, uint16_t y);
 
 // stops at the last frame (great for attacks or dying)
 void animate_sprite_once(AnimSprite *as);

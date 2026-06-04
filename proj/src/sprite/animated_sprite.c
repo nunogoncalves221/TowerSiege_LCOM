@@ -76,9 +76,21 @@ int draw_animated_sprite(AnimSprite *as, uint16_t x, uint16_t y) {
   // hot-swap the pixel map to the current animation frame, draw it, and swap it back
   uint32_t *original_map = as->sp->map;
   as->sp->map = as->map[as->cur_fig];
-  
+
   int result = draw_sprite(as->sp, x, y);
-  
+
+  as->sp->map = original_map;
+  return result;
+}
+
+int draw_animated_sprite_flipped(AnimSprite *as, uint16_t x, uint16_t y) {
+  if (as == NULL || as->sp == NULL || as->map == NULL) return 1;
+
+  uint32_t *original_map = as->sp->map;
+  as->sp->map = as->map[as->cur_fig];
+
+  int result = draw_sprite_flipped(as->sp, x, y);
+
   as->sp->map = original_map;
   return result;
 }

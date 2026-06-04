@@ -66,3 +66,32 @@ int draw_sprite(sprite_t *sp, int16_t x, int16_t y) {
     
     return 0;
 }
+
+int draw_sprite_flipped(sprite_t *sp, int16_t x, int16_t y) {
+    if (sp == NULL || sp->map == NULL) return 1;
+
+    uint32_t transparent = xpm_transparency_color(XPM_8_8_8_8);
+
+    int16_t screen_w = (int16_t) vg_get_x_res();
+    int16_t screen_h = (int16_t) vg_get_y_res();
+
+    for (int16_t i = 0; i < (int16_t) sp->height; i++) {
+        for (int16_t j = 0; j < (int16_t) sp->width; j++) {
+
+            int16_t px = x + j;
+            int16_t py = y + i;
+
+            if (px < 0 || px >= screen_w || py < 0 || py >= screen_h) {
+                continue;
+            }
+
+            uint32_t color = sp->map[i * sp->width + (sp->width - 1 - j)];
+
+            if (color != transparent) {
+                vg_draw_pixel((uint16_t)px, (uint16_t)py, color);
+            }
+        }
+    }
+
+    return 0;
+}
