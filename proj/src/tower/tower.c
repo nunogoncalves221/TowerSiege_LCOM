@@ -16,16 +16,16 @@
 #include "../assets/orb1.xpm"
 #include "../assets/orb2.xpm"
 
-#define MAX_SLOTS  11
 #define MAX_TOWERS 11
 
-static tower_slot_t slots[MAX_SLOTS];
+static tower_slot_t slots[MAX_TOWERS];
 static int slot_count = 0;
 
 static tower_t towers[MAX_TOWERS];
 static int tower_count = 0;
 
 static tower_type_t selected_tower_type = TOWER_NONE;
+static int tower_limit = 11;
 
 static sprite_t *archer_sprite = NULL, *mage_sprite     = NULL;
 static sprite_t *archer_2_sprite = NULL, *mage_2_sprite = NULL;
@@ -82,7 +82,11 @@ static void border_rect(int x, int y, int w, int h, uint32_t c) {
     }
 }
 
-void tower_init(void) {
+void tower_init(difficulty_t diff) {
+    if (diff == DIFF_MEDIUM)    tower_limit = 9;
+    else if (diff == DIFF_HARD) tower_limit = 7;
+    else                        tower_limit = 11;
+
     slot_count = tower_count = 0;
     selected_tower_type = TOWER_NONE;
     popup_slot = -1;
@@ -96,8 +100,8 @@ void tower_init(void) {
     if (!orb2_sprite)     orb2_sprite     = create_sprite((xpm_map_t)orb2);
     bullet_init();
 
-    for (int r = 0; r < MAP_ROWS; r++)
-        for (int c = 0; c < MAP_COLS; c++) {
+    for (int r = 0; r < MAP_ROWS && slot_count < tower_limit; r++)
+        for (int c = 0; c < MAP_COLS && slot_count < tower_limit; c++) {
             if (map_get_tile(c, r) != TILE_BLANK) continue;
             if (r == 8 && (c == 5 || c == 6)) continue;
             slots[slot_count++] = (tower_slot_t){c, r, NULL};
@@ -181,7 +185,7 @@ void tower_handle_click_px(int px, int py) {
         }
     }
 
-    if (selected_tower_type == TOWER_NONE || tower_count >= MAX_TOWERS) {
+    if (selected_tower_type == TOWER_NONE || tower_count >= tower_limit) {
         selected_tower_type = TOWER_NONE; return;
     }
     int cost = (selected_tower_type == TOWER_ARCHER) ? TOWER_ARCHER_COST : TOWER_MAGE_COST;

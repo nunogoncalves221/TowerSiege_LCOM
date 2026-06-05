@@ -7,7 +7,7 @@
 #include "../assets/archer_1.xpm"
 #include "../assets/mage_1.xpm"
 
-static const tile_t map_grid[MAP_ROWS][MAP_COLS] = {
+static const tile_t map_easy[MAP_ROWS][MAP_COLS] = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 1, 1, 1, 0, 0, 0, 2, 0, 2, 0, 0, 0 },
     { 0, 2, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0 },
@@ -18,6 +18,32 @@ static const tile_t map_grid[MAP_ROWS][MAP_COLS] = {
     { 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 1, 1 },
     { 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 0 },
 };
+
+static const tile_t map_medium[MAP_ROWS][MAP_COLS] = {
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 2, 1, 0, 0, 2, 0, 0, 2, 0, 0, 0 },
+    { 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0 },
+    { 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0 },
+    { 0, 2, 1, 1, 1, 1, 2, 0, 1, 2, 0, 0 },
+    { 0, 0, 0, 2, 0, 0, 0, 0, 1, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 },
+    { 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 2, 0 },
+};
+
+static const tile_t map_hard[MAP_ROWS][MAP_COLS] = {
+    { 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0 },
+    { 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 2, 0, 0, 1, 2, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0 },
+    { 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 },
+    { 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0 },
+};
+
+static const tile_t (*active_map)[MAP_COLS] = map_easy;
 
 static sprite_t *grass_sprite  = NULL;
 static sprite_t *path_sprite   = NULL;
@@ -31,7 +57,10 @@ static bool map_dirty = true;
 #define MAP_CACHE_W (MAP_COLS * TILE_SIZE)
 #define MAP_CACHE_H (MAP_ROWS * TILE_SIZE)
 
-void map_init(void) {
+void map_init(difficulty_t diff) {
+    if (diff == DIFF_MEDIUM)      active_map = map_medium;
+    else if (diff == DIFF_HARD)   active_map = map_hard;
+    else                          active_map = map_easy;
     if (grass_sprite == NULL)
         grass_sprite = create_sprite((xpm_map_t) grass);
     if (path_sprite == NULL)
@@ -63,7 +92,7 @@ bool map_draw(void) {
         for (int col = 0; col < MAP_COLS; col++) {
             int16_t x = (int16_t)(col * TILE_SIZE);
             int16_t y = (int16_t)(row * TILE_SIZE);
-            switch (map_grid[row][col]) {
+            switch (active_map[row][col]) {
                 case TILE_PATH:  draw_sprite(path_sprite,  x, y); break;
                 case TILE_BLANK: draw_sprite(blank_sprite, x, y); break;
                 default:         draw_sprite(grass_sprite, x, y); break;
@@ -87,5 +116,5 @@ void map_update_cache(void) {
 tile_t map_get_tile(int col, int row) {
     if (col < 0 || col >= MAP_COLS || row < 0 || row >= MAP_ROWS)
         return TILE_GRASS;
-    return map_grid[row][col];
+    return active_map[row][col];
 }

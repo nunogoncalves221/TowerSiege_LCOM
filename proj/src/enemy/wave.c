@@ -13,6 +13,12 @@ static int orcs_to_spawn = 0;
 static int spawn_timer = 0;
 static int spawn_interval = 0;
 static int wave_delay = 0;
+static bool wave_complete = false;
+
+static float base_goblins = 3.6f;
+static float base_orcs    = 2.4f;
+static int   base_interval = 50;
+static int   min_interval  = 20;
 
 static int16_t orc_start_x = 0;
 static int16_t orc_start_y = 0;
@@ -21,21 +27,31 @@ static int16_t goblin_start_y = 0;
 
 static void start_wave(int wave) {
     wave_number = wave;
-    float g = 3.6, o = 2.4;
-    // enemy count multiplier
+    float g = base_goblins, o = base_orcs;
     for (int i = 1; i < wave; i++) {
-        g *= 1.2;
-        o *= 1.2;
+        g *= 1.2f;
+        o *= 1.2f;
     }
     goblins_to_spawn = (int)g;
     orcs_to_spawn    = (int)o;
-    int interval = 50 - (wave - 1) * 3;
-    spawn_interval = interval < 20 ? 20 : interval;
+    int interval = base_interval - (wave - 1) * 3;
+    spawn_interval = interval < min_interval ? min_interval : interval;
     spawn_timer = 30;
     wave_delay = 0;
 }
 
-void wave_init(void) {
+void wave_init(difficulty_t diff) {
+    if (diff == DIFF_MEDIUM) {
+        base_goblins  = 3.9f; base_orcs = 2.6f;
+        base_interval = 49;   min_interval = 20;
+    } else if (diff == DIFF_HARD) {
+        base_goblins  = 4.3f; base_orcs = 2.9f;
+        base_interval = 46;   min_interval = 20;
+    } else {
+        base_goblins  = 3.6f; base_orcs = 2.4f;
+        base_interval = 50;   min_interval = 20;
+    }
+    wave_complete = false;
     int w, h;
 
     // get sprite dimensions and set spawn coordenates
@@ -74,11 +90,18 @@ void wave_tick(enemy_t **enemies, int *enemy_count) {
         // start countdown after last enemy spawns
         wave_delay++;
         if (*enemy_count == 0 || wave_delay >= WAVE_DELAY) {
-            start_wave(wave_number + 1);
+            if (wave_number >= 10)
+                wave_complete = true;
+            else
+                start_wave(wave_number + 1);
         }
     }
 }
 
 int wave_get_number(void) {
     return wave_number;
+}
+
+bool wave_is_complete(void) {
+    return wave_complete;
 }

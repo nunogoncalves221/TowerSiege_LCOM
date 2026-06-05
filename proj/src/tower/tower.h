@@ -5,6 +5,7 @@
 #include "sprite.h"
 #include "map.h"
 #include "enemy.h"
+#include "difficulty.h"
 
 // types 
 
@@ -58,7 +59,7 @@ typedef struct {
 
 // function prototypes
 
-void tower_init(void);
+void tower_init(difficulty_t diff);
 void tower_handle_click_px(int px, int py);
 void tower_tick(enemy_t **enemies, int enemy_count);
 void tower_draw(void);
