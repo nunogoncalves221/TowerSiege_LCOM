@@ -114,12 +114,15 @@ void hs_draw(void) {
         font_draw_string(rank_x, y, rank_buf, COLOR_TITLE);
 
         if (entries[i].name[0] != '\0') {
-            char buf[64]; int p = 0;
-
             // score
             char score_buf[12];
             int_to_str(entries[i].score, score_buf);
-            for (int j = 0; score_buf[j]; j++) buf[p++] = score_buf[j];
+            uint16_t score_col_w = font_string_width("00000");
+            uint16_t score_x = left_x + rank_w + score_col_w - font_string_width(score_buf);
+            font_draw_string(score_x, y, score_buf, COLOR_TEXT);
+
+            // date, time, name
+            char buf[64]; int p = 0;
 
             // date (dd/mm/yy)
             append_spaces(buf, &p);
@@ -141,9 +144,7 @@ void hs_draw(void) {
                 buf[p++] = entries[i].name[j];
 
             buf[p] = '\0';
-            
-            // draw the line
-            font_draw_string(left_x + rank_w, y, buf, COLOR_TEXT);
+            font_draw_string(left_x + rank_w + score_col_w, y, buf, COLOR_TEXT);
         }
 
         y += line;
