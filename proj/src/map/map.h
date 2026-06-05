@@ -19,7 +19,7 @@
 
 /** @brief Type of a single map tile. */
 typedef enum {
-    TILE_GRASS, /**< Open ground */
+    TILE_GRASS, /**< Open ground. */
     TILE_PATH,  /**< Enemy walking route. */
     TILE_BLANK  /**< Towers can be placed here. */
 } tile_t;

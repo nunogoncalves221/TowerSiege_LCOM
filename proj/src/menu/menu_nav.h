@@ -18,7 +18,7 @@
 /**
  * @brief Handles UP, DOWN, and Enter keys for a generic option list.
  *
- * Decrements or increments *selected on UP/DOWN, wrapping around the list.
+ * Decrements or increments *selected on UP/DOWN.
  *
  * @param scancode Raw keyboard scancode (set 1 make code).
  * @param selected Pointer to the current selection index; updated in place.

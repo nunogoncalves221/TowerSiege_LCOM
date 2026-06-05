@@ -80,7 +80,7 @@ bool player_is_dead(void);
 int  player_get_score(void);
 
 /**
- * @brief Adds points to the player's score.
+ * @brief Adds points to the player's score according to difficulty.
  *
  * @param amount Positive point value to add.
  */

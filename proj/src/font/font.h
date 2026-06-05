@@ -6,9 +6,6 @@
  * before drawing. All glyphs are rendered from a built-in bitmap font;
  * characters are coloured by tinting each non-transparent pixel with the
  * supplied AARRGGBB colour.
- *
- * @note Only uppercase letters, digits, and spaces are supported by the
- *       built-in glyph set.
  */
 
 #ifndef FONT_H

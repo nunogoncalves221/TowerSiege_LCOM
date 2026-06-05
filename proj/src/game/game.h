@@ -89,8 +89,8 @@ bool game_is_over(void);
 /**
  * @brief Forwards a keyboard scancode to the relevant in-game handler.
  *
- * Routes movement keys to the hero, Escape to the pause screen, and
- * tower-popup keys when a popup is open.
+ * Routes movement keys to the hero, and tower-popup keys
+ * when a popup is open.
  *
  * @param scancode Raw keyboard scancode.
  */
@@ -107,8 +107,9 @@ void game_update_cursor(int16_t dx, int16_t dy);
 /**
  * @brief Processes a left mouse-button click at the current cursor position.
  *
- * Checks whether the click lands on a grass tile and opens the tower
- * placement popup if so.
+ * Checks whether the click lands on a blank tile and places the 
+ * selected tower, or opens the upgrade popup if a tower is already 
+ * present.
  */
 void game_handle_click(void);
 

@@ -19,8 +19,8 @@
 /** @brief Type of tower occupying a grid slot. */
 typedef enum {
     TOWER_NONE,   /**< Slot is empty (no tower placed). */
-    TOWER_ARCHER, /**< Archer tower */
-    TOWER_MAGE    /**< Mage tower */
+    TOWER_ARCHER, /**< Archer tower. */
+    TOWER_MAGE    /**< Mage tower. */
 } tower_type_t;
 
 #define TOWER_ARCHER_COST     200
@@ -67,15 +67,15 @@ typedef struct {
  *
  * Must be called once after map_init() before any other tower function.
  *
- * @param diff Selected difficulty, used to scale tower costs if applicable.
+ * @param diff Selected difficulty, used to limit the number of available tower slots.
  */
 void tower_init(difficulty_t diff);
 
 /**
  * @brief Handles a left-click at the given pixel coordinates.
  *
- * If the click lands on a blank tile that has no tower, opens the placement
- * popup. If a tower is already there, opens the upgrade popup instead.
+ * If the click lands on a blank tile with a tower type selected, places the tower immediately.
+ * If a tower is already there, opens the upgrade/remove popup instead.
  *
  * @param px Click X position in screen pixels.
  * @param py Click Y position in screen pixels.

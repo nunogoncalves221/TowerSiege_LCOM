@@ -24,7 +24,7 @@ void bullet_init(void);
 /**
  * @brief Spawns a new bullet aimed at the given enemy.
  *
- * If the pool is exhausted, the oldest bullet is silently recycled.
+ * If the pool is exhausted, the fire request is silently dropped.
  *
  * @param from_x Origin X position in screen pixels (tower centre).
  * @param from_y Origin Y position in screen pixels (tower centre).
