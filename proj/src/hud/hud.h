@@ -2,7 +2,7 @@
  * @file hud.h
  * @brief Heads-up display rendering for in-game UI elements.
  *
- * Draws the player's lives, score, gold, current wave number, and elapsed
+ * Draws the player's lives, score, gold, current wave number, and start
  * match time. Also exposes a generic HP bar renderer shared by other modules.
  */
 
@@ -15,11 +15,9 @@
 /**
  * @brief Draws all HUD elements for the current frame.
  *
- * Renders lives, score, gold, wave number, and the time elapsed since the
- * match started.
+ * Renders lives, score, gold, wave number, and the time of the match start.
  *
- * @param start_time Pointer to the RTC timestamp recorded at game start,
- *                   used to compute and display the match duration.
+ * @param start_time Pointer to the RTC timestamp recorded at game start.
  */
 void hud_draw(rtc_date *start_time);
 
@@ -31,7 +29,7 @@ void hud_draw(rtc_date *start_time);
  * @param width        Total width of the bar in pixels.
  * @param height       Total height of the bar in pixels.
  * @param current      Current HP value (determines fill fraction).
- * @param max          Maximum HP value (full bar).
+ * @param max          Maximum HP value.
  * @param color_good   Fill colour in AARRGGBB format.
  * @param color_bg     Background colour for the empty portion.
  * @param color_border Border colour drawn around the bar.

@@ -26,7 +26,7 @@ void gameover_hs_reset(void);
  * Forwards the scancode to the nameentry module. Once the player confirms
  * with Enter, the score is saved to the high-score table.
  *
- * @param scancode Raw keyboard scancode (set 1 make code).
+ * @param scancode Raw keyboard scancode.
  * @return true when the player confirms the name and the score has been saved.
  */
 bool gameover_hs_handle_key(uint8_t scancode);

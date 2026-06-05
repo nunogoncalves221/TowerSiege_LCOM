@@ -36,7 +36,7 @@ gameover_option_t gameover_get_selected(void);
 /**
  * @brief Processes one keyboard scancode and updates the highlighted option.
  *
- * @param scancode Raw keyboard scancode (set 1 make code).
+ * @param scancode Raw keyboard scancode.
  * @return true if the player pressed Enter to confirm the selection.
  */
 bool gameover_handle_key(uint8_t scancode);
