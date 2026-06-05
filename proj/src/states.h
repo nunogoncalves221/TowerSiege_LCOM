@@ -3,7 +3,7 @@
  * @brief Application state machine enumeration.
  *
  * Defines all possible high-level states that the application can be in.
- * The main loop in @c proj.c reads the current state each iteration and
+ * The main loop in @c main.c reads the current state each iteration and
  * dispatches input, update, and draw calls to the appropriate module.
  */
 

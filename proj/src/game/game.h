@@ -46,6 +46,7 @@
 
 // main game loop
 void game_reset(void);
+void game_destroy(void);
 void game_tick(void);
 void game_draw(void);
 bool game_is_over(void);

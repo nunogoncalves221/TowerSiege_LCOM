@@ -15,6 +15,7 @@ typedef enum {
 } tile_t;
 
 void map_init(difficulty_t diff);
+void map_destroy(void);
 bool map_draw(void);       // returns true if tiles were redrawn (was dirty)
 void map_update_cache(void);
 void map_mark_dirty(void);

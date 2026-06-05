@@ -18,6 +18,8 @@
  * @brief Resets wave state to the beginning of wave 1.
  *
  * Should be called once during game initialisation or on game reset.
+ *
+ * @param diff Selected difficulty, used to scale enemy counts and spawn rate.
  */
 void wave_init(difficulty_t diff);
 
@@ -40,6 +42,13 @@ void wave_tick(enemy_t **enemies, int *enemy_count);
  * @return The wave that is currently being played.
  */
 int  wave_get_number(void);
+
+/**
+ * @brief Returns whether all waves have been completed.
+ *
+ * @return true after wave 10 has been fully spawned and cleared,
+ *         false otherwise.
+ */
 bool wave_is_complete(void);
 
 #endif /* WAVE_H */

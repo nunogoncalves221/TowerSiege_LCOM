@@ -78,6 +78,16 @@ void map_init(difficulty_t diff) {
     map_dirty = true;
 }
 
+void map_destroy(void) {
+    free(map_cache);
+    map_cache = NULL;
+    destroy_sprite(grass_sprite);  grass_sprite  = NULL;
+    destroy_sprite(path_sprite);   path_sprite   = NULL;
+    destroy_sprite(blank_sprite);  blank_sprite  = NULL;
+    destroy_sprite(archer_sprite); archer_sprite = NULL;
+    destroy_sprite(mage_sprite);   mage_sprite   = NULL;
+}
+
 void map_mark_dirty(void) {
     map_dirty = true;
 }

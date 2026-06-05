@@ -265,6 +265,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
   }
 
   // cleanup everything before exiting
+  game_destroy();
   vg_free();
   mouse_unsubscribe_int();
   mouse_write_command(DISABLE_DATA_REPORTING);

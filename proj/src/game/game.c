@@ -164,3 +164,13 @@ void game_handle_click(void) {
     // use pixel-accurate handler so the popup buttons work correctly
     tower_handle_click_px(cursor_x, cursor_y);
 }
+
+void game_destroy(void) {
+    hero_destroy();
+    for (int i = 0; i < enemy_count; i++)
+        enemy_destroy(enemies[i]);
+    enemy_count = 0;
+    destroy_sprite(cursor_sprite);
+    cursor_sprite = NULL;
+    map_destroy();
+}

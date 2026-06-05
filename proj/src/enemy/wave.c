@@ -74,7 +74,7 @@ void wave_tick(enemy_t **enemies, int *enemy_count) {
             int total = goblins_to_spawn + orcs_to_spawn;
 
             // choose randomly between goblin and orc
-            if (orcs_to_spawn > 0 && (goblins_to_spawn == 0 || rand() % total < orcs_to_spawn)) {
+            if (orcs_to_spawn > 0 && (goblins_to_spawn == 0 || (total > 0 && rand() % total < orcs_to_spawn))) {
                 e = enemy_create((xpm_map_t) orc, orc_start_x, orc_start_y, 150, 2);
                 if (e != NULL) { e->gold_value = 30; orcs_to_spawn--; }
             } else {
