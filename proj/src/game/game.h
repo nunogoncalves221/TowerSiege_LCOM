@@ -13,7 +13,7 @@
 #include <lcom/lcf.h>
 #include "rtc.h"
 
-// --- constants ---
+// constants
 
 #define TIMER_FREQ 60
 #define FPS 30
@@ -26,7 +26,7 @@
 
 #define WAVE_DELAY 600
 
-// --- keyboard scancodes ---
+// keyboard scancodes
 
 #define KEY_W_MAKE     0x11
 #define KEY_A_MAKE     0x1E
@@ -44,7 +44,6 @@
 #define KEY_F_MAKE  0x21
 #define KEY_F_BREAK 0xA1
 
-// --- function prototypes ---
 
 /**
  * @brief Initialises all game subsystems and places the first wave.
@@ -77,9 +76,13 @@ void game_tick(void);
 void game_draw(void);
 
 /**
- * @brief Returns whether the game has ended (player ran out of lives).
+ * @brief Returns whether the game session has ended.
  *
- * @return true once the player's life count reaches zero.
+ * Becomes true in two cases: the player's life count reaches zero (defeat),
+ * or wave 10 is completed with no enemies remaining (victory).
+ * Callers must use wave_is_complete() to distinguish the two outcomes.
+ *
+ * @return true when the game is over (win or loss).
  */
 bool game_is_over(void);
 
@@ -89,7 +92,7 @@ bool game_is_over(void);
  * Routes movement keys to the hero, Escape to the pause screen, and
  * tower-popup keys when a popup is open.
  *
- * @param scancode Raw keyboard scancode (set 1 make/break code).
+ * @param scancode Raw keyboard scancode.
  */
 void game_handle_key(uint8_t scancode);
 
