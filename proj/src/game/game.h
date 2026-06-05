@@ -14,8 +14,8 @@
 
 // hero attributes
 #define HERO_SPEED 3  // movement speed in pixels per frame
-#define HERO_BASE_X 750 // hero's starting x position
-#define HERO_BASE_Y 550 // hero's starting y position
+#define HERO_BASE_X 1038 // hero's starting x position
+#define HERO_BASE_Y 646 // hero's starting y position
 
 // wave mechanics
 #define WAVE_DELAY 600 // ticks after last spawn before next wave (20 seconds at 30fps)
