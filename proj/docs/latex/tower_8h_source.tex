@@ -1,0 +1,76 @@
+\doxysection{tower.\+h}
+\hypertarget{tower_8h_source}{}\label{tower_8h_source}\index{src/tower/tower.h@{src/tower/tower.h}}
+\mbox{\hyperlink{tower_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ TOWER\_H}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ TOWER\_H}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <lcom/lcf.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sprite_8h}{sprite.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{map_8h}{map.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{enemy_8h}{enemy.h}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{difficulty_8h}{difficulty.h}}"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aadf52d26e574809de3b8b091a98544cb6}{TOWER\_NONE}},\ \ \ }
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aa16185108eb5b660b17c1ab536d98fe2e}{TOWER\_ARCHER}},\ }
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aac62ecf2b1e74dc0ad5d7e637a06192f4}{TOWER\_MAGE}}\ \ \ \ }
+\DoxyCodeLine{00024\ \}\ \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506a}{tower\_type\_t}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ TOWER\_ARCHER\_COST\ \ \ \ \ 200}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ TOWER\_MAGE\_COST\ \ \ \ \ \ \ 250}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ TOWER\_ARCHER\_UPG\_COST\ 250}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ TOWER\_MAGE\_UPG\_COST\ \ \ 300}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ TOWER\_ARCHER\_BASE\_DMG\ \ \ \ \ \ 10}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ TOWER\_ARCHER\_BASE\_RANGE\ \ \ \ 200}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ TOWER\_ARCHER\_BASE\_COOLDOWN\ 55}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ TOWER\_MAGE\_BASE\_DMG\ \ \ \ \ \ 40}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ TOWER\_MAGE\_BASE\_RANGE\ \ \ \ 160}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ TOWER\_MAGE\_BASE\_COOLDOWN\ 60}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ TOWER\_ARCHER\_UPG\_DMG\_INC\ \ \ 10}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ TOWER\_ARCHER\_UPG\_RANGE\_INC\ 50}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ TOWER\_ARCHER\_UPG\_CD\_DEC\ \ \ \ 8}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ TOWER\_MAGE\_UPG\_DMG\_INC\ \ \ 35}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ TOWER\_MAGE\_UPG\_RANGE\_INC\ 40}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00047\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506a}{tower\_type\_t}}\ \mbox{\hyperlink{structtower__t_a7cd6b9a0f008d39f37fbf3e64e3dc20f}{type}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structtower__t_a2ba3726740f8442e8ae0841dfe863323}{level}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{structsprite__t}{sprite\_t}}\ \ \ \ *\mbox{\hyperlink{structtower__t_a81341a0015c799df402907dae744be6a}{sp}};\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structtower__t_a834c511773b5f9451b28467742c481b6}{col}},\ row;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structtower__t_a9bbd6e671a01820f3141f27829179687}{range}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00053\ \ \ \ \ uint32\_t\ \ \ \ \ \mbox{\hyperlink{structtower__t_adf5873606dd1080a253eb12c5f7a3e16}{range\_sq}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structtower__t_af89eb149b695d0e794b985c2d1ab5c22}{damage}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structtower__t_a81d99dae2d38d4ec8ba475903570bf0a}{attack\_cooldown}};}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structtower__t_aa83936c9a17e2a137991a4a918796b14}{attack\_timer}};\ \ \ }
+\DoxyCodeLine{00057\ \}\ \mbox{\hyperlink{structtower__t}{tower\_t}};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \mbox{\hyperlink{structtower__slot__t_af5e9be70c237ee8b8afa264b0a7a183d}{col}},\ row;\ }
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{structtower__t}{tower\_t}}\ *\mbox{\hyperlink{structtower__slot__t_af61b3828b7d384cd762de01a3b68eed8}{tower}};\ \ \ \ }
+\DoxyCodeLine{00063\ \}\ \mbox{\hyperlink{structtower__slot__t}{tower\_slot\_t}};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tower_8h_ab4cbc632654f7dc134c18a8b806aea51}{tower\_init}}(\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\_t}}\ diff);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tower_8h_a81c75cdbf25f1f76108bd2c0ca103485}{tower\_handle\_click\_px}}(\textcolor{keywordtype}{int}\ px,\ \textcolor{keywordtype}{int}\ py);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00094\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tower_8h_a0ec8a46188799337f544f29e4a65ba04}{tower\_tick}}(\mbox{\hyperlink{structenemy__t}{enemy\_t}}\ **enemies,\ \textcolor{keywordtype}{int}\ enemy\_count);}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00099\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tower_8h_a367355652e460ff34dea9f84cec78b13}{tower\_draw}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00106\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{tower_8h_aaaff0e830e0555ed304de280c558d45f}{tower\_popup\_is\_open}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00115\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{tower_8h_a298ed65ce8e1df892e0301b7b92be7da}{tower\_popup\_handle\_key}}(uint8\_t\ scancode);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00120\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tower_8h_a2518a10f0fd8357f76d9f3104a35eeeb}{tower\_popup\_draw}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00125\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tower_8h_a5eb7be51764c33285bbf7a6a4d4fc1eb}{tower\_popup\_close}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ TOWER\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

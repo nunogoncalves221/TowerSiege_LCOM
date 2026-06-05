@@ -1,0 +1,85 @@
+\doxysection{src/menu/gameovermenu.c File Reference}
+\hypertarget{gameovermenu_8c}{}\label{gameovermenu_8c}\index{src/menu/gameovermenu.c@{src/menu/gameovermenu.c}}
+{\ttfamily \#include "{}gameovermenu.\+h"{}}\newline
+{\ttfamily \#include "{}menu\+\_\+nav.\+h"{}}\newline
+{\ttfamily \#include "{}../font/font.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+Include dependency graph for gameovermenu.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{gameovermenu_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{gameovermenu_8c_ac2364d7d3e26974b3b637d211ca2e519}{gameover\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Resets the highlighted option back to GAMEOVER\+\_\+\+RETRY. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{gameovermenu_8h_a8334bd49a7f408abc6fb0e80ca32dbcf}{gameover\+\_\+option\+\_\+t}} \mbox{\hyperlink{gameovermenu_8c_a7d8c5dccfc83a159d0221a8c5a252956}{gameover\+\_\+get\+\_\+selected}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the option the player currently has highlighted. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{gameovermenu_8c_a081f6867fd3b441a81b45b7c9398eda1}{gameover\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode and updates the highlighted option. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{gameovermenu_8c_aa71d3cf60f3c9104eb53f7e03949b193}{gameover\+\_\+draw}} (int score)
+\begin{DoxyCompactList}\small\item\em Draws the game-\/over screen with the player\textquotesingle{}s final score. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{gameovermenu_8c_aa71d3cf60f3c9104eb53f7e03949b193}\label{gameovermenu_8c_aa71d3cf60f3c9104eb53f7e03949b193} 
+\index{gameovermenu.c@{gameovermenu.c}!gameover\_draw@{gameover\_draw}}
+\index{gameover\_draw@{gameover\_draw}!gameovermenu.c@{gameovermenu.c}}
+\doxysubsubsection{\texorpdfstring{gameover\_draw()}{gameover\_draw()}}
+{\footnotesize\ttfamily void gameover\+\_\+draw (\begin{DoxyParamCaption}\item[{int}]{score }\end{DoxyParamCaption})}
+
+
+
+Draws the game-\/over screen with the player\textquotesingle{}s final score. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em score} & Final score to display. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{gameovermenu_8c_a7d8c5dccfc83a159d0221a8c5a252956}\label{gameovermenu_8c_a7d8c5dccfc83a159d0221a8c5a252956} 
+\index{gameovermenu.c@{gameovermenu.c}!gameover\_get\_selected@{gameover\_get\_selected}}
+\index{gameover\_get\_selected@{gameover\_get\_selected}!gameovermenu.c@{gameovermenu.c}}
+\doxysubsubsection{\texorpdfstring{gameover\_get\_selected()}{gameover\_get\_selected()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{gameovermenu_8h_a8334bd49a7f408abc6fb0e80ca32dbcf}{gameover\+\_\+option\+\_\+t}} gameover\+\_\+get\+\_\+selected (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the option the player currently has highlighted. 
+
+\begin{DoxyReturn}{Returns}
+The currently selected \doxylink{gameovermenu_8h_a8334bd49a7f408abc6fb0e80ca32dbcf}{gameover\+\_\+option\+\_\+t} value. 
+\end{DoxyReturn}
+\Hypertarget{gameovermenu_8c_a081f6867fd3b441a81b45b7c9398eda1}\label{gameovermenu_8c_a081f6867fd3b441a81b45b7c9398eda1} 
+\index{gameovermenu.c@{gameovermenu.c}!gameover\_handle\_key@{gameover\_handle\_key}}
+\index{gameover\_handle\_key@{gameover\_handle\_key}!gameovermenu.c@{gameovermenu.c}}
+\doxysubsubsection{\texorpdfstring{gameover\_handle\_key()}{gameover\_handle\_key()}}
+{\footnotesize\ttfamily bool gameover\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode and updates the highlighted option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player pressed Enter to confirm the selection. 
+\end{DoxyReturn}
+\Hypertarget{gameovermenu_8c_ac2364d7d3e26974b3b637d211ca2e519}\label{gameovermenu_8c_ac2364d7d3e26974b3b637d211ca2e519} 
+\index{gameovermenu.c@{gameovermenu.c}!gameover\_reset@{gameover\_reset}}
+\index{gameover\_reset@{gameover\_reset}!gameovermenu.c@{gameovermenu.c}}
+\doxysubsubsection{\texorpdfstring{gameover\_reset()}{gameover\_reset()}}
+{\footnotesize\ttfamily void gameover\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Resets the highlighted option back to GAMEOVER\+\_\+\+RETRY. 
+
+Should be called when entering the game-\/over screen. 

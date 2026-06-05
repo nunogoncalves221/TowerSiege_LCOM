@@ -1,0 +1,118 @@
+\doxysection{src/hero/hero.h File Reference}
+\hypertarget{hero_8h}{}\label{hero_8h}\index{src/hero/hero.h@{src/hero/hero.h}}
+
+
+Player-\/controlled hero character.  
+
+
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include "{}enemy.\+h"{}}\newline
+Include dependency graph for hero.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=273pt]{hero_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{hero_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{hero_8h_a1fa1ae06866726e07636b1868975453e}{hero\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Sets up the hero\textquotesingle{}s initial position, health, and animations. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hero_8h_a397fc7e54f01ac535495a5df2484d9d1}{hero\+\_\+destroy}} (void)
+\begin{DoxyCompactList}\small\item\em Frees all memory owned by the hero. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hero_8h_ab7eb37b7c3fcef5476873047a972ae68}{hero\+\_\+update\+\_\+input}} (bool w, bool a, bool s, bool d, bool f)
+\begin{DoxyCompactList}\small\item\em Passes the current keyboard state to the hero for the next tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hero_8h_a10e1989996dc60bfb17e92268dd2ad01}{hero\+\_\+tick}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}enemies, int enemy\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Advances the hero simulation by one tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hero_8h_af0027ba5c194454ca60805bc289bda6d}{hero\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the hero sprite and his floating HP bar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Player-\/controlled hero character. 
+
+Manages the hero\textquotesingle{}s position, health, animations, and melee attack state machine. The game loop drives the hero by forwarding keyboard state each tick and calling \doxylink{hero_8h_a10e1989996dc60bfb17e92268dd2ad01}{hero\+\_\+tick()} to resolve movement and combat. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{hero_8h_a397fc7e54f01ac535495a5df2484d9d1}\label{hero_8h_a397fc7e54f01ac535495a5df2484d9d1} 
+\index{hero.h@{hero.h}!hero\_destroy@{hero\_destroy}}
+\index{hero\_destroy@{hero\_destroy}!hero.h@{hero.h}}
+\doxysubsubsection{\texorpdfstring{hero\_destroy()}{hero\_destroy()}}
+{\footnotesize\ttfamily void hero\+\_\+destroy (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Frees all memory owned by the hero. 
+
+Call when the game is reset or the game state is exited. \Hypertarget{hero_8h_af0027ba5c194454ca60805bc289bda6d}\label{hero_8h_af0027ba5c194454ca60805bc289bda6d} 
+\index{hero.h@{hero.h}!hero\_draw@{hero\_draw}}
+\index{hero\_draw@{hero\_draw}!hero.h@{hero.h}}
+\doxysubsubsection{\texorpdfstring{hero\_draw()}{hero\_draw()}}
+{\footnotesize\ttfamily void hero\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the hero sprite and his floating HP bar. 
+
+\Hypertarget{hero_8h_a1fa1ae06866726e07636b1868975453e}\label{hero_8h_a1fa1ae06866726e07636b1868975453e} 
+\index{hero.h@{hero.h}!hero\_init@{hero\_init}}
+\index{hero\_init@{hero\_init}!hero.h@{hero.h}}
+\doxysubsubsection{\texorpdfstring{hero\_init()}{hero\_init()}}
+{\footnotesize\ttfamily void hero\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Sets up the hero\textquotesingle{}s initial position, health, and animations. 
+
+Must be called once during game initialisation before any other hero function. \Hypertarget{hero_8h_a10e1989996dc60bfb17e92268dd2ad01}\label{hero_8h_a10e1989996dc60bfb17e92268dd2ad01} 
+\index{hero.h@{hero.h}!hero\_tick@{hero\_tick}}
+\index{hero\_tick@{hero\_tick}!hero.h@{hero.h}}
+\doxysubsubsection{\texorpdfstring{hero\_tick()}{hero\_tick()}}
+{\footnotesize\ttfamily void hero\+\_\+tick (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{enemies,  }\item[{int}]{enemy\+\_\+count }\end{DoxyParamCaption})}
+
+
+
+Advances the hero simulation by one tick. 
+
+Applies movement, advances the attack state machine, and checks melee collisions against the active enemies.
+
+
+\begin{DoxyParams}{Parameters}
+{\em enemies} & Array of active enemy pointers. \\
+\hline
+{\em enemy\+\_\+count} & Number of active enemies in the array. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{hero_8h_ab7eb37b7c3fcef5476873047a972ae68}\label{hero_8h_ab7eb37b7c3fcef5476873047a972ae68} 
+\index{hero.h@{hero.h}!hero\_update\_input@{hero\_update\_input}}
+\index{hero\_update\_input@{hero\_update\_input}!hero.h@{hero.h}}
+\doxysubsubsection{\texorpdfstring{hero\_update\_input()}{hero\_update\_input()}}
+{\footnotesize\ttfamily void hero\+\_\+update\+\_\+input (\begin{DoxyParamCaption}\item[{bool}]{w,  }\item[{bool}]{a,  }\item[{bool}]{s,  }\item[{bool}]{d,  }\item[{bool}]{f }\end{DoxyParamCaption})}
+
+
+
+Passes the current keyboard state to the hero for the next tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em w} & true while the W key is held (move up). \\
+\hline
+{\em a} & true while the A key is held (move left). \\
+\hline
+{\em s} & true while the S key is held (move down). \\
+\hline
+{\em d} & true while the D key is held (move right). \\
+\hline
+{\em f} & true while the Space key is held (attack). \\
+\hline
+\end{DoxyParams}

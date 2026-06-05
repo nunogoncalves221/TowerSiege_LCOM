@@ -1,0 +1,88 @@
+\doxysection{src/menu/gameovermenu\+\_\+hs.h File Reference}
+\hypertarget{gameovermenu__hs_8h}{}\label{gameovermenu__hs_8h}\index{src/menu/gameovermenu\_hs.h@{src/menu/gameovermenu\_hs.h}}
+
+
+Game-\/over screen with high-\/score name entry.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+Include dependency graph for gameovermenu\+\_\+hs.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{gameovermenu__hs_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{gameovermenu__hs_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{gameovermenu__hs_8h_a38acfd53c808b8bab3b71f779728e38e}{gameover\+\_\+hs\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Resets the name-\/entry state for a new high-\/score submission. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{gameovermenu__hs_8h_a6cb27b244616561b333f600501159a9e}{gameover\+\_\+hs\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode for the name-\/entry widget. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{gameovermenu__hs_8h_af5758c77d9dd06a0846bd4f3f7b3ed65}{gameover\+\_\+hs\+\_\+draw}} (int score)
+\begin{DoxyCompactList}\small\item\em Draws the high-\/score game-\/over screen with the name-\/entry widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Game-\/over screen with high-\/score name entry. 
+
+Shown instead of the regular game-\/over screen when the player\textquotesingle{}s score qualifies for the leaderboard. The player types a name and confirms with Enter before the score is saved. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{gameovermenu__hs_8h_af5758c77d9dd06a0846bd4f3f7b3ed65}\label{gameovermenu__hs_8h_af5758c77d9dd06a0846bd4f3f7b3ed65} 
+\index{gameovermenu\_hs.h@{gameovermenu\_hs.h}!gameover\_hs\_draw@{gameover\_hs\_draw}}
+\index{gameover\_hs\_draw@{gameover\_hs\_draw}!gameovermenu\_hs.h@{gameovermenu\_hs.h}}
+\doxysubsubsection{\texorpdfstring{gameover\_hs\_draw()}{gameover\_hs\_draw()}}
+{\footnotesize\ttfamily void gameover\+\_\+hs\+\_\+draw (\begin{DoxyParamCaption}\item[{int}]{score }\end{DoxyParamCaption})}
+
+
+
+Draws the high-\/score game-\/over screen with the name-\/entry widget. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em score} & Final score to display and submit. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{gameovermenu__hs_8h_a6cb27b244616561b333f600501159a9e}\label{gameovermenu__hs_8h_a6cb27b244616561b333f600501159a9e} 
+\index{gameovermenu\_hs.h@{gameovermenu\_hs.h}!gameover\_hs\_handle\_key@{gameover\_hs\_handle\_key}}
+\index{gameover\_hs\_handle\_key@{gameover\_hs\_handle\_key}!gameovermenu\_hs.h@{gameovermenu\_hs.h}}
+\doxysubsubsection{\texorpdfstring{gameover\_hs\_handle\_key()}{gameover\_hs\_handle\_key()}}
+{\footnotesize\ttfamily bool gameover\+\_\+hs\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode for the name-\/entry widget. 
+
+Forwards the scancode to the nameentry module. Once the player confirms with Enter, the score is saved to the high-\/score table.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true when the player confirms the name and the score has been saved. 
+\end{DoxyReturn}
+\Hypertarget{gameovermenu__hs_8h_a38acfd53c808b8bab3b71f779728e38e}\label{gameovermenu__hs_8h_a38acfd53c808b8bab3b71f779728e38e} 
+\index{gameovermenu\_hs.h@{gameovermenu\_hs.h}!gameover\_hs\_reset@{gameover\_hs\_reset}}
+\index{gameover\_hs\_reset@{gameover\_hs\_reset}!gameovermenu\_hs.h@{gameovermenu\_hs.h}}
+\doxysubsubsection{\texorpdfstring{gameover\_hs\_reset()}{gameover\_hs\_reset()}}
+{\footnotesize\ttfamily void gameover\+\_\+hs\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Resets the name-\/entry state for a new high-\/score submission. 
+
+Should be called when entering this screen. 

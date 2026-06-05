@@ -1,0 +1,372 @@
+\doxysection{src/game/game.h File Reference}
+\hypertarget{game_8h}{}\label{game_8h}\index{src/game/game.h@{src/game/game.h}}
+
+
+Core game loop, input routing, and global game constants.  
+
+
+{\ttfamily \#include $<$lcom/lcf.\+h$>$}\newline
+{\ttfamily \#include "{}rtc.\+h"{}}\newline
+Include dependency graph for game.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{game_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{game_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{game_8h_acf926951944b6cf370b7229ebd50dd8b}{TIMER\+\_\+\+FREQ}}~60
+\item 
+\#define \mbox{\hyperlink{game_8h_ac92ca5ab87034a348decad7ee8d4bd1b}{FPS}}~30
+\item 
+\#define \mbox{\hyperlink{game_8h_a3652158e56c9d1423bfa5d1c5bd3d243}{MAX\+\_\+\+LIVES}}~15
+\item 
+\#define \mbox{\hyperlink{game_8h_a544651f3405cff79c40d898a8e54f507}{MAX\+\_\+\+ENEMIES}}~20
+\item 
+\#define \mbox{\hyperlink{game_8h_a34859c9cfebe7753ae2ec94624236bea}{HERO\+\_\+\+SPEED}}~3
+\item 
+\#define \mbox{\hyperlink{game_8h_a0c9d5b62b05eb0c7a50b3d31c6223697}{HERO\+\_\+\+BASE\+\_\+X}}~1038
+\item 
+\#define \mbox{\hyperlink{game_8h_a3db0ed471b0ab3e495eaa88baab35c33}{HERO\+\_\+\+BASE\+\_\+Y}}~646
+\item 
+\#define \mbox{\hyperlink{game_8h_aa5a9f1084c32ebc3842c7ae931f8e85f}{WAVE\+\_\+\+DELAY}}~600
+\item 
+\#define \mbox{\hyperlink{game_8h_adfb6bfc486168d637e1812de93f68bf6}{KEY\+\_\+\+W\+\_\+\+MAKE}}~0x11
+\item 
+\#define \mbox{\hyperlink{game_8h_a0772722d1938f9b338c663ad1c1008e1}{KEY\+\_\+\+A\+\_\+\+MAKE}}~0x1E
+\item 
+\#define \mbox{\hyperlink{game_8h_a34597fb60329fa1dd686e31435be9928}{KEY\+\_\+\+S\+\_\+\+MAKE}}~0x1F
+\item 
+\#define \mbox{\hyperlink{game_8h_aa2dc8049cb2abcea86aabffb118d797a}{KEY\+\_\+\+D\+\_\+\+MAKE}}~0x20
+\item 
+\#define \mbox{\hyperlink{game_8h_ae21ecccf0c9519f1482cf3e0590f07b0}{KEY\+\_\+\+W\+\_\+\+BREAK}}~0x91
+\item 
+\#define \mbox{\hyperlink{game_8h_a02df95339c22023f145c5a2e1333c52c}{KEY\+\_\+\+A\+\_\+\+BREAK}}~0x9E
+\item 
+\#define \mbox{\hyperlink{game_8h_af223e5096758eacacfacf1d1a40737c4}{KEY\+\_\+\+S\+\_\+\+BREAK}}~0x9F
+\item 
+\#define \mbox{\hyperlink{game_8h_ae4e47d5f7d859a0a99c14e12c4348d51}{KEY\+\_\+\+D\+\_\+\+BREAK}}~0x\+A0
+\item 
+\#define \mbox{\hyperlink{game_8h_ada713f45a3be93fe876392054b36f2b2}{KEY\+\_\+\+UP\+\_\+\+MAKE}}~0x48
+\item 
+\#define \mbox{\hyperlink{game_8h_a61f094e60da9f7287cbf31acd68e06eb}{KEY\+\_\+\+DOWN\+\_\+\+MAKE}}~0x50
+\item 
+\#define \mbox{\hyperlink{game_8h_a6ccbaf0ce305489a0a67295f4db26bfd}{KEY\+\_\+\+ENTER\+\_\+\+MAKE}}~0x1C
+\item 
+\#define \mbox{\hyperlink{game_8h_ac8db1e0fd9e67a3ef3ad21b254cf4090}{KEY\+\_\+\+SPACE\+\_\+\+MAKE}}~0x39
+\item 
+\#define \mbox{\hyperlink{game_8h_ae3351f1864405e3fd217a2dc18dc1234}{KEY\+\_\+\+SPACE\+\_\+\+BREAK}}~0x\+B9
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{game_8h_a05cddc86cdca6cac72dddefeaf3c142e}{game\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Initialises all game subsystems and places the first wave. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8h_addf8c4562fc6746b82fa297f38624052}{game\+\_\+destroy}} (void)
+\begin{DoxyCompactList}\small\item\em Frees all resources allocated by \doxylink{game_8h_a05cddc86cdca6cac72dddefeaf3c142e}{game\+\_\+reset()}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8h_af8a50be77ba977aadb8ea6f85f91ecdb}{game\+\_\+tick}} (void)
+\begin{DoxyCompactList}\small\item\em Advances the game simulation by one tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8h_af6beeef4bd774ee4c8ed789815e68833}{game\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Renders the current game frame to the back-\/buffer. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{game_8h_af97cd03e337953062dd79885856ec382}{game\+\_\+is\+\_\+over}} (void)
+\begin{DoxyCompactList}\small\item\em Returns whether the game session has ended. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8h_a06f939b3f0128c77a7e516e80811a4d7}{game\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Forwards a keyboard scancode to the relevant in-\/game handler. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8h_a03f7db083f6e23af50f720800f163674}{game\+\_\+update\+\_\+cursor}} (int16\+\_\+t dx, int16\+\_\+t dy)
+\begin{DoxyCompactList}\small\item\em Applies a mouse delta to the in-\/game cursor position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8h_a4bb40e4cb00308f7cdcbabb1eed8d321}{game\+\_\+handle\+\_\+click}} (void)
+\begin{DoxyCompactList}\small\item\em Processes a left mouse-\/button click at the current cursor position. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{game_8h_a8a8ce7aedd7485dba20523e428687f46}{game\+\_\+get\+\_\+score}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the player\textquotesingle{}s current score. \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{game_8h_a36c5a459274d5a14fba285fae74fca1c}{game\+\_\+get\+\_\+cursor\+\_\+y}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the vertical screen coordinate of the cursor. \end{DoxyCompactList}\item 
+rtc\+\_\+date \mbox{\hyperlink{game_8h_ab1c473e91a41cb81c8329835d68b7f14}{game\+\_\+get\+\_\+start\+\_\+time}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the RTC timestamp recorded when the game started. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Core game loop, input routing, and global game constants. 
+
+Owns the top-\/level game state\+: the map, hero, towers, enemies, and waves. The main application loop calls \doxylink{game_8h_af8a50be77ba977aadb8ea6f85f91ecdb}{game\+\_\+tick()} and \doxylink{game_8h_af6beeef4bd774ee4c8ed789815e68833}{game\+\_\+draw()} every frame, and forwards hardware events through the handle functions below. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{game_8h_ac92ca5ab87034a348decad7ee8d4bd1b}\label{game_8h_ac92ca5ab87034a348decad7ee8d4bd1b} 
+\index{game.h@{game.h}!FPS@{FPS}}
+\index{FPS@{FPS}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{FPS}{FPS}}
+{\footnotesize\ttfamily \#define FPS~30}
+
+\Hypertarget{game_8h_a0c9d5b62b05eb0c7a50b3d31c6223697}\label{game_8h_a0c9d5b62b05eb0c7a50b3d31c6223697} 
+\index{game.h@{game.h}!HERO\_BASE\_X@{HERO\_BASE\_X}}
+\index{HERO\_BASE\_X@{HERO\_BASE\_X}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{HERO\_BASE\_X}{HERO\_BASE\_X}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+BASE\+\_\+X~1038}
+
+\Hypertarget{game_8h_a3db0ed471b0ab3e495eaa88baab35c33}\label{game_8h_a3db0ed471b0ab3e495eaa88baab35c33} 
+\index{game.h@{game.h}!HERO\_BASE\_Y@{HERO\_BASE\_Y}}
+\index{HERO\_BASE\_Y@{HERO\_BASE\_Y}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{HERO\_BASE\_Y}{HERO\_BASE\_Y}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+BASE\+\_\+Y~646}
+
+\Hypertarget{game_8h_a34859c9cfebe7753ae2ec94624236bea}\label{game_8h_a34859c9cfebe7753ae2ec94624236bea} 
+\index{game.h@{game.h}!HERO\_SPEED@{HERO\_SPEED}}
+\index{HERO\_SPEED@{HERO\_SPEED}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{HERO\_SPEED}{HERO\_SPEED}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+SPEED~3}
+
+\Hypertarget{game_8h_a02df95339c22023f145c5a2e1333c52c}\label{game_8h_a02df95339c22023f145c5a2e1333c52c} 
+\index{game.h@{game.h}!KEY\_A\_BREAK@{KEY\_A\_BREAK}}
+\index{KEY\_A\_BREAK@{KEY\_A\_BREAK}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_A\_BREAK}{KEY\_A\_BREAK}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+A\+\_\+\+BREAK~0x9E}
+
+\Hypertarget{game_8h_a0772722d1938f9b338c663ad1c1008e1}\label{game_8h_a0772722d1938f9b338c663ad1c1008e1} 
+\index{game.h@{game.h}!KEY\_A\_MAKE@{KEY\_A\_MAKE}}
+\index{KEY\_A\_MAKE@{KEY\_A\_MAKE}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_A\_MAKE}{KEY\_A\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+A\+\_\+\+MAKE~0x1E}
+
+\Hypertarget{game_8h_ae4e47d5f7d859a0a99c14e12c4348d51}\label{game_8h_ae4e47d5f7d859a0a99c14e12c4348d51} 
+\index{game.h@{game.h}!KEY\_D\_BREAK@{KEY\_D\_BREAK}}
+\index{KEY\_D\_BREAK@{KEY\_D\_BREAK}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_D\_BREAK}{KEY\_D\_BREAK}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+D\+\_\+\+BREAK~0x\+A0}
+
+\Hypertarget{game_8h_aa2dc8049cb2abcea86aabffb118d797a}\label{game_8h_aa2dc8049cb2abcea86aabffb118d797a} 
+\index{game.h@{game.h}!KEY\_D\_MAKE@{KEY\_D\_MAKE}}
+\index{KEY\_D\_MAKE@{KEY\_D\_MAKE}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_D\_MAKE}{KEY\_D\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+D\+\_\+\+MAKE~0x20}
+
+\Hypertarget{game_8h_a61f094e60da9f7287cbf31acd68e06eb}\label{game_8h_a61f094e60da9f7287cbf31acd68e06eb} 
+\index{game.h@{game.h}!KEY\_DOWN\_MAKE@{KEY\_DOWN\_MAKE}}
+\index{KEY\_DOWN\_MAKE@{KEY\_DOWN\_MAKE}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_DOWN\_MAKE}{KEY\_DOWN\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+DOWN\+\_\+\+MAKE~0x50}
+
+\Hypertarget{game_8h_a6ccbaf0ce305489a0a67295f4db26bfd}\label{game_8h_a6ccbaf0ce305489a0a67295f4db26bfd} 
+\index{game.h@{game.h}!KEY\_ENTER\_MAKE@{KEY\_ENTER\_MAKE}}
+\index{KEY\_ENTER\_MAKE@{KEY\_ENTER\_MAKE}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_ENTER\_MAKE}{KEY\_ENTER\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+ENTER\+\_\+\+MAKE~0x1C}
+
+\Hypertarget{game_8h_af223e5096758eacacfacf1d1a40737c4}\label{game_8h_af223e5096758eacacfacf1d1a40737c4} 
+\index{game.h@{game.h}!KEY\_S\_BREAK@{KEY\_S\_BREAK}}
+\index{KEY\_S\_BREAK@{KEY\_S\_BREAK}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_S\_BREAK}{KEY\_S\_BREAK}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+S\+\_\+\+BREAK~0x9F}
+
+\Hypertarget{game_8h_a34597fb60329fa1dd686e31435be9928}\label{game_8h_a34597fb60329fa1dd686e31435be9928} 
+\index{game.h@{game.h}!KEY\_S\_MAKE@{KEY\_S\_MAKE}}
+\index{KEY\_S\_MAKE@{KEY\_S\_MAKE}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_S\_MAKE}{KEY\_S\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+S\+\_\+\+MAKE~0x1F}
+
+\Hypertarget{game_8h_ae3351f1864405e3fd217a2dc18dc1234}\label{game_8h_ae3351f1864405e3fd217a2dc18dc1234} 
+\index{game.h@{game.h}!KEY\_SPACE\_BREAK@{KEY\_SPACE\_BREAK}}
+\index{KEY\_SPACE\_BREAK@{KEY\_SPACE\_BREAK}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_SPACE\_BREAK}{KEY\_SPACE\_BREAK}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+SPACE\+\_\+\+BREAK~0x\+B9}
+
+\Hypertarget{game_8h_ac8db1e0fd9e67a3ef3ad21b254cf4090}\label{game_8h_ac8db1e0fd9e67a3ef3ad21b254cf4090} 
+\index{game.h@{game.h}!KEY\_SPACE\_MAKE@{KEY\_SPACE\_MAKE}}
+\index{KEY\_SPACE\_MAKE@{KEY\_SPACE\_MAKE}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_SPACE\_MAKE}{KEY\_SPACE\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+SPACE\+\_\+\+MAKE~0x39}
+
+\Hypertarget{game_8h_ada713f45a3be93fe876392054b36f2b2}\label{game_8h_ada713f45a3be93fe876392054b36f2b2} 
+\index{game.h@{game.h}!KEY\_UP\_MAKE@{KEY\_UP\_MAKE}}
+\index{KEY\_UP\_MAKE@{KEY\_UP\_MAKE}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_UP\_MAKE}{KEY\_UP\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+UP\+\_\+\+MAKE~0x48}
+
+\Hypertarget{game_8h_ae21ecccf0c9519f1482cf3e0590f07b0}\label{game_8h_ae21ecccf0c9519f1482cf3e0590f07b0} 
+\index{game.h@{game.h}!KEY\_W\_BREAK@{KEY\_W\_BREAK}}
+\index{KEY\_W\_BREAK@{KEY\_W\_BREAK}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_W\_BREAK}{KEY\_W\_BREAK}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+W\+\_\+\+BREAK~0x91}
+
+\Hypertarget{game_8h_adfb6bfc486168d637e1812de93f68bf6}\label{game_8h_adfb6bfc486168d637e1812de93f68bf6} 
+\index{game.h@{game.h}!KEY\_W\_MAKE@{KEY\_W\_MAKE}}
+\index{KEY\_W\_MAKE@{KEY\_W\_MAKE}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{KEY\_W\_MAKE}{KEY\_W\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+W\+\_\+\+MAKE~0x11}
+
+\Hypertarget{game_8h_a544651f3405cff79c40d898a8e54f507}\label{game_8h_a544651f3405cff79c40d898a8e54f507} 
+\index{game.h@{game.h}!MAX\_ENEMIES@{MAX\_ENEMIES}}
+\index{MAX\_ENEMIES@{MAX\_ENEMIES}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_ENEMIES}{MAX\_ENEMIES}}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+ENEMIES~20}
+
+\Hypertarget{game_8h_a3652158e56c9d1423bfa5d1c5bd3d243}\label{game_8h_a3652158e56c9d1423bfa5d1c5bd3d243} 
+\index{game.h@{game.h}!MAX\_LIVES@{MAX\_LIVES}}
+\index{MAX\_LIVES@{MAX\_LIVES}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_LIVES}{MAX\_LIVES}}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+LIVES~15}
+
+\Hypertarget{game_8h_acf926951944b6cf370b7229ebd50dd8b}\label{game_8h_acf926951944b6cf370b7229ebd50dd8b} 
+\index{game.h@{game.h}!TIMER\_FREQ@{TIMER\_FREQ}}
+\index{TIMER\_FREQ@{TIMER\_FREQ}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{TIMER\_FREQ}{TIMER\_FREQ}}
+{\footnotesize\ttfamily \#define TIMER\+\_\+\+FREQ~60}
+
+\Hypertarget{game_8h_aa5a9f1084c32ebc3842c7ae931f8e85f}\label{game_8h_aa5a9f1084c32ebc3842c7ae931f8e85f} 
+\index{game.h@{game.h}!WAVE\_DELAY@{WAVE\_DELAY}}
+\index{WAVE\_DELAY@{WAVE\_DELAY}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{WAVE\_DELAY}{WAVE\_DELAY}}
+{\footnotesize\ttfamily \#define WAVE\+\_\+\+DELAY~600}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{game_8h_addf8c4562fc6746b82fa297f38624052}\label{game_8h_addf8c4562fc6746b82fa297f38624052} 
+\index{game.h@{game.h}!game\_destroy@{game\_destroy}}
+\index{game\_destroy@{game\_destroy}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_destroy()}{game\_destroy()}}
+{\footnotesize\ttfamily void game\+\_\+destroy (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Frees all resources allocated by \doxylink{game_8h_a05cddc86cdca6cac72dddefeaf3c142e}{game\+\_\+reset()}. 
+
+Call when leaving the game state entirely (e.\+g. returning to the main menu). \Hypertarget{game_8h_af6beeef4bd774ee4c8ed789815e68833}\label{game_8h_af6beeef4bd774ee4c8ed789815e68833} 
+\index{game.h@{game.h}!game\_draw@{game\_draw}}
+\index{game\_draw@{game\_draw}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_draw()}{game\_draw()}}
+{\footnotesize\ttfamily void game\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Renders the current game frame to the back-\/buffer. 
+
+Draws the map, enemies, towers, bullets, hero, and HUD in order. \Hypertarget{game_8h_a36c5a459274d5a14fba285fae74fca1c}\label{game_8h_a36c5a459274d5a14fba285fae74fca1c} 
+\index{game.h@{game.h}!game\_get\_cursor\_y@{game\_get\_cursor\_y}}
+\index{game\_get\_cursor\_y@{game\_get\_cursor\_y}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_get\_cursor\_y()}{game\_get\_cursor\_y()}}
+{\footnotesize\ttfamily int16\+\_\+t game\+\_\+get\+\_\+cursor\+\_\+y (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the vertical screen coordinate of the cursor. 
+
+Used by the game-\/over menu to position the cursor-\/dependent UI.
+
+\begin{DoxyReturn}{Returns}
+Cursor Y position in screen pixels. 
+\end{DoxyReturn}
+\Hypertarget{game_8h_a8a8ce7aedd7485dba20523e428687f46}\label{game_8h_a8a8ce7aedd7485dba20523e428687f46} 
+\index{game.h@{game.h}!game\_get\_score@{game\_get\_score}}
+\index{game\_get\_score@{game\_get\_score}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_get\_score()}{game\_get\_score()}}
+{\footnotesize\ttfamily int game\+\_\+get\+\_\+score (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the player\textquotesingle{}s current score. 
+
+\begin{DoxyReturn}{Returns}
+Score accumulated during this game session. 
+\end{DoxyReturn}
+\Hypertarget{game_8h_ab1c473e91a41cb81c8329835d68b7f14}\label{game_8h_ab1c473e91a41cb81c8329835d68b7f14} 
+\index{game.h@{game.h}!game\_get\_start\_time@{game\_get\_start\_time}}
+\index{game\_get\_start\_time@{game\_get\_start\_time}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_get\_start\_time()}{game\_get\_start\_time()}}
+{\footnotesize\ttfamily rtc\+\_\+date game\+\_\+get\+\_\+start\+\_\+time (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the RTC timestamp recorded when the game started. 
+
+\begin{DoxyReturn}{Returns}
+\+::rtc\+\_\+date captured at the beginning of the current session. 
+\end{DoxyReturn}
+\Hypertarget{game_8h_a4bb40e4cb00308f7cdcbabb1eed8d321}\label{game_8h_a4bb40e4cb00308f7cdcbabb1eed8d321} 
+\index{game.h@{game.h}!game\_handle\_click@{game\_handle\_click}}
+\index{game\_handle\_click@{game\_handle\_click}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_handle\_click()}{game\_handle\_click()}}
+{\footnotesize\ttfamily void game\+\_\+handle\+\_\+click (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Processes a left mouse-\/button click at the current cursor position. 
+
+Checks whether the click lands on a blank tile and places the selected tower, or opens the upgrade popup if a tower is already present. \Hypertarget{game_8h_a06f939b3f0128c77a7e516e80811a4d7}\label{game_8h_a06f939b3f0128c77a7e516e80811a4d7} 
+\index{game.h@{game.h}!game\_handle\_key@{game\_handle\_key}}
+\index{game\_handle\_key@{game\_handle\_key}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_handle\_key()}{game\_handle\_key()}}
+{\footnotesize\ttfamily void game\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Forwards a keyboard scancode to the relevant in-\/game handler. 
+
+Routes movement keys to the hero, and tower-\/popup keys when a popup is open.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{game_8h_af97cd03e337953062dd79885856ec382}\label{game_8h_af97cd03e337953062dd79885856ec382} 
+\index{game.h@{game.h}!game\_is\_over@{game\_is\_over}}
+\index{game\_is\_over@{game\_is\_over}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_is\_over()}{game\_is\_over()}}
+{\footnotesize\ttfamily bool game\+\_\+is\+\_\+over (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns whether the game session has ended. 
+
+Becomes true in two cases\+: the player\textquotesingle{}s life count reaches zero (defeat), or wave 10 is completed with no enemies remaining (victory). Callers must use \doxylink{wave_8c_a92d5c4497394451fbb3cb6abc4736127}{wave\+\_\+is\+\_\+complete()} to distinguish the two outcomes.
+
+\begin{DoxyReturn}{Returns}
+true when the game is over (win or loss). 
+\end{DoxyReturn}
+\Hypertarget{game_8h_a05cddc86cdca6cac72dddefeaf3c142e}\label{game_8h_a05cddc86cdca6cac72dddefeaf3c142e} 
+\index{game.h@{game.h}!game\_reset@{game\_reset}}
+\index{game\_reset@{game\_reset}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_reset()}{game\_reset()}}
+{\footnotesize\ttfamily void game\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialises all game subsystems and places the first wave. 
+
+Must be called before any other game function and again whenever the player retries after a game-\/over. \Hypertarget{game_8h_af8a50be77ba977aadb8ea6f85f91ecdb}\label{game_8h_af8a50be77ba977aadb8ea6f85f91ecdb} 
+\index{game.h@{game.h}!game\_tick@{game\_tick}}
+\index{game\_tick@{game\_tick}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_tick()}{game\_tick()}}
+{\footnotesize\ttfamily void game\+\_\+tick (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Advances the game simulation by one tick. 
+
+Updates the hero, enemies, towers, bullets, and wave spawner. Must be called once per frame before \doxylink{game_8h_af6beeef4bd774ee4c8ed789815e68833}{game\+\_\+draw()}. \Hypertarget{game_8h_a03f7db083f6e23af50f720800f163674}\label{game_8h_a03f7db083f6e23af50f720800f163674} 
+\index{game.h@{game.h}!game\_update\_cursor@{game\_update\_cursor}}
+\index{game\_update\_cursor@{game\_update\_cursor}!game.h@{game.h}}
+\doxysubsubsection{\texorpdfstring{game\_update\_cursor()}{game\_update\_cursor()}}
+{\footnotesize\ttfamily void game\+\_\+update\+\_\+cursor (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{dx,  }\item[{int16\+\_\+t}]{dy }\end{DoxyParamCaption})}
+
+
+
+Applies a mouse delta to the in-\/game cursor position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dx} & Horizontal movement in pixels (positive = right). \\
+\hline
+{\em dy} & Vertical movement in pixels (positive = down). \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,7 @@
+<map id="src/menu/instructions.h" name="src/menu/instructions.h">
+<area shape="rect" id="Node000001" title="How&#45;to&#45;play instructions screen." alt="" coords="40,5,215,31"/>
+<area shape="rect" id="Node000002" href="$main_8c.html" title=" " alt="" coords="5,79,95,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,42,64,80,61,76,103,38"/>
+<area shape="rect" id="Node000003" href="$instructions_8c.html" title=" " alt="" coords="119,79,293,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="152,38,195,76,191,80,148,42"/>
+</map>

@@ -1,0 +1,191 @@
+\doxysection{src/font/font.h File Reference}
+\hypertarget{font_8h}{}\label{font_8h}\index{src/font/font.h@{src/font/font.h}}
+
+
+Bitmap font rendering and string-\/width measurement.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for font.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=165pt]{font_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{font_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{font_8h_a41ac3a1ea7747a16bc656411daeaae2b}{FONT\+\_\+\+LETTER\+\_\+W}}~18
+\begin{DoxyCompactList}\small\item\em Pixel width of a letter glyph at scale 1. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{font_8h_acf7d82c3cc8d9f55483aeef7eb630f52}{FONT\+\_\+\+DIGIT\+\_\+W}}~17
+\begin{DoxyCompactList}\small\item\em Pixel width of a digit glyph at scale 1. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{font_8h_aadf315fb26a08162fb11faaa7e08eeb1}{FONT\+\_\+\+SPACE\+\_\+W}}~8
+\begin{DoxyCompactList}\small\item\em Pixel width of a space character at scale 1. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{font_8h_a202863103bd567f07ec24301ed11f983}{CHAR\+\_\+\+SPACING}}~2
+\begin{DoxyCompactList}\small\item\em Horizontal pixel gap inserted between consecutive glyphs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{font_8h_ae09bb8e7d2e3d76ee89db3e66b0455a7}{font\+\_\+draw\+\_\+string}} (uint16\+\_\+t x, uint16\+\_\+t y, const char \texorpdfstring{$\ast$}{*}s, uint32\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Draws a string at the given screen position. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{font_8h_a86aad67a9e5bfa8d2a294ca18ec35c1a}{font\+\_\+string\+\_\+width}} (const char \texorpdfstring{$\ast$}{*}s)
+\begin{DoxyCompactList}\small\item\em Returns the pixel width a string would occupy without drawing it. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{font_8h_aac3f6a3d4cdcf5f17f2f5dbc205529ba}{font\+\_\+draw\+\_\+string\+\_\+scaled}} (uint16\+\_\+t x, uint16\+\_\+t y, const char \texorpdfstring{$\ast$}{*}s, uint32\+\_\+t color, uint8\+\_\+t scale)
+\begin{DoxyCompactList}\small\item\em Draws a string with each glyph pixel scaled to a square block. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{font_8h_a444e8e12aea7e14a41fb39c8ecbcabe0}{font\+\_\+string\+\_\+width\+\_\+scaled}} (const char \texorpdfstring{$\ast$}{*}s, uint8\+\_\+t scale)
+\begin{DoxyCompactList}\small\item\em Returns the pixel width a scaled string would occupy without drawing it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Bitmap font rendering and string-\/width measurement. 
+
+Provides functions to draw text strings and to measure their pixel width before drawing. All glyphs are rendered from a built-\/in bitmap font; characters are coloured by tinting each non-\/transparent pixel with the supplied AARRGGBB colour. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{font_8h_a202863103bd567f07ec24301ed11f983}\label{font_8h_a202863103bd567f07ec24301ed11f983} 
+\index{font.h@{font.h}!CHAR\_SPACING@{CHAR\_SPACING}}
+\index{CHAR\_SPACING@{CHAR\_SPACING}!font.h@{font.h}}
+\doxysubsubsection{\texorpdfstring{CHAR\_SPACING}{CHAR\_SPACING}}
+{\footnotesize\ttfamily \#define CHAR\+\_\+\+SPACING~2}
+
+
+
+Horizontal pixel gap inserted between consecutive glyphs. 
+
+\Hypertarget{font_8h_acf7d82c3cc8d9f55483aeef7eb630f52}\label{font_8h_acf7d82c3cc8d9f55483aeef7eb630f52} 
+\index{font.h@{font.h}!FONT\_DIGIT\_W@{FONT\_DIGIT\_W}}
+\index{FONT\_DIGIT\_W@{FONT\_DIGIT\_W}!font.h@{font.h}}
+\doxysubsubsection{\texorpdfstring{FONT\_DIGIT\_W}{FONT\_DIGIT\_W}}
+{\footnotesize\ttfamily \#define FONT\+\_\+\+DIGIT\+\_\+W~17}
+
+
+
+Pixel width of a digit glyph at scale 1. 
+
+\Hypertarget{font_8h_a41ac3a1ea7747a16bc656411daeaae2b}\label{font_8h_a41ac3a1ea7747a16bc656411daeaae2b} 
+\index{font.h@{font.h}!FONT\_LETTER\_W@{FONT\_LETTER\_W}}
+\index{FONT\_LETTER\_W@{FONT\_LETTER\_W}!font.h@{font.h}}
+\doxysubsubsection{\texorpdfstring{FONT\_LETTER\_W}{FONT\_LETTER\_W}}
+{\footnotesize\ttfamily \#define FONT\+\_\+\+LETTER\+\_\+W~18}
+
+
+
+Pixel width of a letter glyph at scale 1. 
+
+\Hypertarget{font_8h_aadf315fb26a08162fb11faaa7e08eeb1}\label{font_8h_aadf315fb26a08162fb11faaa7e08eeb1} 
+\index{font.h@{font.h}!FONT\_SPACE\_W@{FONT\_SPACE\_W}}
+\index{FONT\_SPACE\_W@{FONT\_SPACE\_W}!font.h@{font.h}}
+\doxysubsubsection{\texorpdfstring{FONT\_SPACE\_W}{FONT\_SPACE\_W}}
+{\footnotesize\ttfamily \#define FONT\+\_\+\+SPACE\+\_\+W~8}
+
+
+
+Pixel width of a space character at scale 1. 
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{font_8h_ae09bb8e7d2e3d76ee89db3e66b0455a7}\label{font_8h_ae09bb8e7d2e3d76ee89db3e66b0455a7} 
+\index{font.h@{font.h}!font\_draw\_string@{font\_draw\_string}}
+\index{font\_draw\_string@{font\_draw\_string}!font.h@{font.h}}
+\doxysubsubsection{\texorpdfstring{font\_draw\_string()}{font\_draw\_string()}}
+{\footnotesize\ttfamily uint16\+\_\+t font\+\_\+draw\+\_\+string (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{x,  }\item[{uint16\+\_\+t}]{y,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint32\+\_\+t}]{color }\end{DoxyParamCaption})}
+
+
+
+Draws a string at the given screen position. 
+
+Each pixel of every glyph is tinted to {\ttfamily color}. Transparent glyph pixels are skipped.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Left edge of the first character, in screen pixels. \\
+\hline
+{\em y} & Top edge of the first character, in screen pixels. \\
+\hline
+{\em s} & Null-\/terminated string to draw. \\
+\hline
+{\em color} & Tint colour in AARRGGBB format. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Total pixel width rendered (same value as \doxylink{font_8h_a86aad67a9e5bfa8d2a294ca18ec35c1a}{font\+\_\+string\+\_\+width()}). 
+\end{DoxyReturn}
+\Hypertarget{font_8h_aac3f6a3d4cdcf5f17f2f5dbc205529ba}\label{font_8h_aac3f6a3d4cdcf5f17f2f5dbc205529ba} 
+\index{font.h@{font.h}!font\_draw\_string\_scaled@{font\_draw\_string\_scaled}}
+\index{font\_draw\_string\_scaled@{font\_draw\_string\_scaled}!font.h@{font.h}}
+\doxysubsubsection{\texorpdfstring{font\_draw\_string\_scaled()}{font\_draw\_string\_scaled()}}
+{\footnotesize\ttfamily uint16\+\_\+t font\+\_\+draw\+\_\+string\+\_\+scaled (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{x,  }\item[{uint16\+\_\+t}]{y,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint32\+\_\+t}]{color,  }\item[{uint8\+\_\+t}]{scale }\end{DoxyParamCaption})}
+
+
+
+Draws a string with each glyph pixel scaled to a square block. 
+
+Every logical pixel of every glyph is rendered as a {\ttfamily scale} × {\ttfamily scale} block of screen pixels, producing an integer-\/scaled appearance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Left edge of the first character, in screen pixels. \\
+\hline
+{\em y} & Top edge of the first character, in screen pixels. \\
+\hline
+{\em s} & Null-\/terminated string to draw. \\
+\hline
+{\em color} & Tint colour in AARRGGBB format. \\
+\hline
+{\em scale} & Integer scale factor (1 = normal size, 2 = double, …). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Total pixel width rendered at the given scale. 
+\end{DoxyReturn}
+\Hypertarget{font_8h_a86aad67a9e5bfa8d2a294ca18ec35c1a}\label{font_8h_a86aad67a9e5bfa8d2a294ca18ec35c1a} 
+\index{font.h@{font.h}!font\_string\_width@{font\_string\_width}}
+\index{font\_string\_width@{font\_string\_width}!font.h@{font.h}}
+\doxysubsubsection{\texorpdfstring{font\_string\_width()}{font\_string\_width()}}
+{\footnotesize\ttfamily uint16\+\_\+t font\+\_\+string\+\_\+width (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s }\end{DoxyParamCaption})}
+
+
+
+Returns the pixel width a string would occupy without drawing it. 
+
+Useful for centring or right-\/aligning text before committing to a draw call.
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Null-\/terminated string to measure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Width in pixels. 
+\end{DoxyReturn}
+\Hypertarget{font_8h_a444e8e12aea7e14a41fb39c8ecbcabe0}\label{font_8h_a444e8e12aea7e14a41fb39c8ecbcabe0} 
+\index{font.h@{font.h}!font\_string\_width\_scaled@{font\_string\_width\_scaled}}
+\index{font\_string\_width\_scaled@{font\_string\_width\_scaled}!font.h@{font.h}}
+\doxysubsubsection{\texorpdfstring{font\_string\_width\_scaled()}{font\_string\_width\_scaled()}}
+{\footnotesize\ttfamily uint16\+\_\+t font\+\_\+string\+\_\+width\+\_\+scaled (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint8\+\_\+t}]{scale }\end{DoxyParamCaption})}
+
+
+
+Returns the pixel width a scaled string would occupy without drawing it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Null-\/terminated string to measure. \\
+\hline
+{\em scale} & Integer scale factor (must match the intended draw call). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Width in pixels at the given scale. 
+\end{DoxyReturn}

@@ -1,0 +1,17 @@
+<map id="src/enemy/wave.h" name="src/enemy/wave.h">
+<area shape="rect" id="Node000001" title="Enemy wave spawning logic." alt="" coords="40,5,181,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,225,91,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,33,79,53,62,80,52,114,48,150,48,211,43,211,42,149,47,113,58,78,75,50,95,29"/>
+<area shape="rect" id="Node000003" href="$enemy_8h.html" title="Enemy entity definition and per&#45;enemy lifecycle functions." alt="" coords="72,79,149,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,31,113,65,108,65,108,31"/>
+<area shape="rect" id="Node000005" href="$difficulty_8h.html" title="Difficulty selection screen and difficulty type definition." alt="" coords="225,79,314,104"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="137,28,232,71,230,75,135,33"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="104,106,76,153,56,212,51,211,71,151,100,103"/>
+<area shape="rect" id="Node000004" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="86,152,210,177"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="119,103,138,139,133,141,114,106"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="133,180,77,219,74,215,130,175"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="234,152,305,177"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="272,104,272,138,267,138,267,104"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="329,152,412,177"/>
+<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="287,102,344,142,341,146,284,106"/>
+</map>

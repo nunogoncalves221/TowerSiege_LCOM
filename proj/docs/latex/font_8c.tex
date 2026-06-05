@@ -1,0 +1,163 @@
+\doxysection{src/font/font.c File Reference}
+\hypertarget{font_8c}{}\label{font_8c}\index{src/font/font.c@{src/font/font.c}}
+{\ttfamily \#include "{}font.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include $<$lcom/lcf.\+h$>$}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+a.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+b.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+c.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+d.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+e.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+f.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+g.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+h.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+i.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+j.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+k.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+l.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+m.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+n.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+o.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+p.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+q.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+r.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+s.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+t.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+u.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+v.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+w.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+x.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+y.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/letter\+\_\+z.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+zero.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+one.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+two.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+three.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+four.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+five.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+six.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+seven.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+eight.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/number\+\_\+nine.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/char\+\_\+colon.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/char\+\_\+slash.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/char\+\_\+underscore.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/char\+\_\+exclaim.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/char\+\_\+plus.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/font/char\+\_\+minus.\+xpm"{}}\newline
+Include dependency graph for font.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{font_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{font_8c_ae09bb8e7d2e3d76ee89db3e66b0455a7}{font\+\_\+draw\+\_\+string}} (uint16\+\_\+t x, uint16\+\_\+t y, const char \texorpdfstring{$\ast$}{*}s, uint32\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Draws a string at the given screen position. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{font_8c_a86aad67a9e5bfa8d2a294ca18ec35c1a}{font\+\_\+string\+\_\+width}} (const char \texorpdfstring{$\ast$}{*}s)
+\begin{DoxyCompactList}\small\item\em Returns the pixel width a string would occupy without drawing it. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{font_8c_aac3f6a3d4cdcf5f17f2f5dbc205529ba}{font\+\_\+draw\+\_\+string\+\_\+scaled}} (uint16\+\_\+t x, uint16\+\_\+t y, const char \texorpdfstring{$\ast$}{*}s, uint32\+\_\+t color, uint8\+\_\+t scale)
+\begin{DoxyCompactList}\small\item\em Draws a string with each glyph pixel scaled to a square block. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{font_8c_a444e8e12aea7e14a41fb39c8ecbcabe0}{font\+\_\+string\+\_\+width\+\_\+scaled}} (const char \texorpdfstring{$\ast$}{*}s, uint8\+\_\+t scale)
+\begin{DoxyCompactList}\small\item\em Returns the pixel width a scaled string would occupy without drawing it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{font_8c_ae09bb8e7d2e3d76ee89db3e66b0455a7}\label{font_8c_ae09bb8e7d2e3d76ee89db3e66b0455a7} 
+\index{font.c@{font.c}!font\_draw\_string@{font\_draw\_string}}
+\index{font\_draw\_string@{font\_draw\_string}!font.c@{font.c}}
+\doxysubsubsection{\texorpdfstring{font\_draw\_string()}{font\_draw\_string()}}
+{\footnotesize\ttfamily uint16\+\_\+t font\+\_\+draw\+\_\+string (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{x,  }\item[{uint16\+\_\+t}]{y,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint32\+\_\+t}]{color }\end{DoxyParamCaption})}
+
+
+
+Draws a string at the given screen position. 
+
+Each pixel of every glyph is tinted to {\ttfamily color}. Transparent glyph pixels are skipped.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Left edge of the first character, in screen pixels. \\
+\hline
+{\em y} & Top edge of the first character, in screen pixels. \\
+\hline
+{\em s} & Null-\/terminated string to draw. \\
+\hline
+{\em color} & Tint colour in AARRGGBB format. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Total pixel width rendered (same value as \doxylink{font_8h_a86aad67a9e5bfa8d2a294ca18ec35c1a}{font\+\_\+string\+\_\+width()}). 
+\end{DoxyReturn}
+\Hypertarget{font_8c_aac3f6a3d4cdcf5f17f2f5dbc205529ba}\label{font_8c_aac3f6a3d4cdcf5f17f2f5dbc205529ba} 
+\index{font.c@{font.c}!font\_draw\_string\_scaled@{font\_draw\_string\_scaled}}
+\index{font\_draw\_string\_scaled@{font\_draw\_string\_scaled}!font.c@{font.c}}
+\doxysubsubsection{\texorpdfstring{font\_draw\_string\_scaled()}{font\_draw\_string\_scaled()}}
+{\footnotesize\ttfamily uint16\+\_\+t font\+\_\+draw\+\_\+string\+\_\+scaled (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{x,  }\item[{uint16\+\_\+t}]{y,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint32\+\_\+t}]{color,  }\item[{uint8\+\_\+t}]{scale }\end{DoxyParamCaption})}
+
+
+
+Draws a string with each glyph pixel scaled to a square block. 
+
+Every logical pixel of every glyph is rendered as a {\ttfamily scale} × {\ttfamily scale} block of screen pixels, producing an integer-\/scaled appearance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Left edge of the first character, in screen pixels. \\
+\hline
+{\em y} & Top edge of the first character, in screen pixels. \\
+\hline
+{\em s} & Null-\/terminated string to draw. \\
+\hline
+{\em color} & Tint colour in AARRGGBB format. \\
+\hline
+{\em scale} & Integer scale factor (1 = normal size, 2 = double, …). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Total pixel width rendered at the given scale. 
+\end{DoxyReturn}
+\Hypertarget{font_8c_a86aad67a9e5bfa8d2a294ca18ec35c1a}\label{font_8c_a86aad67a9e5bfa8d2a294ca18ec35c1a} 
+\index{font.c@{font.c}!font\_string\_width@{font\_string\_width}}
+\index{font\_string\_width@{font\_string\_width}!font.c@{font.c}}
+\doxysubsubsection{\texorpdfstring{font\_string\_width()}{font\_string\_width()}}
+{\footnotesize\ttfamily uint16\+\_\+t font\+\_\+string\+\_\+width (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s }\end{DoxyParamCaption})}
+
+
+
+Returns the pixel width a string would occupy without drawing it. 
+
+Useful for centring or right-\/aligning text before committing to a draw call.
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Null-\/terminated string to measure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Width in pixels. 
+\end{DoxyReturn}
+\Hypertarget{font_8c_a444e8e12aea7e14a41fb39c8ecbcabe0}\label{font_8c_a444e8e12aea7e14a41fb39c8ecbcabe0} 
+\index{font.c@{font.c}!font\_string\_width\_scaled@{font\_string\_width\_scaled}}
+\index{font\_string\_width\_scaled@{font\_string\_width\_scaled}!font.c@{font.c}}
+\doxysubsubsection{\texorpdfstring{font\_string\_width\_scaled()}{font\_string\_width\_scaled()}}
+{\footnotesize\ttfamily uint16\+\_\+t font\+\_\+string\+\_\+width\+\_\+scaled (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s,  }\item[{uint8\+\_\+t}]{scale }\end{DoxyParamCaption})}
+
+
+
+Returns the pixel width a scaled string would occupy without drawing it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Null-\/terminated string to measure. \\
+\hline
+{\em scale} & Integer scale factor (must match the intended draw call). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Width in pixels at the given scale. 
+\end{DoxyReturn}

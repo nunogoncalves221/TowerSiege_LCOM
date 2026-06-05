@@ -1,0 +1,93 @@
+\doxysection{src/enemy/wave.c File Reference}
+\hypertarget{wave_8c}{}\label{wave_8c}\index{src/enemy/wave.c@{src/enemy/wave.c}}
+{\ttfamily \#include "{}wave.\+h"{}}\newline
+{\ttfamily \#include "{}game.\+h"{}}\newline
+{\ttfamily \#include "{}map.\+h"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}../assets/orc.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/goblin.\+xpm"{}}\newline
+Include dependency graph for wave.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{wave_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{wave_8c_a15facfc5876ff0e8d903412ff951369b}{wave\+\_\+init}} (\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} diff)
+\begin{DoxyCompactList}\small\item\em Resets wave state to the beginning of wave 1. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{wave_8c_a29e80ed15014febb083015a84d804443}{wave\+\_\+tick}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}enemies, int \texorpdfstring{$\ast$}{*}enemy\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Advances the wave timer and spawns enemies when appropriate. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{wave_8c_a9e1561054b93659b1cbc09f59e63b68f}{wave\+\_\+get\+\_\+number}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the current wave number (1-\/based). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{wave_8c_a92d5c4497394451fbb3cb6abc4736127}{wave\+\_\+is\+\_\+complete}} (void)
+\begin{DoxyCompactList}\small\item\em Returns whether all waves have been completed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{wave_8c_a9e1561054b93659b1cbc09f59e63b68f}\label{wave_8c_a9e1561054b93659b1cbc09f59e63b68f} 
+\index{wave.c@{wave.c}!wave\_get\_number@{wave\_get\_number}}
+\index{wave\_get\_number@{wave\_get\_number}!wave.c@{wave.c}}
+\doxysubsubsection{\texorpdfstring{wave\_get\_number()}{wave\_get\_number()}}
+{\footnotesize\ttfamily int wave\+\_\+get\+\_\+number (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the current wave number (1-\/based). 
+
+\begin{DoxyReturn}{Returns}
+The wave that is currently being played. 
+\end{DoxyReturn}
+\Hypertarget{wave_8c_a15facfc5876ff0e8d903412ff951369b}\label{wave_8c_a15facfc5876ff0e8d903412ff951369b} 
+\index{wave.c@{wave.c}!wave\_init@{wave\_init}}
+\index{wave\_init@{wave\_init}!wave.c@{wave.c}}
+\doxysubsubsection{\texorpdfstring{wave\_init()}{wave\_init()}}
+{\footnotesize\ttfamily void wave\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}}}]{diff }\end{DoxyParamCaption})}
+
+
+
+Resets wave state to the beginning of wave 1. 
+
+Should be called once during game initialisation or on game reset.
+
+
+\begin{DoxyParams}{Parameters}
+{\em diff} & Selected difficulty, used to scale enemy counts and spawn rate. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{wave_8c_a92d5c4497394451fbb3cb6abc4736127}\label{wave_8c_a92d5c4497394451fbb3cb6abc4736127} 
+\index{wave.c@{wave.c}!wave\_is\_complete@{wave\_is\_complete}}
+\index{wave\_is\_complete@{wave\_is\_complete}!wave.c@{wave.c}}
+\doxysubsubsection{\texorpdfstring{wave\_is\_complete()}{wave\_is\_complete()}}
+{\footnotesize\ttfamily bool wave\+\_\+is\+\_\+complete (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns whether all waves have been completed. 
+
+\begin{DoxyReturn}{Returns}
+true after wave 10 has been fully spawned and cleared, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{wave_8c_a29e80ed15014febb083015a84d804443}\label{wave_8c_a29e80ed15014febb083015a84d804443} 
+\index{wave.c@{wave.c}!wave\_tick@{wave\_tick}}
+\index{wave\_tick@{wave\_tick}!wave.c@{wave.c}}
+\doxysubsubsection{\texorpdfstring{wave\_tick()}{wave\_tick()}}
+{\footnotesize\ttfamily void wave\+\_\+tick (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{enemies,  }\item[{int \texorpdfstring{$\ast$}{*}}]{enemy\+\_\+count }\end{DoxyParamCaption})}
+
+
+
+Advances the wave timer and spawns enemies when appropriate. 
+
+Must be called once per game tick. When the spawn timer fires, a new \doxylink{structenemy__t}{enemy\+\_\+t} is appended to {\ttfamily enemies} and {\ttfamily enemy\+\_\+count} is incremented. The function handles wave transitions internally.
+
+
+\begin{DoxyParams}{Parameters}
+{\em enemies} & Pointer to the array of active enemy pointers. \\
+\hline
+{\em enemy\+\_\+count} & Pointer to the current number of active enemies; incremented each time an enemy is spawned. \\
+\hline
+\end{DoxyParams}

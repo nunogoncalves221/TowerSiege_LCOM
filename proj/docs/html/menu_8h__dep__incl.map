@@ -1,0 +1,7 @@
+<map id="src/menu/menu.h" name="src/menu/menu.h">
+<area shape="rect" id="Node000001" title="Main menu screen and option selection." alt="" coords="51,5,185,31"/>
+<area shape="rect" id="Node000002" href="$main_8c.html" title=" " alt="" coords="5,79,95,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,42,63,80,59,77,96,39"/>
+<area shape="rect" id="Node000003" href="$menu_8c.html" title=" " alt="" coords="119,79,253,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="140,39,177,77,173,80,137,42"/>
+</map>

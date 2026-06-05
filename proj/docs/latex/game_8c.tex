@@ -1,0 +1,196 @@
+\doxysection{src/game/game.c File Reference}
+\hypertarget{game_8c}{}\label{game_8c}\index{src/game/game.c@{src/game/game.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}game.\+h"{}}\newline
+{\ttfamily \#include "{}difficulty.\+h"{}}\newline
+{\ttfamily \#include "{}sprite.\+h"{}}\newline
+{\ttfamily \#include "{}animated\+\_\+sprite.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include "{}map.\+h"{}}\newline
+{\ttfamily \#include "{}hero.\+h"{}}\newline
+{\ttfamily \#include "{}enemy.\+h"{}}\newline
+{\ttfamily \#include "{}enemy\+\_\+manager.\+h"{}}\newline
+{\ttfamily \#include "{}wave.\+h"{}}\newline
+{\ttfamily \#include "{}tower.\+h"{}}\newline
+{\ttfamily \#include "{}bullet.\+h"{}}\newline
+{\ttfamily \#include "{}font.\+h"{}}\newline
+{\ttfamily \#include "{}rtc.\+h"{}}\newline
+{\ttfamily \#include "{}player.\+h"{}}\newline
+{\ttfamily \#include "{}hud.\+h"{}}\newline
+{\ttfamily \#include "{}../assets/cursor.\+xpm"{}}\newline
+Include dependency graph for game.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{game_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{game_8c_a05cddc86cdca6cac72dddefeaf3c142e}{game\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Initialises all game subsystems and places the first wave. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8c_a06f939b3f0128c77a7e516e80811a4d7}{game\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Forwards a keyboard scancode to the relevant in-\/game handler. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8c_af8a50be77ba977aadb8ea6f85f91ecdb}{game\+\_\+tick}} (void)
+\begin{DoxyCompactList}\small\item\em Advances the game simulation by one tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8c_af6beeef4bd774ee4c8ed789815e68833}{game\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Renders the current game frame to the back-\/buffer. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{game_8c_af97cd03e337953062dd79885856ec382}{game\+\_\+is\+\_\+over}} (void)
+\begin{DoxyCompactList}\small\item\em Returns whether the game session has ended. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{game_8c_a8a8ce7aedd7485dba20523e428687f46}{game\+\_\+get\+\_\+score}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the player\textquotesingle{}s current score. \end{DoxyCompactList}\item 
+int16\+\_\+t \mbox{\hyperlink{game_8c_a36c5a459274d5a14fba285fae74fca1c}{game\+\_\+get\+\_\+cursor\+\_\+y}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the vertical screen coordinate of the cursor. \end{DoxyCompactList}\item 
+rtc\+\_\+date \mbox{\hyperlink{game_8c_ab1c473e91a41cb81c8329835d68b7f14}{game\+\_\+get\+\_\+start\+\_\+time}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the RTC timestamp recorded when the game started. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8c_a03f7db083f6e23af50f720800f163674}{game\+\_\+update\+\_\+cursor}} (int16\+\_\+t dx, int16\+\_\+t dy)
+\begin{DoxyCompactList}\small\item\em Applies a mouse delta to the in-\/game cursor position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8c_a4bb40e4cb00308f7cdcbabb1eed8d321}{game\+\_\+handle\+\_\+click}} (void)
+\begin{DoxyCompactList}\small\item\em Processes a left mouse-\/button click at the current cursor position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{game_8c_addf8c4562fc6746b82fa297f38624052}{game\+\_\+destroy}} (void)
+\begin{DoxyCompactList}\small\item\em Frees all resources allocated by \doxylink{game_8h_a05cddc86cdca6cac72dddefeaf3c142e}{game\+\_\+reset()}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{game_8c_addf8c4562fc6746b82fa297f38624052}\label{game_8c_addf8c4562fc6746b82fa297f38624052} 
+\index{game.c@{game.c}!game\_destroy@{game\_destroy}}
+\index{game\_destroy@{game\_destroy}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_destroy()}{game\_destroy()}}
+{\footnotesize\ttfamily void game\+\_\+destroy (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Frees all resources allocated by \doxylink{game_8h_a05cddc86cdca6cac72dddefeaf3c142e}{game\+\_\+reset()}. 
+
+Call when leaving the game state entirely (e.\+g. returning to the main menu). \Hypertarget{game_8c_af6beeef4bd774ee4c8ed789815e68833}\label{game_8c_af6beeef4bd774ee4c8ed789815e68833} 
+\index{game.c@{game.c}!game\_draw@{game\_draw}}
+\index{game\_draw@{game\_draw}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_draw()}{game\_draw()}}
+{\footnotesize\ttfamily void game\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Renders the current game frame to the back-\/buffer. 
+
+Draws the map, enemies, towers, bullets, hero, and HUD in order. \Hypertarget{game_8c_a36c5a459274d5a14fba285fae74fca1c}\label{game_8c_a36c5a459274d5a14fba285fae74fca1c} 
+\index{game.c@{game.c}!game\_get\_cursor\_y@{game\_get\_cursor\_y}}
+\index{game\_get\_cursor\_y@{game\_get\_cursor\_y}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_get\_cursor\_y()}{game\_get\_cursor\_y()}}
+{\footnotesize\ttfamily int16\+\_\+t game\+\_\+get\+\_\+cursor\+\_\+y (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the vertical screen coordinate of the cursor. 
+
+Used by the game-\/over menu to position the cursor-\/dependent UI.
+
+\begin{DoxyReturn}{Returns}
+Cursor Y position in screen pixels. 
+\end{DoxyReturn}
+\Hypertarget{game_8c_a8a8ce7aedd7485dba20523e428687f46}\label{game_8c_a8a8ce7aedd7485dba20523e428687f46} 
+\index{game.c@{game.c}!game\_get\_score@{game\_get\_score}}
+\index{game\_get\_score@{game\_get\_score}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_get\_score()}{game\_get\_score()}}
+{\footnotesize\ttfamily int game\+\_\+get\+\_\+score (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the player\textquotesingle{}s current score. 
+
+\begin{DoxyReturn}{Returns}
+Score accumulated during this game session. 
+\end{DoxyReturn}
+\Hypertarget{game_8c_ab1c473e91a41cb81c8329835d68b7f14}\label{game_8c_ab1c473e91a41cb81c8329835d68b7f14} 
+\index{game.c@{game.c}!game\_get\_start\_time@{game\_get\_start\_time}}
+\index{game\_get\_start\_time@{game\_get\_start\_time}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_get\_start\_time()}{game\_get\_start\_time()}}
+{\footnotesize\ttfamily rtc\+\_\+date game\+\_\+get\+\_\+start\+\_\+time (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the RTC timestamp recorded when the game started. 
+
+\begin{DoxyReturn}{Returns}
+\+::rtc\+\_\+date captured at the beginning of the current session. 
+\end{DoxyReturn}
+\Hypertarget{game_8c_a4bb40e4cb00308f7cdcbabb1eed8d321}\label{game_8c_a4bb40e4cb00308f7cdcbabb1eed8d321} 
+\index{game.c@{game.c}!game\_handle\_click@{game\_handle\_click}}
+\index{game\_handle\_click@{game\_handle\_click}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_handle\_click()}{game\_handle\_click()}}
+{\footnotesize\ttfamily void game\+\_\+handle\+\_\+click (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Processes a left mouse-\/button click at the current cursor position. 
+
+Checks whether the click lands on a blank tile and places the selected tower, or opens the upgrade popup if a tower is already present. \Hypertarget{game_8c_a06f939b3f0128c77a7e516e80811a4d7}\label{game_8c_a06f939b3f0128c77a7e516e80811a4d7} 
+\index{game.c@{game.c}!game\_handle\_key@{game\_handle\_key}}
+\index{game\_handle\_key@{game\_handle\_key}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_handle\_key()}{game\_handle\_key()}}
+{\footnotesize\ttfamily void game\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Forwards a keyboard scancode to the relevant in-\/game handler. 
+
+Routes movement keys to the hero, and tower-\/popup keys when a popup is open.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{game_8c_af97cd03e337953062dd79885856ec382}\label{game_8c_af97cd03e337953062dd79885856ec382} 
+\index{game.c@{game.c}!game\_is\_over@{game\_is\_over}}
+\index{game\_is\_over@{game\_is\_over}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_is\_over()}{game\_is\_over()}}
+{\footnotesize\ttfamily bool game\+\_\+is\+\_\+over (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns whether the game session has ended. 
+
+Becomes true in two cases\+: the player\textquotesingle{}s life count reaches zero (defeat), or wave 10 is completed with no enemies remaining (victory). Callers must use \doxylink{wave_8c_a92d5c4497394451fbb3cb6abc4736127}{wave\+\_\+is\+\_\+complete()} to distinguish the two outcomes.
+
+\begin{DoxyReturn}{Returns}
+true when the game is over (win or loss). 
+\end{DoxyReturn}
+\Hypertarget{game_8c_a05cddc86cdca6cac72dddefeaf3c142e}\label{game_8c_a05cddc86cdca6cac72dddefeaf3c142e} 
+\index{game.c@{game.c}!game\_reset@{game\_reset}}
+\index{game\_reset@{game\_reset}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_reset()}{game\_reset()}}
+{\footnotesize\ttfamily void game\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialises all game subsystems and places the first wave. 
+
+Must be called before any other game function and again whenever the player retries after a game-\/over. \Hypertarget{game_8c_af8a50be77ba977aadb8ea6f85f91ecdb}\label{game_8c_af8a50be77ba977aadb8ea6f85f91ecdb} 
+\index{game.c@{game.c}!game\_tick@{game\_tick}}
+\index{game\_tick@{game\_tick}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_tick()}{game\_tick()}}
+{\footnotesize\ttfamily void game\+\_\+tick (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Advances the game simulation by one tick. 
+
+Updates the hero, enemies, towers, bullets, and wave spawner. Must be called once per frame before \doxylink{game_8h_af6beeef4bd774ee4c8ed789815e68833}{game\+\_\+draw()}. \Hypertarget{game_8c_a03f7db083f6e23af50f720800f163674}\label{game_8c_a03f7db083f6e23af50f720800f163674} 
+\index{game.c@{game.c}!game\_update\_cursor@{game\_update\_cursor}}
+\index{game\_update\_cursor@{game\_update\_cursor}!game.c@{game.c}}
+\doxysubsubsection{\texorpdfstring{game\_update\_cursor()}{game\_update\_cursor()}}
+{\footnotesize\ttfamily void game\+\_\+update\+\_\+cursor (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{dx,  }\item[{int16\+\_\+t}]{dy }\end{DoxyParamCaption})}
+
+
+
+Applies a mouse delta to the in-\/game cursor position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dx} & Horizontal movement in pixels (positive = right). \\
+\hline
+{\em dy} & Vertical movement in pixels (positive = down). \\
+\hline
+\end{DoxyParams}

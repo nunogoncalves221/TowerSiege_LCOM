@@ -1,0 +1,100 @@
+\doxysection{src/enemy/enemy.c File Reference}
+\hypertarget{enemy_8c}{}\label{enemy_8c}\index{src/enemy/enemy.c@{src/enemy/enemy.c}}
+{\ttfamily \#include "{}enemy.\+h"{}}\newline
+{\ttfamily \#include "{}map.\+h"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+Include dependency graph for enemy.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{enemy_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{enemy_8c_a2868126683ce0db9c3867bb46b10945f}{enemy\+\_\+create}} (xpm\+\_\+map\+\_\+t xpm, int16\+\_\+t start\+\_\+x, int16\+\_\+t start\+\_\+y, int16\+\_\+t hp, int16\+\_\+t speed)
+\begin{DoxyCompactList}\small\item\em Allocates and initialises a single enemy at the given coordinates. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{enemy_8c_a7baaa37dabdffe0e0fc16b55bbabfb9b}{enemy\+\_\+destroy}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}e)
+\begin{DoxyCompactList}\small\item\em Frees all memory owned by an enemy. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{enemy_8c_a6279af2a46427e7a3b804eb217643058}{enemy\+\_\+update}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}e)
+\begin{DoxyCompactList}\small\item\em Advances an enemy one step along the TILE\+\_\+\+PATH grid. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{enemy_8c_adf9ffda3a57700e2dec6d23014df1bbf}{enemy\+\_\+draw}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}e)
+\begin{DoxyCompactList}\small\item\em Draws the enemy sprite at its current position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{enemy_8c_a2868126683ce0db9c3867bb46b10945f}\label{enemy_8c_a2868126683ce0db9c3867bb46b10945f} 
+\index{enemy.c@{enemy.c}!enemy\_create@{enemy\_create}}
+\index{enemy\_create@{enemy\_create}!enemy.c@{enemy.c}}
+\doxysubsubsection{\texorpdfstring{enemy\_create()}{enemy\_create()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*} enemy\+\_\+create (\begin{DoxyParamCaption}\item[{xpm\+\_\+map\+\_\+t}]{xpm,  }\item[{int16\+\_\+t}]{start\+\_\+x,  }\item[{int16\+\_\+t}]{start\+\_\+y,  }\item[{int16\+\_\+t}]{hp,  }\item[{int16\+\_\+t}]{speed }\end{DoxyParamCaption})}
+
+
+
+Allocates and initialises a single enemy at the given coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpm} & XPM image used as the enemy\textquotesingle{}s sprite. \\
+\hline
+{\em start\+\_\+x} & Initial horizontal position in screen pixels. \\
+\hline
+{\em start\+\_\+y} & Initial vertical position in screen pixels. \\
+\hline
+{\em hp} & Starting hit points. \\
+\hline
+{\em speed} & Movement speed in pixels per game tick. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the newly allocated \doxylink{structenemy__t}{enemy\+\_\+t}, or NULL on failure. 
+\end{DoxyReturn}
+\Hypertarget{enemy_8c_a7baaa37dabdffe0e0fc16b55bbabfb9b}\label{enemy_8c_a7baaa37dabdffe0e0fc16b55bbabfb9b} 
+\index{enemy.c@{enemy.c}!enemy\_destroy@{enemy\_destroy}}
+\index{enemy\_destroy@{enemy\_destroy}!enemy.c@{enemy.c}}
+\doxysubsubsection{\texorpdfstring{enemy\_destroy()}{enemy\_destroy()}}
+{\footnotesize\ttfamily void enemy\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{e }\end{DoxyParamCaption})}
+
+
+
+Frees all memory owned by an enemy. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Enemy to destroy. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{enemy_8c_adf9ffda3a57700e2dec6d23014df1bbf}\label{enemy_8c_adf9ffda3a57700e2dec6d23014df1bbf} 
+\index{enemy.c@{enemy.c}!enemy\_draw@{enemy\_draw}}
+\index{enemy\_draw@{enemy\_draw}!enemy.c@{enemy.c}}
+\doxysubsubsection{\texorpdfstring{enemy\_draw()}{enemy\_draw()}}
+{\footnotesize\ttfamily void enemy\+\_\+draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{e }\end{DoxyParamCaption})}
+
+
+
+Draws the enemy sprite at its current position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Enemy to draw. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{enemy_8c_a6279af2a46427e7a3b804eb217643058}\label{enemy_8c_a6279af2a46427e7a3b804eb217643058} 
+\index{enemy.c@{enemy.c}!enemy\_update@{enemy\_update}}
+\index{enemy\_update@{enemy\_update}!enemy.c@{enemy.c}}
+\doxysubsubsection{\texorpdfstring{enemy\_update()}{enemy\_update()}}
+{\footnotesize\ttfamily void enemy\+\_\+update (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{e }\end{DoxyParamCaption})}
+
+
+
+Advances an enemy one step along the TILE\+\_\+\+PATH grid. 
+
+Must be called once per game tick for each active enemy.
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Enemy to update. \\
+\hline
+\end{DoxyParams}

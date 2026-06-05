@@ -1,0 +1,181 @@
+\doxysection{src/sprite/animated\+\_\+sprite.c File Reference}
+\hypertarget{animated__sprite_8c}{}\label{animated__sprite_8c}\index{src/sprite/animated\_sprite.c@{src/sprite/animated\_sprite.c}}
+{\ttfamily \#include "{}animated\+\_\+sprite.\+h"{}}\newline
+Include dependency graph for animated\+\_\+sprite.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{animated__sprite_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{animated__sprite_8c_abff27595c391742537dff31e1a714419}{create\+\_\+animated\+\_\+sprite}} (xpm\+\_\+map\+\_\+t \texorpdfstring{$\ast$}{*}xpm\+\_\+array, uint8\+\_\+t no\+\_\+pic, int aspeed)
+\begin{DoxyCompactList}\small\item\em Allocates and initialises an animated sprite from an array of XPMs. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{animated__sprite_8c_a6cccb5be7c06e0806a0e65b3c74110af}{destroy\+\_\+animated\+\_\+sprite}} (\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}as)
+\begin{DoxyCompactList}\small\item\em Frees all memory associated with an animated sprite. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{animated__sprite_8c_afb7045a9bac7a76e1a33462865b3dd4a}{draw\+\_\+animated\+\_\+sprite}} (\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}as, uint16\+\_\+t x, uint16\+\_\+t y)
+\begin{DoxyCompactList}\small\item\em Draws the current frame of the animated sprite. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{animated__sprite_8c_ab0152b006cd6097debaf2eb3adb0d1e2}{draw\+\_\+animated\+\_\+sprite\+\_\+flipped}} (\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}as, uint16\+\_\+t x, uint16\+\_\+t y)
+\begin{DoxyCompactList}\small\item\em Draws the current frame mirrored horizontally. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{animated__sprite_8c_a04399fc9eea15e8df1571b5a26797435}{animate\+\_\+sprite\+\_\+once}} (\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}as)
+\begin{DoxyCompactList}\small\item\em Advances the animation by one tick, stopping at the last frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{animated__sprite_8c_a56b888e1711ae8f80ee3bd055fc05acb}{animate\+\_\+sprite\+\_\+loop}} (\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}as)
+\begin{DoxyCompactList}\small\item\em Advances the animation by one tick, looping back to frame 0. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{animated__sprite_8c_a435147b777a3c7a27420131fd7cbfbe8}{animated\+\_\+sprite\+\_\+finished}} (\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}as)
+\begin{DoxyCompactList}\small\item\em Returns whether a one-\/shot animation has fully completed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{animated__sprite_8c_a20e664f8864f2cb1cd4c83d8929f5718}{reset\+\_\+animated\+\_\+sprite}} (\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}as)
+\begin{DoxyCompactList}\small\item\em Resets the animation back to the first frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{animated__sprite_8c_a56b888e1711ae8f80ee3bd055fc05acb}\label{animated__sprite_8c_a56b888e1711ae8f80ee3bd055fc05acb} 
+\index{animated\_sprite.c@{animated\_sprite.c}!animate\_sprite\_loop@{animate\_sprite\_loop}}
+\index{animate\_sprite\_loop@{animate\_sprite\_loop}!animated\_sprite.c@{animated\_sprite.c}}
+\doxysubsubsection{\texorpdfstring{animate\_sprite\_loop()}{animate\_sprite\_loop()}}
+{\footnotesize\ttfamily void animate\+\_\+sprite\+\_\+loop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}}]{as }\end{DoxyParamCaption})}
+
+
+
+Advances the animation by one tick, looping back to frame 0. 
+
+Suitable for continuous animations such as walking or idle cycles.
+
+
+\begin{DoxyParams}{Parameters}
+{\em as} & Animated sprite to tick. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{animated__sprite_8c_a04399fc9eea15e8df1571b5a26797435}\label{animated__sprite_8c_a04399fc9eea15e8df1571b5a26797435} 
+\index{animated\_sprite.c@{animated\_sprite.c}!animate\_sprite\_once@{animate\_sprite\_once}}
+\index{animate\_sprite\_once@{animate\_sprite\_once}!animated\_sprite.c@{animated\_sprite.c}}
+\doxysubsubsection{\texorpdfstring{animate\_sprite\_once()}{animate\_sprite\_once()}}
+{\footnotesize\ttfamily void animate\+\_\+sprite\+\_\+once (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}}]{as }\end{DoxyParamCaption})}
+
+
+
+Advances the animation by one tick, stopping at the last frame. 
+
+Suitable for one-\/shot actions such as attack or death sequences. Use \doxylink{animated__sprite_8h_a435147b777a3c7a27420131fd7cbfbe8}{animated\+\_\+sprite\+\_\+finished()} to detect completion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em as} & Animated sprite to tick. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{animated__sprite_8c_a435147b777a3c7a27420131fd7cbfbe8}\label{animated__sprite_8c_a435147b777a3c7a27420131fd7cbfbe8} 
+\index{animated\_sprite.c@{animated\_sprite.c}!animated\_sprite\_finished@{animated\_sprite\_finished}}
+\index{animated\_sprite\_finished@{animated\_sprite\_finished}!animated\_sprite.c@{animated\_sprite.c}}
+\doxysubsubsection{\texorpdfstring{animated\_sprite\_finished()}{animated\_sprite\_finished()}}
+{\footnotesize\ttfamily bool animated\+\_\+sprite\+\_\+finished (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}}]{as }\end{DoxyParamCaption})}
+
+
+
+Returns whether a one-\/shot animation has fully completed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em as} & Animated sprite to query. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the last frame has been displayed, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{animated__sprite_8c_abff27595c391742537dff31e1a714419}\label{animated__sprite_8c_abff27595c391742537dff31e1a714419} 
+\index{animated\_sprite.c@{animated\_sprite.c}!create\_animated\_sprite@{create\_animated\_sprite}}
+\index{create\_animated\_sprite@{create\_animated\_sprite}!animated\_sprite.c@{animated\_sprite.c}}
+\doxysubsubsection{\texorpdfstring{create\_animated\_sprite()}{create\_animated\_sprite()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*} create\+\_\+animated\+\_\+sprite (\begin{DoxyParamCaption}\item[{xpm\+\_\+map\+\_\+t \texorpdfstring{$\ast$}{*}}]{xpm\+\_\+array,  }\item[{uint8\+\_\+t}]{no\+\_\+pic,  }\item[{int}]{aspeed }\end{DoxyParamCaption})}
+
+
+
+Allocates and initialises an animated sprite from an array of XPMs. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpm\+\_\+array} & Array of XPM maps, one per animation frame. \\
+\hline
+{\em no\+\_\+pic} & Number of frames (length of {\ttfamily xpm\+\_\+array}). \\
+\hline
+{\em aspeed} & Ticks per frame (higher = slower animation). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the newly allocated \doxylink{structAnimSprite}{Anim\+Sprite}, or NULL on failure. 
+\end{DoxyReturn}
+\Hypertarget{animated__sprite_8c_a6cccb5be7c06e0806a0e65b3c74110af}\label{animated__sprite_8c_a6cccb5be7c06e0806a0e65b3c74110af} 
+\index{animated\_sprite.c@{animated\_sprite.c}!destroy\_animated\_sprite@{destroy\_animated\_sprite}}
+\index{destroy\_animated\_sprite@{destroy\_animated\_sprite}!animated\_sprite.c@{animated\_sprite.c}}
+\doxysubsubsection{\texorpdfstring{destroy\_animated\_sprite()}{destroy\_animated\_sprite()}}
+{\footnotesize\ttfamily void destroy\+\_\+animated\+\_\+sprite (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}}]{as }\end{DoxyParamCaption})}
+
+
+
+Frees all memory associated with an animated sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em as} & Animated sprite to destroy. May be NULL (no-\/op). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{animated__sprite_8c_afb7045a9bac7a76e1a33462865b3dd4a}\label{animated__sprite_8c_afb7045a9bac7a76e1a33462865b3dd4a} 
+\index{animated\_sprite.c@{animated\_sprite.c}!draw\_animated\_sprite@{draw\_animated\_sprite}}
+\index{draw\_animated\_sprite@{draw\_animated\_sprite}!animated\_sprite.c@{animated\_sprite.c}}
+\doxysubsubsection{\texorpdfstring{draw\_animated\_sprite()}{draw\_animated\_sprite()}}
+{\footnotesize\ttfamily int draw\+\_\+animated\+\_\+sprite (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}}]{as,  }\item[{uint16\+\_\+t}]{x,  }\item[{uint16\+\_\+t}]{y }\end{DoxyParamCaption})}
+
+
+
+Draws the current frame of the animated sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em as} & Animated sprite to draw. \\
+\hline
+{\em x} & Horizontal screen coordinate of the top-\/left corner. \\
+\hline
+{\em y} & Vertical screen coordinate of the top-\/left corner. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, non-\/zero on error. 
+\end{DoxyReturn}
+\Hypertarget{animated__sprite_8c_ab0152b006cd6097debaf2eb3adb0d1e2}\label{animated__sprite_8c_ab0152b006cd6097debaf2eb3adb0d1e2} 
+\index{animated\_sprite.c@{animated\_sprite.c}!draw\_animated\_sprite\_flipped@{draw\_animated\_sprite\_flipped}}
+\index{draw\_animated\_sprite\_flipped@{draw\_animated\_sprite\_flipped}!animated\_sprite.c@{animated\_sprite.c}}
+\doxysubsubsection{\texorpdfstring{draw\_animated\_sprite\_flipped()}{draw\_animated\_sprite\_flipped()}}
+{\footnotesize\ttfamily int draw\+\_\+animated\+\_\+sprite\+\_\+flipped (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}}]{as,  }\item[{uint16\+\_\+t}]{x,  }\item[{uint16\+\_\+t}]{y }\end{DoxyParamCaption})}
+
+
+
+Draws the current frame mirrored horizontally. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em as} & Animated sprite to draw flipped. \\
+\hline
+{\em x} & Horizontal screen coordinate of the top-\/left corner. \\
+\hline
+{\em y} & Vertical screen coordinate of the top-\/left corner. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, non-\/zero on error. 
+\end{DoxyReturn}
+\Hypertarget{animated__sprite_8c_a20e664f8864f2cb1cd4c83d8929f5718}\label{animated__sprite_8c_a20e664f8864f2cb1cd4c83d8929f5718} 
+\index{animated\_sprite.c@{animated\_sprite.c}!reset\_animated\_sprite@{reset\_animated\_sprite}}
+\index{reset\_animated\_sprite@{reset\_animated\_sprite}!animated\_sprite.c@{animated\_sprite.c}}
+\doxysubsubsection{\texorpdfstring{reset\_animated\_sprite()}{reset\_animated\_sprite()}}
+{\footnotesize\ttfamily void reset\+\_\+animated\+\_\+sprite (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structAnimSprite}{Anim\+Sprite}} \texorpdfstring{$\ast$}{*}}]{as }\end{DoxyParamCaption})}
+
+
+
+Resets the animation back to the first frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em as} & Animated sprite to reset. \\
+\hline
+\end{DoxyParams}

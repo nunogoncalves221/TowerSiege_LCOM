@@ -1,0 +1,12 @@
+<map id="src/enemy/enemy_manager.h" name="src/enemy/enemy_manager.h">
+<area shape="rect" id="Node000001" title="Batch update and draw for all active enemies." alt="" coords="5,5,220,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="19,79,102,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,33,79,69,75,66,102,29"/>
+<area shape="rect" id="Node000003" href="$enemy_8h.html" title="Enemy entity definition and per&#45;enemy lifecycle functions." alt="" coords="126,79,203,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="123,29,150,66,146,69,119,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="121,225,206,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="161,105,150,127,142,152,143,184,153,212,148,214,138,185,137,152,145,125,156,103"/>
+<area shape="rect" id="Node000005" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="152,152,276,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="175,103,200,139,196,142,171,106"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="208,179,182,216,177,213,203,176"/>
+</map>

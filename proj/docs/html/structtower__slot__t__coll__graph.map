@@ -1,0 +1,7 @@
+<map id="tower_slot_t" name="tower_slot_t">
+<area shape="rect" id="Node000001" title="Associates a grid position with the tower placed on it." alt="" coords="5,181,108,207"/>
+<area shape="rect" id="Node000002" href="$structtower__t.html" title="Represents a single placed tower and all its combat stats." alt="" coords="21,93,92,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,133,59,181,54,181,54,133"/>
+<area shape="rect" id="Node000003" href="$structsprite__t.html" title="Holds the visual data of a single, non&#45;animated image." alt="" coords="21,5,92,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="59,45,59,93,54,93,54,45"/>
+</map>

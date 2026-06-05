@@ -1,0 +1,192 @@
+\doxysection{src/map/map.h File Reference}
+\hypertarget{map_8h}{}\label{map_8h}\index{src/map/map.h@{src/map/map.h}}
+
+
+Tile-\/based game map definition and rendering.  
+
+
+{\ttfamily \#include $<$lcom/lcf.\+h$>$}\newline
+{\ttfamily \#include "{}difficulty.\+h"{}}\newline
+Include dependency graph for map.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{map_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{map_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{map_8h_a0c8fa5f924e3cb0ab18aa9ef5563ec23}{MAP\+\_\+\+COLS}}~12
+\item 
+\#define \mbox{\hyperlink{map_8h_abeb9c94c1e5b0cb6b5aea0884b1fb942}{MAP\+\_\+\+ROWS}}~9
+\item 
+\#define \mbox{\hyperlink{map_8h_a62ecd70800687eb2d625af180c4210d7}{TILE\+\_\+\+SIZE}}~96
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457b}{tile\+\_\+t}} \{ \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457bae4f6a257892b87f66f3c7be3d6f17c83}{TILE\+\_\+\+GRASS}}
+, \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457babd56e9ded1681ef9bf51e1bfd96e8daf}{TILE\+\_\+\+PATH}}
+, \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457ba80a759cf1b5375b0f86d31851bf8814a}{TILE\+\_\+\+BLANK}}
+ \}
+\begin{DoxyCompactList}\small\item\em Type of a single map tile. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{map_8h_ae18974de51e6efe91d9f25b7390d2a07}{map\+\_\+init}} (\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} diff)
+\begin{DoxyCompactList}\small\item\em Loads the map layout for the given difficulty and prepares tile sprites. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{map_8h_a54b43ccaa42a112d27fd5566535dca54}{map\+\_\+destroy}} (void)
+\begin{DoxyCompactList}\small\item\em Frees all resources allocated by \doxylink{map_8h_ae18974de51e6efe91d9f25b7390d2a07}{map\+\_\+init()}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{map_8h_a7aa2ff9936be2784889e50761db67856}{map\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the map to the screen if the tile cache is dirty. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{map_8h_aa57f803b165f19605b092e9462089968}{map\+\_\+update\+\_\+cache}} (void)
+\begin{DoxyCompactList}\small\item\em Copies the current rendered map into the tile cache. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{map_8h_ad4f915d0612e4ba38fa6e9e203b0e848}{map\+\_\+mark\+\_\+dirty}} (void)
+\begin{DoxyCompactList}\small\item\em Marks the tile cache as stale, forcing a full redraw on the next \doxylink{map_8h_a7aa2ff9936be2784889e50761db67856}{map\+\_\+draw()}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457b}{tile\+\_\+t}} \mbox{\hyperlink{map_8h_ab34e46c34eb8059ebd834ea8c6348cb7}{map\+\_\+get\+\_\+tile}} (int col, int row)
+\begin{DoxyCompactList}\small\item\em Returns the tile type at the given grid coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Tile-\/based game map definition and rendering. 
+
+The map is a fixed grid of \doxylink{map_8h_a0c8fa5f924e3cb0ab18aa9ef5563ec23}{MAP\+\_\+\+COLS} × \doxylink{map_8h_abeb9c94c1e5b0cb6b5aea0884b1fb942}{MAP\+\_\+\+ROWS} tiles. Each tile is either grass (placeable), path (enemy route), or blank (tower slot). The map caches its rendered state and only redraws when marked dirty. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{map_8h_a0c8fa5f924e3cb0ab18aa9ef5563ec23}\label{map_8h_a0c8fa5f924e3cb0ab18aa9ef5563ec23} 
+\index{map.h@{map.h}!MAP\_COLS@{MAP\_COLS}}
+\index{MAP\_COLS@{MAP\_COLS}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{MAP\_COLS}{MAP\_COLS}}
+{\footnotesize\ttfamily \#define MAP\+\_\+\+COLS~12}
+
+\Hypertarget{map_8h_abeb9c94c1e5b0cb6b5aea0884b1fb942}\label{map_8h_abeb9c94c1e5b0cb6b5aea0884b1fb942} 
+\index{map.h@{map.h}!MAP\_ROWS@{MAP\_ROWS}}
+\index{MAP\_ROWS@{MAP\_ROWS}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{MAP\_ROWS}{MAP\_ROWS}}
+{\footnotesize\ttfamily \#define MAP\+\_\+\+ROWS~9}
+
+\Hypertarget{map_8h_a62ecd70800687eb2d625af180c4210d7}\label{map_8h_a62ecd70800687eb2d625af180c4210d7} 
+\index{map.h@{map.h}!TILE\_SIZE@{TILE\_SIZE}}
+\index{TILE\_SIZE@{TILE\_SIZE}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{TILE\_SIZE}{TILE\_SIZE}}
+{\footnotesize\ttfamily \#define TILE\+\_\+\+SIZE~96}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{map_8h_af00ac9a4078e892d78c3010c9c2d457b}\label{map_8h_af00ac9a4078e892d78c3010c9c2d457b} 
+\index{map.h@{map.h}!tile\_t@{tile\_t}}
+\index{tile\_t@{tile\_t}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{tile\_t}{tile\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457b}{tile\+\_\+t}}}
+
+
+
+Type of a single map tile. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TILE\_GRASS@{TILE\_GRASS}!map.h@{map.h}}\index{map.h@{map.h}!TILE\_GRASS@{TILE\_GRASS}}}\Hypertarget{map_8h_af00ac9a4078e892d78c3010c9c2d457bae4f6a257892b87f66f3c7be3d6f17c83}\label{map_8h_af00ac9a4078e892d78c3010c9c2d457bae4f6a257892b87f66f3c7be3d6f17c83} 
+TILE\+\_\+\+GRASS&Open ground. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TILE\_PATH@{TILE\_PATH}!map.h@{map.h}}\index{map.h@{map.h}!TILE\_PATH@{TILE\_PATH}}}\Hypertarget{map_8h_af00ac9a4078e892d78c3010c9c2d457babd56e9ded1681ef9bf51e1bfd96e8daf}\label{map_8h_af00ac9a4078e892d78c3010c9c2d457babd56e9ded1681ef9bf51e1bfd96e8daf} 
+TILE\+\_\+\+PATH&Enemy walking route. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TILE\_BLANK@{TILE\_BLANK}!map.h@{map.h}}\index{map.h@{map.h}!TILE\_BLANK@{TILE\_BLANK}}}\Hypertarget{map_8h_af00ac9a4078e892d78c3010c9c2d457ba80a759cf1b5375b0f86d31851bf8814a}\label{map_8h_af00ac9a4078e892d78c3010c9c2d457ba80a759cf1b5375b0f86d31851bf8814a} 
+TILE\+\_\+\+BLANK&Towers can be placed here. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{map_8h_a54b43ccaa42a112d27fd5566535dca54}\label{map_8h_a54b43ccaa42a112d27fd5566535dca54} 
+\index{map.h@{map.h}!map\_destroy@{map\_destroy}}
+\index{map\_destroy@{map\_destroy}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{map\_destroy()}{map\_destroy()}}
+{\footnotesize\ttfamily void map\+\_\+destroy (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Frees all resources allocated by \doxylink{map_8h_ae18974de51e6efe91d9f25b7390d2a07}{map\+\_\+init()}. 
+
+\Hypertarget{map_8h_a7aa2ff9936be2784889e50761db67856}\label{map_8h_a7aa2ff9936be2784889e50761db67856} 
+\index{map.h@{map.h}!map\_draw@{map\_draw}}
+\index{map\_draw@{map\_draw}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{map\_draw()}{map\_draw()}}
+{\footnotesize\ttfamily bool map\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the map to the screen if the tile cache is dirty. 
+
+\begin{DoxyReturn}{Returns}
+true if the tiles were redrawn, false if the cached frame was reused. 
+\end{DoxyReturn}
+\Hypertarget{map_8h_ab34e46c34eb8059ebd834ea8c6348cb7}\label{map_8h_ab34e46c34eb8059ebd834ea8c6348cb7} 
+\index{map.h@{map.h}!map\_get\_tile@{map\_get\_tile}}
+\index{map\_get\_tile@{map\_get\_tile}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{map\_get\_tile()}{map\_get\_tile()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457b}{tile\+\_\+t}} map\+\_\+get\+\_\+tile (\begin{DoxyParamCaption}\item[{int}]{col,  }\item[{int}]{row }\end{DoxyParamCaption})}
+
+
+
+Returns the tile type at the given grid coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em col} & Column index (0-\/based, 0 = leftmost). \\
+\hline
+{\em row} & Row index (0-\/based, 0 = topmost). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \doxylink{map_8h_af00ac9a4078e892d78c3010c9c2d457b}{tile\+\_\+t} at that position. 
+\end{DoxyReturn}
+\Hypertarget{map_8h_ae18974de51e6efe91d9f25b7390d2a07}\label{map_8h_ae18974de51e6efe91d9f25b7390d2a07} 
+\index{map.h@{map.h}!map\_init@{map\_init}}
+\index{map\_init@{map\_init}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{map\_init()}{map\_init()}}
+{\footnotesize\ttfamily void map\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}}}]{diff }\end{DoxyParamCaption})}
+
+
+
+Loads the map layout for the given difficulty and prepares tile sprites. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em diff} & Selected difficulty, which may determine the map variant used. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8h_ad4f915d0612e4ba38fa6e9e203b0e848}\label{map_8h_ad4f915d0612e4ba38fa6e9e203b0e848} 
+\index{map.h@{map.h}!map\_mark\_dirty@{map\_mark\_dirty}}
+\index{map\_mark\_dirty@{map\_mark\_dirty}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{map\_mark\_dirty()}{map\_mark\_dirty()}}
+{\footnotesize\ttfamily void map\+\_\+mark\+\_\+dirty (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Marks the tile cache as stale, forcing a full redraw on the next \doxylink{map_8h_a7aa2ff9936be2784889e50761db67856}{map\+\_\+draw()}. 
+
+\Hypertarget{map_8h_aa57f803b165f19605b092e9462089968}\label{map_8h_aa57f803b165f19605b092e9462089968} 
+\index{map.h@{map.h}!map\_update\_cache@{map\_update\_cache}}
+\index{map\_update\_cache@{map\_update\_cache}!map.h@{map.h}}
+\doxysubsubsection{\texorpdfstring{map\_update\_cache()}{map\_update\_cache()}}
+{\footnotesize\ttfamily void map\+\_\+update\+\_\+cache (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Copies the current rendered map into the tile cache. 
+
+Call after a full redraw so subsequent frames can skip the redraw. 

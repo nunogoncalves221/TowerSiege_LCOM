@@ -1,0 +1,96 @@
+\doxysection{src/menu/menu.c File Reference}
+\hypertarget{menu_8c}{}\label{menu_8c}\index{src/menu/menu.c@{src/menu/menu.c}}
+{\ttfamily \#include "{}menu.\+h"{}}\newline
+{\ttfamily \#include "{}menu\+\_\+nav.\+h"{}}\newline
+{\ttfamily \#include "{}../sprite/sprite.\+h"{}}\newline
+{\ttfamily \#include "{}../font/font.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include "{}../assets/menus/logo\+\_\+tower\+\_\+siege.\+xpm"{}}\newline
+Include dependency graph for menu.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{menu_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{menu_8c_a69b1626cd295acf4cf3f8e284205b9db}{ESC\+\_\+\+BREAKCODE}}~0x81
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{menu_8c_a214b6d30aba6a9bd92470ca0047d524c}{menu\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Resets the highlighted option back to MENU\+\_\+\+PLAY. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{menu_8h_a34b645d7f9fdd5a19cd0e64c5fd7139c}{menu\+\_\+option\+\_\+t}} \mbox{\hyperlink{menu_8c_a4d806a73ebf993403815326ec02b09bf}{menu\+\_\+get\+\_\+selected}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the option the player currently has highlighted. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{menu_8c_af6bc6354ecb4e8b955237834ed1d1c52}{menu\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode and updates the highlighted option. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{menu_8c_a9f6c49d910115edc918f4ddb79001309}{menu\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the main menu screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{menu_8c_a69b1626cd295acf4cf3f8e284205b9db}\label{menu_8c_a69b1626cd295acf4cf3f8e284205b9db} 
+\index{menu.c@{menu.c}!ESC\_BREAKCODE@{ESC\_BREAKCODE}}
+\index{ESC\_BREAKCODE@{ESC\_BREAKCODE}!menu.c@{menu.c}}
+\doxysubsubsection{\texorpdfstring{ESC\_BREAKCODE}{ESC\_BREAKCODE}}
+{\footnotesize\ttfamily \#define ESC\+\_\+\+BREAKCODE~0x81}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{menu_8c_a9f6c49d910115edc918f4ddb79001309}\label{menu_8c_a9f6c49d910115edc918f4ddb79001309} 
+\index{menu.c@{menu.c}!menu\_draw@{menu\_draw}}
+\index{menu\_draw@{menu\_draw}!menu.c@{menu.c}}
+\doxysubsubsection{\texorpdfstring{menu\_draw()}{menu\_draw()}}
+{\footnotesize\ttfamily void menu\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the main menu screen. 
+
+\Hypertarget{menu_8c_a4d806a73ebf993403815326ec02b09bf}\label{menu_8c_a4d806a73ebf993403815326ec02b09bf} 
+\index{menu.c@{menu.c}!menu\_get\_selected@{menu\_get\_selected}}
+\index{menu\_get\_selected@{menu\_get\_selected}!menu.c@{menu.c}}
+\doxysubsubsection{\texorpdfstring{menu\_get\_selected()}{menu\_get\_selected()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{menu_8h_a34b645d7f9fdd5a19cd0e64c5fd7139c}{menu\+\_\+option\+\_\+t}} menu\+\_\+get\+\_\+selected (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the option the player currently has highlighted. 
+
+\begin{DoxyReturn}{Returns}
+The currently selected \doxylink{menu_8h_a34b645d7f9fdd5a19cd0e64c5fd7139c}{menu\+\_\+option\+\_\+t} value. 
+\end{DoxyReturn}
+\Hypertarget{menu_8c_af6bc6354ecb4e8b955237834ed1d1c52}\label{menu_8c_af6bc6354ecb4e8b955237834ed1d1c52} 
+\index{menu.c@{menu.c}!menu\_handle\_key@{menu\_handle\_key}}
+\index{menu\_handle\_key@{menu\_handle\_key}!menu.c@{menu.c}}
+\doxysubsubsection{\texorpdfstring{menu\_handle\_key()}{menu\_handle\_key()}}
+{\footnotesize\ttfamily bool menu\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode and updates the highlighted option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode (set 1 make code). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player pressed Enter to confirm the selection. 
+\end{DoxyReturn}
+\Hypertarget{menu_8c_a214b6d30aba6a9bd92470ca0047d524c}\label{menu_8c_a214b6d30aba6a9bd92470ca0047d524c} 
+\index{menu.c@{menu.c}!menu\_reset@{menu\_reset}}
+\index{menu\_reset@{menu\_reset}!menu.c@{menu.c}}
+\doxysubsubsection{\texorpdfstring{menu\_reset()}{menu\_reset()}}
+{\footnotesize\ttfamily void menu\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Resets the highlighted option back to MENU\+\_\+\+PLAY. 
+
+Should be called when entering the main menu. 

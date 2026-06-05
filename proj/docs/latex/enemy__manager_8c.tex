@@ -1,0 +1,63 @@
+\doxysection{src/enemy/enemy\+\_\+manager.c File Reference}
+\hypertarget{enemy__manager_8c}{}\label{enemy__manager_8c}\index{src/enemy/enemy\_manager.c@{src/enemy/enemy\_manager.c}}
+{\ttfamily \#include "{}enemy\+\_\+manager.\+h"{}}\newline
+{\ttfamily \#include "{}player.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include "{}bullet.\+h"{}}\newline
+Include dependency graph for enemy\+\_\+manager.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{enemy__manager_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{enemy__manager_8c_a8c10af9eca9cbf113fdffe642430838a}{enemy\+\_\+manager\+\_\+tick}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}enemies, int \texorpdfstring{$\ast$}{*}enemy\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Updates all active enemies and handles collisions and deaths. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{enemy__manager_8c_a93bf0b4d171f33372ff6f55fc1325df5}{enemy\+\_\+manager\+\_\+draw}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}enemies, int enemy\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Draws all active enemies. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{enemy__manager_8c_a93bf0b4d171f33372ff6f55fc1325df5}\label{enemy__manager_8c_a93bf0b4d171f33372ff6f55fc1325df5} 
+\index{enemy\_manager.c@{enemy\_manager.c}!enemy\_manager\_draw@{enemy\_manager\_draw}}
+\index{enemy\_manager\_draw@{enemy\_manager\_draw}!enemy\_manager.c@{enemy\_manager.c}}
+\doxysubsubsection{\texorpdfstring{enemy\_manager\_draw()}{enemy\_manager\_draw()}}
+{\footnotesize\ttfamily void enemy\+\_\+manager\+\_\+draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{enemies,  }\item[{int}]{enemy\+\_\+count }\end{DoxyParamCaption})}
+
+
+
+Draws all active enemies. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enemies} & Array of active enemy pointers. \\
+\hline
+{\em enemy\+\_\+count} & Number of active enemies in the array. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{enemy__manager_8c_a8c10af9eca9cbf113fdffe642430838a}\label{enemy__manager_8c_a8c10af9eca9cbf113fdffe642430838a} 
+\index{enemy\_manager.c@{enemy\_manager.c}!enemy\_manager\_tick@{enemy\_manager\_tick}}
+\index{enemy\_manager\_tick@{enemy\_manager\_tick}!enemy\_manager.c@{enemy\_manager.c}}
+\doxysubsubsection{\texorpdfstring{enemy\_manager\_tick()}{enemy\_manager\_tick()}}
+{\footnotesize\ttfamily bool enemy\+\_\+manager\+\_\+tick (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{enemies,  }\item[{int \texorpdfstring{$\ast$}{*}}]{enemy\+\_\+count }\end{DoxyParamCaption})}
+
+
+
+Updates all active enemies and handles collisions and deaths. 
+
+Must be called once per game tick. Moves each enemy, checks whether it has reached the player\textquotesingle{}s base (removing a life), and removes enemies whose hp has dropped to zero.
+
+
+\begin{DoxyParams}{Parameters}
+{\em enemies} & Pointer to the array of active enemy pointers. \\
+\hline
+{\em enemy\+\_\+count} & Pointer to the current number of active enemies; decremented when an enemy is removed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player\textquotesingle{}s base lost its last life this tick. 
+\end{DoxyReturn}

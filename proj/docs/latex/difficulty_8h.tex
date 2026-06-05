@@ -1,0 +1,136 @@
+\doxysection{src/menu/difficulty.h File Reference}
+\hypertarget{difficulty_8h}{}\label{difficulty_8h}\index{src/menu/difficulty.h@{src/menu/difficulty.h}}
+
+
+Difficulty selection screen and difficulty type definition.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+Include dependency graph for difficulty.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{difficulty_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{difficulty_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} \{ \mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a8bda7b0105c63f8b111bd844df580ce7}{DIFF\+\_\+\+EASY}} = 0
+, \mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a222ac6f9eaade842ae55e447e85207e6}{DIFF\+\_\+\+MEDIUM}}
+, \mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08acb9dd0bdcd97ec04f1573370b991ef0e}{DIFF\+\_\+\+HARD}}
+, \mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a61d27f687c82c0809dfed22927940055}{DIFF\+\_\+\+OPTION\+\_\+\+COUNT}}
+ \}
+\begin{DoxyCompactList}\small\item\em Available difficulty levels. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} \mbox{\hyperlink{difficulty_8h_a79704501f29600c140ffe16ffaf16a65}{diff\+\_\+get\+\_\+selected}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the difficulty option the player currently has highlighted. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{difficulty_8h_a8ec57475fa0c3d6d3e73349e9eb54661}{diff\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Resets the highlighted option back to DIFF\+\_\+\+EASY. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{difficulty_8h_ae799e9cdd2123e560238be81e724a5f5}{diff\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode and updates the highlighted option. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{difficulty_8h_af13e07b2db54f1a4eaffe2b8e557f786}{diff\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the difficulty selection screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Difficulty selection screen and difficulty type definition. 
+
+Defines the \doxylink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t} enumeration used throughout the game to scale enemy stats and spawn rates, and provides the keyboard-\/driven selection screen shown before a new game begins. 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}\label{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08} 
+\index{difficulty.h@{difficulty.h}!difficulty\_t@{difficulty\_t}}
+\index{difficulty\_t@{difficulty\_t}!difficulty.h@{difficulty.h}}
+\doxysubsubsection{\texorpdfstring{difficulty\_t}{difficulty\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}}}
+
+
+
+Available difficulty levels. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DIFF\_EASY@{DIFF\_EASY}!difficulty.h@{difficulty.h}}\index{difficulty.h@{difficulty.h}!DIFF\_EASY@{DIFF\_EASY}}}\Hypertarget{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a8bda7b0105c63f8b111bd844df580ce7}\label{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a8bda7b0105c63f8b111bd844df580ce7} 
+DIFF\+\_\+\+EASY&Fewer enemies, lower stats. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DIFF\_MEDIUM@{DIFF\_MEDIUM}!difficulty.h@{difficulty.h}}\index{difficulty.h@{difficulty.h}!DIFF\_MEDIUM@{DIFF\_MEDIUM}}}\Hypertarget{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a222ac6f9eaade842ae55e447e85207e6}\label{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a222ac6f9eaade842ae55e447e85207e6} 
+DIFF\+\_\+\+MEDIUM&Balanced enemy count and stats. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DIFF\_HARD@{DIFF\_HARD}!difficulty.h@{difficulty.h}}\index{difficulty.h@{difficulty.h}!DIFF\_HARD@{DIFF\_HARD}}}\Hypertarget{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08acb9dd0bdcd97ec04f1573370b991ef0e}\label{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08acb9dd0bdcd97ec04f1573370b991ef0e} 
+DIFF\+\_\+\+HARD&More enemies, higher stats, faster spawns. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DIFF\_OPTION\_COUNT@{DIFF\_OPTION\_COUNT}!difficulty.h@{difficulty.h}}\index{difficulty.h@{difficulty.h}!DIFF\_OPTION\_COUNT@{DIFF\_OPTION\_COUNT}}}\Hypertarget{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a61d27f687c82c0809dfed22927940055}\label{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08a61d27f687c82c0809dfed22927940055} 
+DIFF\+\_\+\+OPTION\+\_\+\+COUNT&Number of selectable difficulty options. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{difficulty_8h_af13e07b2db54f1a4eaffe2b8e557f786}\label{difficulty_8h_af13e07b2db54f1a4eaffe2b8e557f786} 
+\index{difficulty.h@{difficulty.h}!diff\_draw@{diff\_draw}}
+\index{diff\_draw@{diff\_draw}!difficulty.h@{difficulty.h}}
+\doxysubsubsection{\texorpdfstring{diff\_draw()}{diff\_draw()}}
+{\footnotesize\ttfamily void diff\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the difficulty selection screen. 
+
+\Hypertarget{difficulty_8h_a79704501f29600c140ffe16ffaf16a65}\label{difficulty_8h_a79704501f29600c140ffe16ffaf16a65} 
+\index{difficulty.h@{difficulty.h}!diff\_get\_selected@{diff\_get\_selected}}
+\index{diff\_get\_selected@{diff\_get\_selected}!difficulty.h@{difficulty.h}}
+\doxysubsubsection{\texorpdfstring{diff\_get\_selected()}{diff\_get\_selected()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} diff\+\_\+get\+\_\+selected (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the difficulty option the player currently has highlighted. 
+
+\begin{DoxyReturn}{Returns}
+The currently selected \doxylink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t} value. 
+\end{DoxyReturn}
+\Hypertarget{difficulty_8h_ae799e9cdd2123e560238be81e724a5f5}\label{difficulty_8h_ae799e9cdd2123e560238be81e724a5f5} 
+\index{difficulty.h@{difficulty.h}!diff\_handle\_key@{diff\_handle\_key}}
+\index{diff\_handle\_key@{diff\_handle\_key}!difficulty.h@{difficulty.h}}
+\doxysubsubsection{\texorpdfstring{diff\_handle\_key()}{diff\_handle\_key()}}
+{\footnotesize\ttfamily bool diff\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode and updates the highlighted option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player pressed Enter to confirm the selection. 
+\end{DoxyReturn}
+\Hypertarget{difficulty_8h_a8ec57475fa0c3d6d3e73349e9eb54661}\label{difficulty_8h_a8ec57475fa0c3d6d3e73349e9eb54661} 
+\index{difficulty.h@{difficulty.h}!diff\_reset@{diff\_reset}}
+\index{diff\_reset@{diff\_reset}!difficulty.h@{difficulty.h}}
+\doxysubsubsection{\texorpdfstring{diff\_reset()}{diff\_reset()}}
+{\footnotesize\ttfamily void diff\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Resets the highlighted option back to DIFF\+\_\+\+EASY. 
+
+Should be called when entering the difficulty selection screen. 

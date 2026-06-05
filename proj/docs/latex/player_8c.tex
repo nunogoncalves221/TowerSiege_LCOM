@@ -1,0 +1,181 @@
+\doxysection{src/player/player.c File Reference}
+\hypertarget{player_8c}{}\label{player_8c}\index{src/player/player.c@{src/player/player.c}}
+{\ttfamily \#include "{}player.\+h"{}}\newline
+Include dependency graph for player.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{player_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{player_8c_acee959685db3737ad7bab102c7977ba8}{player\+\_\+init}} (\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} diff)
+\begin{DoxyCompactList}\small\item\em Resets all player resources to their initial values. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{player_8c_ab8f692925fb2e087c086a51d972d60ca}{player\+\_\+get\+\_\+gold}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the player\textquotesingle{}s current gold balance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{player_8c_a6c48a846cf9c93282966903d6d2c0fda}{player\+\_\+add\+\_\+gold}} (int amount)
+\begin{DoxyCompactList}\small\item\em Adds gold to the player\textquotesingle{}s balance. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{player_8c_a3892c119614db0e9e8897b2a1106b658}{player\+\_\+spend\+\_\+gold}} (int amount)
+\begin{DoxyCompactList}\small\item\em Deducts gold from the player\textquotesingle{}s balance if sufficient funds exist. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{player_8c_a104b658a519c5095f0485450e10c7f1b}{player\+\_\+get\+\_\+lives}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the player\textquotesingle{}s current life count. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{player_8c_a45e5b71b3ebb7af4d8c7da62eb5e2eec}{player\+\_\+get\+\_\+max\+\_\+lives}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the maximum number of lives (defined by \doxylink{game_8h_a3652158e56c9d1423bfa5d1c5bd3d243}{MAX\+\_\+\+LIVES}). \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{player_8c_a7341b6b32773c8296803bf4d53f73883}{player\+\_\+take\+\_\+damage}} (int amount)
+\begin{DoxyCompactList}\small\item\em Reduces the player\textquotesingle{}s life count by {\ttfamily amount}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{player_8c_a28aa784994b028e628a37faf9618c9f8}{player\+\_\+is\+\_\+dead}} (void)
+\begin{DoxyCompactList}\small\item\em Returns whether the player has run out of lives. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{player_8c_a87c1c789f1ec9900b1b68422d7bfa938}{player\+\_\+get\+\_\+score}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the player\textquotesingle{}s current score. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{player_8c_ae7255cf432b4fdb22c05df96a9e14cd3}{player\+\_\+add\+\_\+score}} (int amount)
+\begin{DoxyCompactList}\small\item\em Adds points to the player\textquotesingle{}s score according to difficulty. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{player_8c_a6c48a846cf9c93282966903d6d2c0fda}\label{player_8c_a6c48a846cf9c93282966903d6d2c0fda} 
+\index{player.c@{player.c}!player\_add\_gold@{player\_add\_gold}}
+\index{player\_add\_gold@{player\_add\_gold}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_add\_gold()}{player\_add\_gold()}}
+{\footnotesize\ttfamily void player\+\_\+add\+\_\+gold (\begin{DoxyParamCaption}\item[{int}]{amount }\end{DoxyParamCaption})}
+
+
+
+Adds gold to the player\textquotesingle{}s balance. 
+
+Typically called when an enemy is killed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Positive gold amount to add. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{player_8c_ae7255cf432b4fdb22c05df96a9e14cd3}\label{player_8c_ae7255cf432b4fdb22c05df96a9e14cd3} 
+\index{player.c@{player.c}!player\_add\_score@{player\_add\_score}}
+\index{player\_add\_score@{player\_add\_score}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_add\_score()}{player\_add\_score()}}
+{\footnotesize\ttfamily void player\+\_\+add\+\_\+score (\begin{DoxyParamCaption}\item[{int}]{amount }\end{DoxyParamCaption})}
+
+
+
+Adds points to the player\textquotesingle{}s score according to difficulty. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Positive point value to add. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{player_8c_ab8f692925fb2e087c086a51d972d60ca}\label{player_8c_ab8f692925fb2e087c086a51d972d60ca} 
+\index{player.c@{player.c}!player\_get\_gold@{player\_get\_gold}}
+\index{player\_get\_gold@{player\_get\_gold}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_get\_gold()}{player\_get\_gold()}}
+{\footnotesize\ttfamily int player\+\_\+get\+\_\+gold (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the player\textquotesingle{}s current gold balance. 
+
+\begin{DoxyReturn}{Returns}
+Gold amount (\texorpdfstring{$>$}{>}= 0). 
+\end{DoxyReturn}
+\Hypertarget{player_8c_a104b658a519c5095f0485450e10c7f1b}\label{player_8c_a104b658a519c5095f0485450e10c7f1b} 
+\index{player.c@{player.c}!player\_get\_lives@{player\_get\_lives}}
+\index{player\_get\_lives@{player\_get\_lives}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_get\_lives()}{player\_get\_lives()}}
+{\footnotesize\ttfamily int player\+\_\+get\+\_\+lives (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the player\textquotesingle{}s current life count. 
+
+\begin{DoxyReturn}{Returns}
+Lives remaining (0 means game over). 
+\end{DoxyReturn}
+\Hypertarget{player_8c_a45e5b71b3ebb7af4d8c7da62eb5e2eec}\label{player_8c_a45e5b71b3ebb7af4d8c7da62eb5e2eec} 
+\index{player.c@{player.c}!player\_get\_max\_lives@{player\_get\_max\_lives}}
+\index{player\_get\_max\_lives@{player\_get\_max\_lives}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_get\_max\_lives()}{player\_get\_max\_lives()}}
+{\footnotesize\ttfamily int player\+\_\+get\+\_\+max\+\_\+lives (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the maximum number of lives (defined by \doxylink{game_8h_a3652158e56c9d1423bfa5d1c5bd3d243}{MAX\+\_\+\+LIVES}). 
+
+\begin{DoxyReturn}{Returns}
+Maximum lives for this game session. 
+\end{DoxyReturn}
+\Hypertarget{player_8c_a87c1c789f1ec9900b1b68422d7bfa938}\label{player_8c_a87c1c789f1ec9900b1b68422d7bfa938} 
+\index{player.c@{player.c}!player\_get\_score@{player\_get\_score}}
+\index{player\_get\_score@{player\_get\_score}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_get\_score()}{player\_get\_score()}}
+{\footnotesize\ttfamily int player\+\_\+get\+\_\+score (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the player\textquotesingle{}s current score. 
+
+\begin{DoxyReturn}{Returns}
+Score (\texorpdfstring{$>$}{>}= 0). 
+\end{DoxyReturn}
+\Hypertarget{player_8c_acee959685db3737ad7bab102c7977ba8}\label{player_8c_acee959685db3737ad7bab102c7977ba8} 
+\index{player.c@{player.c}!player\_init@{player\_init}}
+\index{player\_init@{player\_init}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_init()}{player\_init()}}
+{\footnotesize\ttfamily void player\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}}}]{diff }\end{DoxyParamCaption})}
+
+
+
+Resets all player resources to their initial values. 
+
+Must be called once before a new game begins (e.\+g. from \doxylink{game_8c_a05cddc86cdca6cac72dddefeaf3c142e}{game\+\_\+reset()}). \Hypertarget{player_8c_a28aa784994b028e628a37faf9618c9f8}\label{player_8c_a28aa784994b028e628a37faf9618c9f8} 
+\index{player.c@{player.c}!player\_is\_dead@{player\_is\_dead}}
+\index{player\_is\_dead@{player\_is\_dead}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_is\_dead()}{player\_is\_dead()}}
+{\footnotesize\ttfamily bool player\+\_\+is\+\_\+dead (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns whether the player has run out of lives. 
+
+\begin{DoxyReturn}{Returns}
+true when lives == 0, false otherwise. 
+\end{DoxyReturn}
+\Hypertarget{player_8c_a3892c119614db0e9e8897b2a1106b658}\label{player_8c_a3892c119614db0e9e8897b2a1106b658} 
+\index{player.c@{player.c}!player\_spend\_gold@{player\_spend\_gold}}
+\index{player\_spend\_gold@{player\_spend\_gold}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_spend\_gold()}{player\_spend\_gold()}}
+{\footnotesize\ttfamily bool player\+\_\+spend\+\_\+gold (\begin{DoxyParamCaption}\item[{int}]{amount }\end{DoxyParamCaption})}
+
+
+
+Deducts gold from the player\textquotesingle{}s balance if sufficient funds exist. 
+
+Typically called when placing a tower.
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Cost to deduct. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player had enough gold and the amount was deducted; false if the balance was insufficient (balance unchanged). 
+\end{DoxyReturn}
+\Hypertarget{player_8c_a7341b6b32773c8296803bf4d53f73883}\label{player_8c_a7341b6b32773c8296803bf4d53f73883} 
+\index{player.c@{player.c}!player\_take\_damage@{player\_take\_damage}}
+\index{player\_take\_damage@{player\_take\_damage}!player.c@{player.c}}
+\doxysubsubsection{\texorpdfstring{player\_take\_damage()}{player\_take\_damage()}}
+{\footnotesize\ttfamily void player\+\_\+take\+\_\+damage (\begin{DoxyParamCaption}\item[{int}]{amount }\end{DoxyParamCaption})}
+
+
+
+Reduces the player\textquotesingle{}s life count by {\ttfamily amount}. 
+
+Called when an enemy reaches the base. Lives cannot drop below 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & Number of lives to remove (usually 1). \\
+\hline
+\end{DoxyParams}

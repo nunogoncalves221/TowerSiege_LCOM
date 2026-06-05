@@ -1,0 +1,68 @@
+\doxysection{game.\+h}
+\hypertarget{game_8h_source}{}\label{game_8h_source}\index{src/game/game.h@{src/game/game.h}}
+\mbox{\hyperlink{game_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ GAME\_H}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ GAME\_H}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <lcom/lcf.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}rtc.h"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ constants}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ TIMER\_FREQ\ 60}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ FPS\ 30}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ MAX\_LIVES\ 15}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ MAX\_ENEMIES\ 20}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ HERO\_SPEED\ \ 3}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ HERO\_BASE\_X\ 1038}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ HERO\_BASE\_Y\ 646}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ WAVE\_DELAY\ 600}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ keyboard\ scancodes}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ KEY\_W\_MAKE\ \ \ \ \ 0x11}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ KEY\_A\_MAKE\ \ \ \ \ 0x1E}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ KEY\_S\_MAKE\ \ \ \ \ 0x1F}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ KEY\_D\_MAKE\ \ \ \ \ 0x20}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ KEY\_W\_BREAK\ \ \ \ 0x91}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ KEY\_A\_BREAK\ \ \ \ 0x9E}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ KEY\_S\_BREAK\ \ \ \ 0x9F}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ KEY\_D\_BREAK\ \ \ \ 0xA0}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ KEY\_UP\_MAKE\ \ \ \ 0x48}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ KEY\_DOWN\_MAKE\ \ 0x50}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ KEY\_ENTER\_MAKE\ 0x1C}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ KEY\_SPACE\_MAKE\ \ 0x39}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ KEY\_SPACE\_BREAK\ 0xB9}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{game_8h_a05cddc86cdca6cac72dddefeaf3c142e}{game\_reset}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00061\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{game_8h_addf8c4562fc6746b82fa297f38624052}{game\_destroy}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00069\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{game_8h_af8a50be77ba977aadb8ea6f85f91ecdb}{game\_tick}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{game_8h_af6beeef4bd774ee4c8ed789815e68833}{game\_draw}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{game_8h_af97cd03e337953062dd79885856ec382}{game\_is\_over}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00097\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{game_8h_a06f939b3f0128c77a7e516e80811a4d7}{game\_handle\_key}}(uint8\_t\ scancode);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00105\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{game_8h_a03f7db083f6e23af50f720800f163674}{game\_update\_cursor}}(int16\_t\ dx,\ int16\_t\ dy);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00114\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{game_8h_a4bb40e4cb00308f7cdcbabb1eed8d321}{game\_handle\_click}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00121\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{game_8h_a8a8ce7aedd7485dba20523e428687f46}{game\_get\_score}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00130\ int16\_t\ \mbox{\hyperlink{game_8h_a36c5a459274d5a14fba285fae74fca1c}{game\_get\_cursor\_y}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00137\ rtc\_date\ \mbox{\hyperlink{game_8h_ab1c473e91a41cb81c8329835d68b7f14}{game\_get\_start\_time}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ GAME\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

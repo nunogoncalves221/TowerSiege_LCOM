@@ -1,0 +1,132 @@
+\doxysection{src/menu/menu\+\_\+nav.c File Reference}
+\hypertarget{menu__nav_8c}{}\label{menu__nav_8c}\index{src/menu/menu\_nav.c@{src/menu/menu\_nav.c}}
+{\ttfamily \#include "{}menu\+\_\+nav.\+h"{}}\newline
+{\ttfamily \#include "{}../font/font.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+Include dependency graph for menu\+\_\+nav.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=323pt]{menu__nav_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{menu__nav_8c_ada713f45a3be93fe876392054b36f2b2}{KEY\+\_\+\+UP\+\_\+\+MAKE}}~0x48
+\item 
+\#define \mbox{\hyperlink{menu__nav_8c_a61f094e60da9f7287cbf31acd68e06eb}{KEY\+\_\+\+DOWN\+\_\+\+MAKE}}~0x50
+\item 
+\#define \mbox{\hyperlink{menu__nav_8c_adfb6bfc486168d637e1812de93f68bf6}{KEY\+\_\+\+W\+\_\+\+MAKE}}~0x11
+\item 
+\#define \mbox{\hyperlink{menu__nav_8c_a34597fb60329fa1dd686e31435be9928}{KEY\+\_\+\+S\+\_\+\+MAKE}}~0x1F
+\item 
+\#define \mbox{\hyperlink{menu__nav_8c_a6ccbaf0ce305489a0a67295f4db26bfd}{KEY\+\_\+\+ENTER\+\_\+\+MAKE}}~0x1C
+\item 
+\#define \mbox{\hyperlink{menu__nav_8c_a7bc36dddd38d7b65bd0a83f7ea82337f}{DOT\+\_\+\+SIZE}}~6
+\item 
+\#define \mbox{\hyperlink{menu__nav_8c_aa09f3ee225878a8b018b99789608a618}{DOT\+\_\+\+PAD}}~14
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{menu__nav_8c_a9c16449727fefbe32d1d1a5282e593d4}{menu\+\_\+nav\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode, int \texorpdfstring{$\ast$}{*}selected, int count)
+\begin{DoxyCompactList}\small\item\em Handles UP, DOWN, and Enter keys for a generic option list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{menu__nav_8c_a0af8273ee2e27c4e7030729a4756b357}{menu\+\_\+nav\+\_\+draw\+\_\+item}} (uint16\+\_\+t ix, uint16\+\_\+t iy, const char \texorpdfstring{$\ast$}{*}label, bool is\+\_\+selected)
+\begin{DoxyCompactList}\small\item\em Draws a single menu option with a selection indicator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{menu__nav_8c_aa09f3ee225878a8b018b99789608a618}\label{menu__nav_8c_aa09f3ee225878a8b018b99789608a618} 
+\index{menu\_nav.c@{menu\_nav.c}!DOT\_PAD@{DOT\_PAD}}
+\index{DOT\_PAD@{DOT\_PAD}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{DOT\_PAD}{DOT\_PAD}}
+{\footnotesize\ttfamily \#define DOT\+\_\+\+PAD~14}
+
+\Hypertarget{menu__nav_8c_a7bc36dddd38d7b65bd0a83f7ea82337f}\label{menu__nav_8c_a7bc36dddd38d7b65bd0a83f7ea82337f} 
+\index{menu\_nav.c@{menu\_nav.c}!DOT\_SIZE@{DOT\_SIZE}}
+\index{DOT\_SIZE@{DOT\_SIZE}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{DOT\_SIZE}{DOT\_SIZE}}
+{\footnotesize\ttfamily \#define DOT\+\_\+\+SIZE~6}
+
+\Hypertarget{menu__nav_8c_a61f094e60da9f7287cbf31acd68e06eb}\label{menu__nav_8c_a61f094e60da9f7287cbf31acd68e06eb} 
+\index{menu\_nav.c@{menu\_nav.c}!KEY\_DOWN\_MAKE@{KEY\_DOWN\_MAKE}}
+\index{KEY\_DOWN\_MAKE@{KEY\_DOWN\_MAKE}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{KEY\_DOWN\_MAKE}{KEY\_DOWN\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+DOWN\+\_\+\+MAKE~0x50}
+
+\Hypertarget{menu__nav_8c_a6ccbaf0ce305489a0a67295f4db26bfd}\label{menu__nav_8c_a6ccbaf0ce305489a0a67295f4db26bfd} 
+\index{menu\_nav.c@{menu\_nav.c}!KEY\_ENTER\_MAKE@{KEY\_ENTER\_MAKE}}
+\index{KEY\_ENTER\_MAKE@{KEY\_ENTER\_MAKE}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{KEY\_ENTER\_MAKE}{KEY\_ENTER\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+ENTER\+\_\+\+MAKE~0x1C}
+
+\Hypertarget{menu__nav_8c_a34597fb60329fa1dd686e31435be9928}\label{menu__nav_8c_a34597fb60329fa1dd686e31435be9928} 
+\index{menu\_nav.c@{menu\_nav.c}!KEY\_S\_MAKE@{KEY\_S\_MAKE}}
+\index{KEY\_S\_MAKE@{KEY\_S\_MAKE}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{KEY\_S\_MAKE}{KEY\_S\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+S\+\_\+\+MAKE~0x1F}
+
+\Hypertarget{menu__nav_8c_ada713f45a3be93fe876392054b36f2b2}\label{menu__nav_8c_ada713f45a3be93fe876392054b36f2b2} 
+\index{menu\_nav.c@{menu\_nav.c}!KEY\_UP\_MAKE@{KEY\_UP\_MAKE}}
+\index{KEY\_UP\_MAKE@{KEY\_UP\_MAKE}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{KEY\_UP\_MAKE}{KEY\_UP\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+UP\+\_\+\+MAKE~0x48}
+
+\Hypertarget{menu__nav_8c_adfb6bfc486168d637e1812de93f68bf6}\label{menu__nav_8c_adfb6bfc486168d637e1812de93f68bf6} 
+\index{menu\_nav.c@{menu\_nav.c}!KEY\_W\_MAKE@{KEY\_W\_MAKE}}
+\index{KEY\_W\_MAKE@{KEY\_W\_MAKE}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{KEY\_W\_MAKE}{KEY\_W\_MAKE}}
+{\footnotesize\ttfamily \#define KEY\+\_\+\+W\+\_\+\+MAKE~0x11}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{menu__nav_8c_a0af8273ee2e27c4e7030729a4756b357}\label{menu__nav_8c_a0af8273ee2e27c4e7030729a4756b357} 
+\index{menu\_nav.c@{menu\_nav.c}!menu\_nav\_draw\_item@{menu\_nav\_draw\_item}}
+\index{menu\_nav\_draw\_item@{menu\_nav\_draw\_item}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{menu\_nav\_draw\_item()}{menu\_nav\_draw\_item()}}
+{\footnotesize\ttfamily void menu\+\_\+nav\+\_\+draw\+\_\+item (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{ix,  }\item[{uint16\+\_\+t}]{iy,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{label,  }\item[{bool}]{is\+\_\+selected }\end{DoxyParamCaption})}
+
+
+
+Draws a single menu option with a selection indicator. 
+
+Renders {\ttfamily label} at ({\ttfamily ix}, {\ttfamily iy}). If {\ttfamily is\+\_\+selected} is true the text is drawn in \doxylink{menu__nav_8h_a88e2f5627c372b3e6a28ca6e699c2a5f}{MENU\+\_\+\+NAV\+\_\+\+COLOR\+\_\+\+SELECTED} with a dot indicator; otherwise it uses \doxylink{menu__nav_8h_afa35b448fc1d7579b0335e44316f57bf}{MENU\+\_\+\+NAV\+\_\+\+COLOR\+\_\+\+NORMAL}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ix} & Horizontal screen position in pixels. \\
+\hline
+{\em iy} & Vertical screen position in pixels. \\
+\hline
+{\em label} & Null-\/terminated option label to render. \\
+\hline
+{\em is\+\_\+selected} & true if this option is currently highlighted. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{menu__nav_8c_a9c16449727fefbe32d1d1a5282e593d4}\label{menu__nav_8c_a9c16449727fefbe32d1d1a5282e593d4} 
+\index{menu\_nav.c@{menu\_nav.c}!menu\_nav\_handle\_key@{menu\_nav\_handle\_key}}
+\index{menu\_nav\_handle\_key@{menu\_nav\_handle\_key}!menu\_nav.c@{menu\_nav.c}}
+\doxysubsubsection{\texorpdfstring{menu\_nav\_handle\_key()}{menu\_nav\_handle\_key()}}
+{\footnotesize\ttfamily bool menu\+\_\+nav\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode,  }\item[{int \texorpdfstring{$\ast$}{*}}]{selected,  }\item[{int}]{count }\end{DoxyParamCaption})}
+
+
+
+Handles UP, DOWN, and Enter keys for a generic option list. 
+
+Decrements or increments \texorpdfstring{$\ast$}{*}selected on UP/\+DOWN.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode (set 1 make code). \\
+\hline
+{\em selected} & Pointer to the current selection index; updated in place. \\
+\hline
+{\em count} & Total number of options in the list. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player pressed Enter to confirm the current selection. 
+\end{DoxyReturn}

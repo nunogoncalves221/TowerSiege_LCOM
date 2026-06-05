@@ -1,0 +1,5 @@
+<map id="tower_t" name="tower_t">
+<area shape="rect" id="Node000001" title="Represents a single placed tower and all its combat stats." alt="" coords="5,93,76,119"/>
+<area shape="rect" id="Node000002" href="$structsprite__t.html" title="Holds the visual data of a single, non&#45;animated image." alt="" coords="5,5,76,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="43,45,43,93,38,93,38,45"/>
+</map>

@@ -1,0 +1,36 @@
+\doxysection{high\+\_\+scores.\+h}
+\hypertarget{high__scores_8h_source}{}\label{high__scores_8h_source}\index{src/menu/high\_scores.h@{src/menu/high\_scores.h}}
+\mbox{\hyperlink{high__scores_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ HIGH\_SCORES\_H}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ HIGH\_SCORES\_H}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}rtc.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ HS\_MAX\_ENTRIES\ \ 10}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ HS\_MAX\_NAME\_LEN\ 8}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{char}\ \ \ \ \ name[\mbox{\hyperlink{high__scores_8h_a8af2b8f50581d3e8f348a6962f5eb184}{HS\_MAX\_NAME\_LEN}}\ +\ 1];\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \mbox{\hyperlink{strucths__entry__t_a4f8a179c327618b6433f382655a721c5}{score}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ rtc\_date\ \mbox{\hyperlink{strucths__entry__t_af96f8ca3f885bbcefbed928cc72f3c70}{date}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00025\ \}\ \mbox{\hyperlink{strucths__entry__t}{hs\_entry\_t}};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00033\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{high__scores_8h_a5451de2c48b991d8e07291b42e09fbfa}{hs\_load}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{high__scores_8h_aa4dad1df979dafc6d6382c4e0d2f77b8}{hs\_save}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{high__scores_8h_a53eb43262251bb403e5eaccb545318ff}{hs\_qualifies}}(\textcolor{keywordtype}{int}\ score);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00060\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{high__scores_8h_a71e91559542a520be188053ed1bc4c43}{hs\_insert}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \textcolor{keywordtype}{int}\ score,\ rtc\_date\ date);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{const}\ \mbox{\hyperlink{strucths__entry__t}{hs\_entry\_t}}\ *\mbox{\hyperlink{high__scores_8h_aace9fe126984e0e7391d679b936e856f}{hs\_get\_entries}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00073\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{high__scores_8h_aea1547d87306c98b683879ed01adb056}{hs\_draw}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ HIGH\_SCORES\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

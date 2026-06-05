@@ -1,0 +1,80 @@
+\doxysection{src/menu/pause.c File Reference}
+\hypertarget{pause_8c}{}\label{pause_8c}\index{src/menu/pause.c@{src/menu/pause.c}}
+{\ttfamily \#include "{}pause.\+h"{}}\newline
+{\ttfamily \#include "{}menu\+\_\+nav.\+h"{}}\newline
+{\ttfamily \#include "{}../font/font.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+Include dependency graph for pause.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{pause_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{pause_8c_a847bc036baaab15e4e5cd8ed3d8ab76c}{pause\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Resets the highlighted option back to PAUSE\+\_\+\+CONTINUE. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}{pause\+\_\+option\+\_\+t}} \mbox{\hyperlink{pause_8c_a6975b195adb9ce0593db0a0885f0c375}{pause\+\_\+get\+\_\+selected}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the option the player currently has highlighted. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{pause_8c_ad7ba69d484c7e1b33957b010b3e5d720}{pause\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode and updates the highlighted option. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pause_8c_a1f31c5a93d25d54c7e69b79241b61feb}{pause\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the pause overlay on top of the current frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{pause_8c_a1f31c5a93d25d54c7e69b79241b61feb}\label{pause_8c_a1f31c5a93d25d54c7e69b79241b61feb} 
+\index{pause.c@{pause.c}!pause\_draw@{pause\_draw}}
+\index{pause\_draw@{pause\_draw}!pause.c@{pause.c}}
+\doxysubsubsection{\texorpdfstring{pause\_draw()}{pause\_draw()}}
+{\footnotesize\ttfamily void pause\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the pause overlay on top of the current frame. 
+
+\Hypertarget{pause_8c_a6975b195adb9ce0593db0a0885f0c375}\label{pause_8c_a6975b195adb9ce0593db0a0885f0c375} 
+\index{pause.c@{pause.c}!pause\_get\_selected@{pause\_get\_selected}}
+\index{pause\_get\_selected@{pause\_get\_selected}!pause.c@{pause.c}}
+\doxysubsubsection{\texorpdfstring{pause\_get\_selected()}{pause\_get\_selected()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}{pause\+\_\+option\+\_\+t}} pause\+\_\+get\+\_\+selected (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the option the player currently has highlighted. 
+
+\begin{DoxyReturn}{Returns}
+The currently selected \doxylink{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}{pause\+\_\+option\+\_\+t} value. 
+\end{DoxyReturn}
+\Hypertarget{pause_8c_ad7ba69d484c7e1b33957b010b3e5d720}\label{pause_8c_ad7ba69d484c7e1b33957b010b3e5d720} 
+\index{pause.c@{pause.c}!pause\_handle\_key@{pause\_handle\_key}}
+\index{pause\_handle\_key@{pause\_handle\_key}!pause.c@{pause.c}}
+\doxysubsubsection{\texorpdfstring{pause\_handle\_key()}{pause\_handle\_key()}}
+{\footnotesize\ttfamily bool pause\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode and updates the highlighted option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode (set 1 make code). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player pressed Enter to confirm the selection. 
+\end{DoxyReturn}
+\Hypertarget{pause_8c_a847bc036baaab15e4e5cd8ed3d8ab76c}\label{pause_8c_a847bc036baaab15e4e5cd8ed3d8ab76c} 
+\index{pause.c@{pause.c}!pause\_reset@{pause\_reset}}
+\index{pause\_reset@{pause\_reset}!pause.c@{pause.c}}
+\doxysubsubsection{\texorpdfstring{pause\_reset()}{pause\_reset()}}
+{\footnotesize\ttfamily void pause\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Resets the highlighted option back to PAUSE\+\_\+\+CONTINUE. 
+
+Should be called when the pause overlay is opened. 

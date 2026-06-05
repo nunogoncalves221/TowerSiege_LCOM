@@ -1,0 +1,36 @@
+\doxysection{map.\+h}
+\hypertarget{map_8h_source}{}\label{map_8h_source}\index{src/map/map.h@{src/map/map.h}}
+\mbox{\hyperlink{map_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#ifndef\ MAP\_H}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ MAP\_H}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <lcom/lcf.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{difficulty_8h}{difficulty.h}}"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ MAP\_COLS\ \ 12}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ MAP\_ROWS\ \ 9}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ TILE\_SIZE\ 96}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457bae4f6a257892b87f66f3c7be3d6f17c83}{TILE\_GRASS}},\ }
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457babd56e9ded1681ef9bf51e1bfd96e8daf}{TILE\_PATH}},\ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457ba80a759cf1b5375b0f86d31851bf8814a}{TILE\_BLANK}}\ \ }
+\DoxyCodeLine{00025\ \}\ \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457b}{tile\_t}};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00032\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{map_8h_ae18974de51e6efe91d9f25b7390d2a07}{map\_init}}(\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\_t}}\ diff);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00037\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{map_8h_a54b43ccaa42a112d27fd5566535dca54}{map\_destroy}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00044\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{map_8h_a7aa2ff9936be2784889e50761db67856}{map\_draw}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00051\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{map_8h_aa57f803b165f19605b092e9462089968}{map\_update\_cache}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{map_8h_ad4f915d0612e4ba38fa6e9e203b0e848}{map\_mark\_dirty}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00065\ \mbox{\hyperlink{map_8h_af00ac9a4078e892d78c3010c9c2d457b}{tile\_t}}\ \mbox{\hyperlink{map_8h_ab34e46c34eb8059ebd834ea8c6348cb7}{map\_get\_tile}}(\textcolor{keywordtype}{int}\ col,\ \textcolor{keywordtype}{int}\ row);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ MAP\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

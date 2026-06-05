@@ -1,0 +1,339 @@
+\doxysection{src/tower/tower.h File Reference}
+\hypertarget{tower_8h}{}\label{tower_8h}\index{src/tower/tower.h@{src/tower/tower.h}}
+
+
+Tower placement, upgrading, and attack logic.  
+
+
+{\ttfamily \#include $<$lcom/lcf.\+h$>$}\newline
+{\ttfamily \#include "{}sprite.\+h"{}}\newline
+{\ttfamily \#include "{}map.\+h"{}}\newline
+{\ttfamily \#include "{}enemy.\+h"{}}\newline
+{\ttfamily \#include "{}difficulty.\+h"{}}\newline
+Include dependency graph for tower.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=335pt]{tower_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{tower_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtower__t}{tower\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Represents a single placed tower and all its combat stats. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtower__slot__t}{tower\+\_\+slot\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Associates a grid position with the tower placed on it. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{tower_8h_a6ec44a842e53d708c5948d93b790419e}{TOWER\+\_\+\+ARCHER\+\_\+\+COST}}~200
+\item 
+\#define \mbox{\hyperlink{tower_8h_a83d75c61c03af354d9c3270f526b736c}{TOWER\+\_\+\+MAGE\+\_\+\+COST}}~250
+\item 
+\#define \mbox{\hyperlink{tower_8h_acd922c937b1635b347278b47737668b4}{TOWER\+\_\+\+ARCHER\+\_\+\+UPG\+\_\+\+COST}}~250
+\item 
+\#define \mbox{\hyperlink{tower_8h_aa7ad644ea030cec5e5fb480d0de7de9b}{TOWER\+\_\+\+MAGE\+\_\+\+UPG\+\_\+\+COST}}~300
+\item 
+\#define \mbox{\hyperlink{tower_8h_a684a95dc12bc0d70848297269e335717}{TOWER\+\_\+\+ARCHER\+\_\+\+BASE\+\_\+\+DMG}}~10
+\item 
+\#define \mbox{\hyperlink{tower_8h_ad1005972d3143e6202880ff850037a5f}{TOWER\+\_\+\+ARCHER\+\_\+\+BASE\+\_\+\+RANGE}}~200
+\item 
+\#define \mbox{\hyperlink{tower_8h_abf585f00bcd15920f8a5ba6d10a61382}{TOWER\+\_\+\+ARCHER\+\_\+\+BASE\+\_\+\+COOLDOWN}}~55
+\item 
+\#define \mbox{\hyperlink{tower_8h_af6491ae61053ffcb5d41e0525f6d1bf5}{TOWER\+\_\+\+MAGE\+\_\+\+BASE\+\_\+\+DMG}}~40
+\item 
+\#define \mbox{\hyperlink{tower_8h_a31d6e82cabbb987c4d4aff66e893b16d}{TOWER\+\_\+\+MAGE\+\_\+\+BASE\+\_\+\+RANGE}}~160
+\item 
+\#define \mbox{\hyperlink{tower_8h_affadb7f04d4d44027bd7d7a9552bcec7}{TOWER\+\_\+\+MAGE\+\_\+\+BASE\+\_\+\+COOLDOWN}}~60
+\item 
+\#define \mbox{\hyperlink{tower_8h_aac8a1bc3855923ca7082ecd01210925e}{TOWER\+\_\+\+ARCHER\+\_\+\+UPG\+\_\+\+DMG\+\_\+\+INC}}~10
+\item 
+\#define \mbox{\hyperlink{tower_8h_a3b5917ab4a3b8f476faafeb4353c5c5b}{TOWER\+\_\+\+ARCHER\+\_\+\+UPG\+\_\+\+RANGE\+\_\+\+INC}}~50
+\item 
+\#define \mbox{\hyperlink{tower_8h_acc20fbc38e501d60a7db242644beea58}{TOWER\+\_\+\+ARCHER\+\_\+\+UPG\+\_\+\+CD\+\_\+\+DEC}}~8
+\item 
+\#define \mbox{\hyperlink{tower_8h_a57aaf2fad294a7a23185f5df43b746e9}{TOWER\+\_\+\+MAGE\+\_\+\+UPG\+\_\+\+DMG\+\_\+\+INC}}~35
+\item 
+\#define \mbox{\hyperlink{tower_8h_a25c327cc0216d2bb4b57cf608e6c0bc8}{TOWER\+\_\+\+MAGE\+\_\+\+UPG\+\_\+\+RANGE\+\_\+\+INC}}~40
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506a}{tower\+\_\+type\+\_\+t}} \{ \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aadf52d26e574809de3b8b091a98544cb6}{TOWER\+\_\+\+NONE}}
+, \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aa16185108eb5b660b17c1ab536d98fe2e}{TOWER\+\_\+\+ARCHER}}
+, \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aac62ecf2b1e74dc0ad5d7e637a06192f4}{TOWER\+\_\+\+MAGE}}
+ \}
+\begin{DoxyCompactList}\small\item\em Type of tower occupying a grid slot. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{tower_8h_ab4cbc632654f7dc134c18a8b806aea51}{tower\+\_\+init}} (\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} diff)
+\begin{DoxyCompactList}\small\item\em Initialises the tower grid and loads tower sprites. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tower_8h_a81c75cdbf25f1f76108bd2c0ca103485}{tower\+\_\+handle\+\_\+click\+\_\+px}} (int px, int py)
+\begin{DoxyCompactList}\small\item\em Handles a left-\/click at the given pixel coordinates. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tower_8h_a0ec8a46188799337f544f29e4a65ba04}{tower\+\_\+tick}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}enemies, int enemy\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Advances all placed towers by one tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tower_8h_a367355652e460ff34dea9f84cec78b13}{tower\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws all placed towers on the map. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{tower_8h_aaaff0e830e0555ed304de280c558d45f}{tower\+\_\+popup\+\_\+is\+\_\+open}} (void)
+\begin{DoxyCompactList}\small\item\em Returns whether the tower placement/upgrade popup is currently open. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{tower_8h_a298ed65ce8e1df892e0301b7b92be7da}{tower\+\_\+popup\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Forwards a keyboard scancode to the tower popup. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tower_8h_a2518a10f0fd8357f76d9f3104a35eeeb}{tower\+\_\+popup\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the tower placement/upgrade popup overlay. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tower_8h_a5eb7be51764c33285bbf7a6a4d4fc1eb}{tower\+\_\+popup\+\_\+close}} (void)
+\begin{DoxyCompactList}\small\item\em Closes the tower popup without taking any action. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Tower placement, upgrading, and attack logic. 
+
+Manages all placed towers on the map. Each tower scans for enemies in range every tick and fires a bullet at the closest one. A click-\/driven popup lets the player remove or upgrade towers on blank tiles. 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{tower_8h_abf585f00bcd15920f8a5ba6d10a61382}\label{tower_8h_abf585f00bcd15920f8a5ba6d10a61382} 
+\index{tower.h@{tower.h}!TOWER\_ARCHER\_BASE\_COOLDOWN@{TOWER\_ARCHER\_BASE\_COOLDOWN}}
+\index{TOWER\_ARCHER\_BASE\_COOLDOWN@{TOWER\_ARCHER\_BASE\_COOLDOWN}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_ARCHER\_BASE\_COOLDOWN}{TOWER\_ARCHER\_BASE\_COOLDOWN}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+ARCHER\+\_\+\+BASE\+\_\+\+COOLDOWN~55}
+
+\Hypertarget{tower_8h_a684a95dc12bc0d70848297269e335717}\label{tower_8h_a684a95dc12bc0d70848297269e335717} 
+\index{tower.h@{tower.h}!TOWER\_ARCHER\_BASE\_DMG@{TOWER\_ARCHER\_BASE\_DMG}}
+\index{TOWER\_ARCHER\_BASE\_DMG@{TOWER\_ARCHER\_BASE\_DMG}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_ARCHER\_BASE\_DMG}{TOWER\_ARCHER\_BASE\_DMG}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+ARCHER\+\_\+\+BASE\+\_\+\+DMG~10}
+
+\Hypertarget{tower_8h_ad1005972d3143e6202880ff850037a5f}\label{tower_8h_ad1005972d3143e6202880ff850037a5f} 
+\index{tower.h@{tower.h}!TOWER\_ARCHER\_BASE\_RANGE@{TOWER\_ARCHER\_BASE\_RANGE}}
+\index{TOWER\_ARCHER\_BASE\_RANGE@{TOWER\_ARCHER\_BASE\_RANGE}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_ARCHER\_BASE\_RANGE}{TOWER\_ARCHER\_BASE\_RANGE}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+ARCHER\+\_\+\+BASE\+\_\+\+RANGE~200}
+
+\Hypertarget{tower_8h_a6ec44a842e53d708c5948d93b790419e}\label{tower_8h_a6ec44a842e53d708c5948d93b790419e} 
+\index{tower.h@{tower.h}!TOWER\_ARCHER\_COST@{TOWER\_ARCHER\_COST}}
+\index{TOWER\_ARCHER\_COST@{TOWER\_ARCHER\_COST}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_ARCHER\_COST}{TOWER\_ARCHER\_COST}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+ARCHER\+\_\+\+COST~200}
+
+\Hypertarget{tower_8h_acc20fbc38e501d60a7db242644beea58}\label{tower_8h_acc20fbc38e501d60a7db242644beea58} 
+\index{tower.h@{tower.h}!TOWER\_ARCHER\_UPG\_CD\_DEC@{TOWER\_ARCHER\_UPG\_CD\_DEC}}
+\index{TOWER\_ARCHER\_UPG\_CD\_DEC@{TOWER\_ARCHER\_UPG\_CD\_DEC}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_ARCHER\_UPG\_CD\_DEC}{TOWER\_ARCHER\_UPG\_CD\_DEC}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+ARCHER\+\_\+\+UPG\+\_\+\+CD\+\_\+\+DEC~8}
+
+\Hypertarget{tower_8h_acd922c937b1635b347278b47737668b4}\label{tower_8h_acd922c937b1635b347278b47737668b4} 
+\index{tower.h@{tower.h}!TOWER\_ARCHER\_UPG\_COST@{TOWER\_ARCHER\_UPG\_COST}}
+\index{TOWER\_ARCHER\_UPG\_COST@{TOWER\_ARCHER\_UPG\_COST}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_ARCHER\_UPG\_COST}{TOWER\_ARCHER\_UPG\_COST}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+ARCHER\+\_\+\+UPG\+\_\+\+COST~250}
+
+\Hypertarget{tower_8h_aac8a1bc3855923ca7082ecd01210925e}\label{tower_8h_aac8a1bc3855923ca7082ecd01210925e} 
+\index{tower.h@{tower.h}!TOWER\_ARCHER\_UPG\_DMG\_INC@{TOWER\_ARCHER\_UPG\_DMG\_INC}}
+\index{TOWER\_ARCHER\_UPG\_DMG\_INC@{TOWER\_ARCHER\_UPG\_DMG\_INC}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_ARCHER\_UPG\_DMG\_INC}{TOWER\_ARCHER\_UPG\_DMG\_INC}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+ARCHER\+\_\+\+UPG\+\_\+\+DMG\+\_\+\+INC~10}
+
+\Hypertarget{tower_8h_a3b5917ab4a3b8f476faafeb4353c5c5b}\label{tower_8h_a3b5917ab4a3b8f476faafeb4353c5c5b} 
+\index{tower.h@{tower.h}!TOWER\_ARCHER\_UPG\_RANGE\_INC@{TOWER\_ARCHER\_UPG\_RANGE\_INC}}
+\index{TOWER\_ARCHER\_UPG\_RANGE\_INC@{TOWER\_ARCHER\_UPG\_RANGE\_INC}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_ARCHER\_UPG\_RANGE\_INC}{TOWER\_ARCHER\_UPG\_RANGE\_INC}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+ARCHER\+\_\+\+UPG\+\_\+\+RANGE\+\_\+\+INC~50}
+
+\Hypertarget{tower_8h_affadb7f04d4d44027bd7d7a9552bcec7}\label{tower_8h_affadb7f04d4d44027bd7d7a9552bcec7} 
+\index{tower.h@{tower.h}!TOWER\_MAGE\_BASE\_COOLDOWN@{TOWER\_MAGE\_BASE\_COOLDOWN}}
+\index{TOWER\_MAGE\_BASE\_COOLDOWN@{TOWER\_MAGE\_BASE\_COOLDOWN}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_MAGE\_BASE\_COOLDOWN}{TOWER\_MAGE\_BASE\_COOLDOWN}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+MAGE\+\_\+\+BASE\+\_\+\+COOLDOWN~60}
+
+\Hypertarget{tower_8h_af6491ae61053ffcb5d41e0525f6d1bf5}\label{tower_8h_af6491ae61053ffcb5d41e0525f6d1bf5} 
+\index{tower.h@{tower.h}!TOWER\_MAGE\_BASE\_DMG@{TOWER\_MAGE\_BASE\_DMG}}
+\index{TOWER\_MAGE\_BASE\_DMG@{TOWER\_MAGE\_BASE\_DMG}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_MAGE\_BASE\_DMG}{TOWER\_MAGE\_BASE\_DMG}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+MAGE\+\_\+\+BASE\+\_\+\+DMG~40}
+
+\Hypertarget{tower_8h_a31d6e82cabbb987c4d4aff66e893b16d}\label{tower_8h_a31d6e82cabbb987c4d4aff66e893b16d} 
+\index{tower.h@{tower.h}!TOWER\_MAGE\_BASE\_RANGE@{TOWER\_MAGE\_BASE\_RANGE}}
+\index{TOWER\_MAGE\_BASE\_RANGE@{TOWER\_MAGE\_BASE\_RANGE}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_MAGE\_BASE\_RANGE}{TOWER\_MAGE\_BASE\_RANGE}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+MAGE\+\_\+\+BASE\+\_\+\+RANGE~160}
+
+\Hypertarget{tower_8h_a83d75c61c03af354d9c3270f526b736c}\label{tower_8h_a83d75c61c03af354d9c3270f526b736c} 
+\index{tower.h@{tower.h}!TOWER\_MAGE\_COST@{TOWER\_MAGE\_COST}}
+\index{TOWER\_MAGE\_COST@{TOWER\_MAGE\_COST}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_MAGE\_COST}{TOWER\_MAGE\_COST}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+MAGE\+\_\+\+COST~250}
+
+\Hypertarget{tower_8h_aa7ad644ea030cec5e5fb480d0de7de9b}\label{tower_8h_aa7ad644ea030cec5e5fb480d0de7de9b} 
+\index{tower.h@{tower.h}!TOWER\_MAGE\_UPG\_COST@{TOWER\_MAGE\_UPG\_COST}}
+\index{TOWER\_MAGE\_UPG\_COST@{TOWER\_MAGE\_UPG\_COST}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_MAGE\_UPG\_COST}{TOWER\_MAGE\_UPG\_COST}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+MAGE\+\_\+\+UPG\+\_\+\+COST~300}
+
+\Hypertarget{tower_8h_a57aaf2fad294a7a23185f5df43b746e9}\label{tower_8h_a57aaf2fad294a7a23185f5df43b746e9} 
+\index{tower.h@{tower.h}!TOWER\_MAGE\_UPG\_DMG\_INC@{TOWER\_MAGE\_UPG\_DMG\_INC}}
+\index{TOWER\_MAGE\_UPG\_DMG\_INC@{TOWER\_MAGE\_UPG\_DMG\_INC}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_MAGE\_UPG\_DMG\_INC}{TOWER\_MAGE\_UPG\_DMG\_INC}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+MAGE\+\_\+\+UPG\+\_\+\+DMG\+\_\+\+INC~35}
+
+\Hypertarget{tower_8h_a25c327cc0216d2bb4b57cf608e6c0bc8}\label{tower_8h_a25c327cc0216d2bb4b57cf608e6c0bc8} 
+\index{tower.h@{tower.h}!TOWER\_MAGE\_UPG\_RANGE\_INC@{TOWER\_MAGE\_UPG\_RANGE\_INC}}
+\index{TOWER\_MAGE\_UPG\_RANGE\_INC@{TOWER\_MAGE\_UPG\_RANGE\_INC}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{TOWER\_MAGE\_UPG\_RANGE\_INC}{TOWER\_MAGE\_UPG\_RANGE\_INC}}
+{\footnotesize\ttfamily \#define TOWER\+\_\+\+MAGE\+\_\+\+UPG\+\_\+\+RANGE\+\_\+\+INC~40}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506a}\label{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506a} 
+\index{tower.h@{tower.h}!tower\_type\_t@{tower\_type\_t}}
+\index{tower\_type\_t@{tower\_type\_t}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_type\_t}{tower\_type\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506a}{tower\+\_\+type\+\_\+t}}}
+
+
+
+Type of tower occupying a grid slot. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOWER\_NONE@{TOWER\_NONE}!tower.h@{tower.h}}\index{tower.h@{tower.h}!TOWER\_NONE@{TOWER\_NONE}}}\Hypertarget{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aadf52d26e574809de3b8b091a98544cb6}\label{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aadf52d26e574809de3b8b091a98544cb6} 
+TOWER\+\_\+\+NONE&Slot is empty (no tower placed). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOWER\_ARCHER@{TOWER\_ARCHER}!tower.h@{tower.h}}\index{tower.h@{tower.h}!TOWER\_ARCHER@{TOWER\_ARCHER}}}\Hypertarget{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aa16185108eb5b660b17c1ab536d98fe2e}\label{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aa16185108eb5b660b17c1ab536d98fe2e} 
+TOWER\+\_\+\+ARCHER&Archer tower. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TOWER\_MAGE@{TOWER\_MAGE}!tower.h@{tower.h}}\index{tower.h@{tower.h}!TOWER\_MAGE@{TOWER\_MAGE}}}\Hypertarget{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aac62ecf2b1e74dc0ad5d7e637a06192f4}\label{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506aac62ecf2b1e74dc0ad5d7e637a06192f4} 
+TOWER\+\_\+\+MAGE&Mage tower. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{tower_8h_a367355652e460ff34dea9f84cec78b13}\label{tower_8h_a367355652e460ff34dea9f84cec78b13} 
+\index{tower.h@{tower.h}!tower\_draw@{tower\_draw}}
+\index{tower\_draw@{tower\_draw}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_draw()}{tower\_draw()}}
+{\footnotesize\ttfamily void tower\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws all placed towers on the map. 
+
+\Hypertarget{tower_8h_a81c75cdbf25f1f76108bd2c0ca103485}\label{tower_8h_a81c75cdbf25f1f76108bd2c0ca103485} 
+\index{tower.h@{tower.h}!tower\_handle\_click\_px@{tower\_handle\_click\_px}}
+\index{tower\_handle\_click\_px@{tower\_handle\_click\_px}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_handle\_click\_px()}{tower\_handle\_click\_px()}}
+{\footnotesize\ttfamily void tower\+\_\+handle\+\_\+click\+\_\+px (\begin{DoxyParamCaption}\item[{int}]{px,  }\item[{int}]{py }\end{DoxyParamCaption})}
+
+
+
+Handles a left-\/click at the given pixel coordinates. 
+
+If the click lands on a blank tile with a tower type selected, places the tower immediately. If a tower is already there, opens the upgrade/remove popup instead.
+
+
+\begin{DoxyParams}{Parameters}
+{\em px} & Click X position in screen pixels. \\
+\hline
+{\em py} & Click Y position in screen pixels. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{tower_8h_ab4cbc632654f7dc134c18a8b806aea51}\label{tower_8h_ab4cbc632654f7dc134c18a8b806aea51} 
+\index{tower.h@{tower.h}!tower\_init@{tower\_init}}
+\index{tower\_init@{tower\_init}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_init()}{tower\_init()}}
+{\footnotesize\ttfamily void tower\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}}}]{diff }\end{DoxyParamCaption})}
+
+
+
+Initialises the tower grid and loads tower sprites. 
+
+Must be called once after \doxylink{map_8c_ae18974de51e6efe91d9f25b7390d2a07}{map\+\_\+init()} before any other tower function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em diff} & Selected difficulty, used to limit the number of available tower slots. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{tower_8h_a5eb7be51764c33285bbf7a6a4d4fc1eb}\label{tower_8h_a5eb7be51764c33285bbf7a6a4d4fc1eb} 
+\index{tower.h@{tower.h}!tower\_popup\_close@{tower\_popup\_close}}
+\index{tower\_popup\_close@{tower\_popup\_close}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_popup\_close()}{tower\_popup\_close()}}
+{\footnotesize\ttfamily void tower\+\_\+popup\+\_\+close (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Closes the tower popup without taking any action. 
+
+\Hypertarget{tower_8h_a2518a10f0fd8357f76d9f3104a35eeeb}\label{tower_8h_a2518a10f0fd8357f76d9f3104a35eeeb} 
+\index{tower.h@{tower.h}!tower\_popup\_draw@{tower\_popup\_draw}}
+\index{tower\_popup\_draw@{tower\_popup\_draw}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_popup\_draw()}{tower\_popup\_draw()}}
+{\footnotesize\ttfamily void tower\+\_\+popup\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the tower placement/upgrade popup overlay. 
+
+\Hypertarget{tower_8h_a298ed65ce8e1df892e0301b7b92be7da}\label{tower_8h_a298ed65ce8e1df892e0301b7b92be7da} 
+\index{tower.h@{tower.h}!tower\_popup\_handle\_key@{tower\_popup\_handle\_key}}
+\index{tower\_popup\_handle\_key@{tower\_popup\_handle\_key}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_popup\_handle\_key()}{tower\_popup\_handle\_key()}}
+{\footnotesize\ttfamily bool tower\+\_\+popup\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Forwards a keyboard scancode to the tower popup. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode (set 1 make code). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the key was consumed by the popup (caller should not forward it to other handlers). 
+\end{DoxyReturn}
+\Hypertarget{tower_8h_aaaff0e830e0555ed304de280c558d45f}\label{tower_8h_aaaff0e830e0555ed304de280c558d45f} 
+\index{tower.h@{tower.h}!tower\_popup\_is\_open@{tower\_popup\_is\_open}}
+\index{tower\_popup\_is\_open@{tower\_popup\_is\_open}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_popup\_is\_open()}{tower\_popup\_is\_open()}}
+{\footnotesize\ttfamily bool tower\+\_\+popup\+\_\+is\+\_\+open (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns whether the tower placement/upgrade popup is currently open. 
+
+\begin{DoxyReturn}{Returns}
+true if the popup is visible and consuming input. 
+\end{DoxyReturn}
+\Hypertarget{tower_8h_a0ec8a46188799337f544f29e4a65ba04}\label{tower_8h_a0ec8a46188799337f544f29e4a65ba04} 
+\index{tower.h@{tower.h}!tower\_tick@{tower\_tick}}
+\index{tower\_tick@{tower\_tick}!tower.h@{tower.h}}
+\doxysubsubsection{\texorpdfstring{tower\_tick()}{tower\_tick()}}
+{\footnotesize\ttfamily void tower\+\_\+tick (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{enemies,  }\item[{int}]{enemy\+\_\+count }\end{DoxyParamCaption})}
+
+
+
+Advances all placed towers by one tick. 
+
+Each tower scans for enemies within its range and fires a bullet at the closest one when its cooldown has expired.
+
+
+\begin{DoxyParams}{Parameters}
+{\em enemies} & Array of active enemy pointers. \\
+\hline
+{\em enemy\+\_\+count} & Number of active enemies in the array. \\
+\hline
+\end{DoxyParams}

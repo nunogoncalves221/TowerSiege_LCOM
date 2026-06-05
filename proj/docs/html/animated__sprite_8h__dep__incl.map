@@ -1,0 +1,9 @@
+<map id="src/sprite/animated_sprite.h" name="src/sprite/animated_sprite.h">
+<area shape="rect" id="Node000001" title="Multi&#45;frame animated sprite with tick&#45;based playback control." alt="" coords="149,5,297,45"/>
+<area shape="rect" id="Node000002" href="$game_8c.html" title=" " alt="" coords="5,101,140,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,54,94,103,91,98,177,50"/>
+<area shape="rect" id="Node000003" href="$hero_8c.html" title=" " alt="" coords="164,101,283,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,59,226,100,221,100,221,59"/>
+<area shape="rect" id="Node000004" href="$animated__sprite_8c.html" title=" " alt="" coords="307,93,455,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="271,50,347,91,345,96,269,54"/>
+</map>

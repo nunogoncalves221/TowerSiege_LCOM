@@ -1,0 +1,5 @@
+<map id="enemy_t" name="enemy_t">
+<area shape="rect" id="Node000001" title="Represents a single active enemy on the map." alt="" coords="5,93,84,119"/>
+<area shape="rect" id="Node000002" href="$structsprite__t.html" title="Holds the visual data of a single, non&#45;animated image." alt="" coords="9,5,80,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="47,45,47,93,42,93,42,45"/>
+</map>

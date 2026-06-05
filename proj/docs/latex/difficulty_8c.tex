@@ -1,0 +1,80 @@
+\doxysection{src/menu/difficulty.c File Reference}
+\hypertarget{difficulty_8c}{}\label{difficulty_8c}\index{src/menu/difficulty.c@{src/menu/difficulty.c}}
+{\ttfamily \#include "{}difficulty.\+h"{}}\newline
+{\ttfamily \#include "{}menu\+\_\+nav.\+h"{}}\newline
+{\ttfamily \#include "{}../font/font.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+Include dependency graph for difficulty.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{difficulty_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} \mbox{\hyperlink{difficulty_8c_a79704501f29600c140ffe16ffaf16a65}{diff\+\_\+get\+\_\+selected}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the difficulty option the player currently has highlighted. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{difficulty_8c_a8ec57475fa0c3d6d3e73349e9eb54661}{diff\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Resets the highlighted option back to DIFF\+\_\+\+EASY. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{difficulty_8c_ae799e9cdd2123e560238be81e724a5f5}{diff\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode and updates the highlighted option. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{difficulty_8c_af13e07b2db54f1a4eaffe2b8e557f786}{diff\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the difficulty selection screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{difficulty_8c_af13e07b2db54f1a4eaffe2b8e557f786}\label{difficulty_8c_af13e07b2db54f1a4eaffe2b8e557f786} 
+\index{difficulty.c@{difficulty.c}!diff\_draw@{diff\_draw}}
+\index{diff\_draw@{diff\_draw}!difficulty.c@{difficulty.c}}
+\doxysubsubsection{\texorpdfstring{diff\_draw()}{diff\_draw()}}
+{\footnotesize\ttfamily void diff\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the difficulty selection screen. 
+
+\Hypertarget{difficulty_8c_a79704501f29600c140ffe16ffaf16a65}\label{difficulty_8c_a79704501f29600c140ffe16ffaf16a65} 
+\index{difficulty.c@{difficulty.c}!diff\_get\_selected@{diff\_get\_selected}}
+\index{diff\_get\_selected@{diff\_get\_selected}!difficulty.c@{difficulty.c}}
+\doxysubsubsection{\texorpdfstring{diff\_get\_selected()}{diff\_get\_selected()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t}} diff\+\_\+get\+\_\+selected (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the difficulty option the player currently has highlighted. 
+
+\begin{DoxyReturn}{Returns}
+The currently selected \doxylink{difficulty_8h_a3a922b9bea86b62e5a3292061e50ab08}{difficulty\+\_\+t} value. 
+\end{DoxyReturn}
+\Hypertarget{difficulty_8c_ae799e9cdd2123e560238be81e724a5f5}\label{difficulty_8c_ae799e9cdd2123e560238be81e724a5f5} 
+\index{difficulty.c@{difficulty.c}!diff\_handle\_key@{diff\_handle\_key}}
+\index{diff\_handle\_key@{diff\_handle\_key}!difficulty.c@{difficulty.c}}
+\doxysubsubsection{\texorpdfstring{diff\_handle\_key()}{diff\_handle\_key()}}
+{\footnotesize\ttfamily bool diff\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode and updates the highlighted option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player pressed Enter to confirm the selection. 
+\end{DoxyReturn}
+\Hypertarget{difficulty_8c_a8ec57475fa0c3d6d3e73349e9eb54661}\label{difficulty_8c_a8ec57475fa0c3d6d3e73349e9eb54661} 
+\index{difficulty.c@{difficulty.c}!diff\_reset@{diff\_reset}}
+\index{diff\_reset@{diff\_reset}!difficulty.c@{difficulty.c}}
+\doxysubsubsection{\texorpdfstring{diff\_reset()}{diff\_reset()}}
+{\footnotesize\ttfamily void diff\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Resets the highlighted option back to DIFF\+\_\+\+EASY. 
+
+Should be called when entering the difficulty selection screen. 

@@ -1,0 +1,11 @@
+<map id="src/map/map.h" name="src/map/map.h">
+<area shape="rect" id="Node000001" title="Tile&#45;based game map definition and rendering." alt="" coords="45,5,163,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,91,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,33,68,69,63,66,93,29"/>
+<area shape="rect" id="Node000003" href="$difficulty_8h.html" title="Difficulty selection screen and difficulty type definition." alt="" coords="115,79,205,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="115,29,145,66,140,69,111,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="74,152,145,177"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="154,106,128,142,123,139,149,103"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="169,152,252,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="171,103,197,139,192,142,166,106"/>
+</map>

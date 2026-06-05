@@ -1,0 +1,232 @@
+\doxysection{src/hud/hud.c File Reference}
+\hypertarget{hud_8c}{}\label{hud_8c}\index{src/hud/hud.c@{src/hud/hud.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}hud.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include "{}font.\+h"{}}\newline
+{\ttfamily \#include "{}player.\+h"{}}\newline
+{\ttfamily \#include "{}wave.\+h"{}}\newline
+Include dependency graph for hud.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{hud_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{hud_8c_a00484a1326c24fd824f61098f4443055}{RTC\+\_\+\+STR\+\_\+\+MAX\+\_\+\+LEN}}~64
+\item 
+\#define \mbox{\hyperlink{hud_8c_ae11b3fb1c901612bf26415d9503e749a}{RTC\+\_\+\+UI\+\_\+\+PAD\+\_\+X}}~10
+\item 
+\#define \mbox{\hyperlink{hud_8c_a7249af88ff56c94754a7737ad9e53c0d}{RTC\+\_\+\+UI\+\_\+\+PAD\+\_\+Y}}~30
+\item 
+\#define \mbox{\hyperlink{hud_8c_ae8832bc43bc1815c4b73dfb92d5eb7b9}{RTC\+\_\+\+TEXT\+\_\+\+COLOR}}~0x00\+FFFFFF
+\item 
+\#define \mbox{\hyperlink{hud_8c_ae9061f019e29e4faa405140bf6bd928a}{RTC\+\_\+\+BG\+\_\+\+COLOR}}~0x00000000
+\item 
+\#define \mbox{\hyperlink{hud_8c_a2dc1fe30dd8ed8205e5b75a977dbf912}{RTC\+\_\+\+FONT\+\_\+H}}~14
+\item 
+\#define \mbox{\hyperlink{hud_8c_acb12089462b8b1e382fe93ad9ea070d8}{RTC\+\_\+\+BG\+\_\+\+PAD}}~4
+\item 
+\#define \mbox{\hyperlink{hud_8c_a0a44a059857707fd094ce4fd3fe43807}{UI\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+GOOD}}~0x0000\+FF00
+\item 
+\#define \mbox{\hyperlink{hud_8c_aac2a71f0d0e9e266dd983f9959837e49}{UI\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+BG}}~0x00\+FF0000
+\item 
+\#define \mbox{\hyperlink{hud_8c_a42b65396a0239f449f683e02b300ada5}{UI\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+BORDER}}~0x00000000
+\item 
+\#define \mbox{\hyperlink{hud_8c_a651a85b93dd96e2f27561fa569790fd4}{HUD\+\_\+\+PAD\+\_\+X}}~10
+\item 
+\#define \mbox{\hyperlink{hud_8c_a0efd4fb910dd13f1f32cae84124c4f0f}{HUD\+\_\+\+PAD\+\_\+Y}}~10
+\item 
+\#define \mbox{\hyperlink{hud_8c_a890c91dd3d6131fe9627e3a932fa485d}{HUD\+\_\+\+WAVE\+\_\+Y}}~30
+\item 
+\#define \mbox{\hyperlink{hud_8c_af76e3feaa37c7796171f161ed731eb87}{BASE\+\_\+\+HP\+\_\+\+BAR\+\_\+W}}~200
+\item 
+\#define \mbox{\hyperlink{hud_8c_a90df52bf8acf277386bd27de97fdfe16}{BASE\+\_\+\+HP\+\_\+\+BAR\+\_\+H}}~14
+\item 
+\#define \mbox{\hyperlink{hud_8c_a1f676b97eef43aeb0dd540f8be2298b0}{STR\+\_\+\+BUF\+\_\+\+SHORT}}~16
+\item 
+\#define \mbox{\hyperlink{hud_8c_a1f9b18dd76cc149e782b0773fe6d35c1}{STR\+\_\+\+BUF\+\_\+\+LONG}}~32
+\item 
+\#define \mbox{\hyperlink{hud_8c_a4c1aef9c6da54ed06421c9dd5e3da09c}{HUD\+\_\+\+COLOR\+\_\+\+TEXT}}~0x00\+FFFFFF
+\item 
+\#define \mbox{\hyperlink{hud_8c_acf76c6136597bf8d1ac89b869fc0265c}{HUD\+\_\+\+COLOR\+\_\+\+GOLD}}~0x00\+FFD700
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{hud_8c_ad58b97eb39ad9f465d5e14ce6b871482}{draw\+\_\+hp\+\_\+bar}} (int x, int y, int width, int height, int current, int max, uint32\+\_\+t color\+\_\+good, uint32\+\_\+t color\+\_\+bg, uint32\+\_\+t color\+\_\+border)
+\begin{DoxyCompactList}\small\item\em Draws a filled HP bar with a coloured fill and border. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hud_8c_a459b9eb9fca4da9caf56eb224060d09a}{hud\+\_\+draw}} (rtc\+\_\+date \texorpdfstring{$\ast$}{*}start\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Draws all HUD elements for the current frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{hud_8c_a90df52bf8acf277386bd27de97fdfe16}\label{hud_8c_a90df52bf8acf277386bd27de97fdfe16} 
+\index{hud.c@{hud.c}!BASE\_HP\_BAR\_H@{BASE\_HP\_BAR\_H}}
+\index{BASE\_HP\_BAR\_H@{BASE\_HP\_BAR\_H}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{BASE\_HP\_BAR\_H}{BASE\_HP\_BAR\_H}}
+{\footnotesize\ttfamily \#define BASE\+\_\+\+HP\+\_\+\+BAR\+\_\+H~14}
+
+\Hypertarget{hud_8c_af76e3feaa37c7796171f161ed731eb87}\label{hud_8c_af76e3feaa37c7796171f161ed731eb87} 
+\index{hud.c@{hud.c}!BASE\_HP\_BAR\_W@{BASE\_HP\_BAR\_W}}
+\index{BASE\_HP\_BAR\_W@{BASE\_HP\_BAR\_W}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{BASE\_HP\_BAR\_W}{BASE\_HP\_BAR\_W}}
+{\footnotesize\ttfamily \#define BASE\+\_\+\+HP\+\_\+\+BAR\+\_\+W~200}
+
+\Hypertarget{hud_8c_acf76c6136597bf8d1ac89b869fc0265c}\label{hud_8c_acf76c6136597bf8d1ac89b869fc0265c} 
+\index{hud.c@{hud.c}!HUD\_COLOR\_GOLD@{HUD\_COLOR\_GOLD}}
+\index{HUD\_COLOR\_GOLD@{HUD\_COLOR\_GOLD}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{HUD\_COLOR\_GOLD}{HUD\_COLOR\_GOLD}}
+{\footnotesize\ttfamily \#define HUD\+\_\+\+COLOR\+\_\+\+GOLD~0x00\+FFD700}
+
+\Hypertarget{hud_8c_a4c1aef9c6da54ed06421c9dd5e3da09c}\label{hud_8c_a4c1aef9c6da54ed06421c9dd5e3da09c} 
+\index{hud.c@{hud.c}!HUD\_COLOR\_TEXT@{HUD\_COLOR\_TEXT}}
+\index{HUD\_COLOR\_TEXT@{HUD\_COLOR\_TEXT}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{HUD\_COLOR\_TEXT}{HUD\_COLOR\_TEXT}}
+{\footnotesize\ttfamily \#define HUD\+\_\+\+COLOR\+\_\+\+TEXT~0x00\+FFFFFF}
+
+\Hypertarget{hud_8c_a651a85b93dd96e2f27561fa569790fd4}\label{hud_8c_a651a85b93dd96e2f27561fa569790fd4} 
+\index{hud.c@{hud.c}!HUD\_PAD\_X@{HUD\_PAD\_X}}
+\index{HUD\_PAD\_X@{HUD\_PAD\_X}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{HUD\_PAD\_X}{HUD\_PAD\_X}}
+{\footnotesize\ttfamily \#define HUD\+\_\+\+PAD\+\_\+X~10}
+
+\Hypertarget{hud_8c_a0efd4fb910dd13f1f32cae84124c4f0f}\label{hud_8c_a0efd4fb910dd13f1f32cae84124c4f0f} 
+\index{hud.c@{hud.c}!HUD\_PAD\_Y@{HUD\_PAD\_Y}}
+\index{HUD\_PAD\_Y@{HUD\_PAD\_Y}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{HUD\_PAD\_Y}{HUD\_PAD\_Y}}
+{\footnotesize\ttfamily \#define HUD\+\_\+\+PAD\+\_\+Y~10}
+
+\Hypertarget{hud_8c_a890c91dd3d6131fe9627e3a932fa485d}\label{hud_8c_a890c91dd3d6131fe9627e3a932fa485d} 
+\index{hud.c@{hud.c}!HUD\_WAVE\_Y@{HUD\_WAVE\_Y}}
+\index{HUD\_WAVE\_Y@{HUD\_WAVE\_Y}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{HUD\_WAVE\_Y}{HUD\_WAVE\_Y}}
+{\footnotesize\ttfamily \#define HUD\+\_\+\+WAVE\+\_\+Y~30}
+
+\Hypertarget{hud_8c_ae9061f019e29e4faa405140bf6bd928a}\label{hud_8c_ae9061f019e29e4faa405140bf6bd928a} 
+\index{hud.c@{hud.c}!RTC\_BG\_COLOR@{RTC\_BG\_COLOR}}
+\index{RTC\_BG\_COLOR@{RTC\_BG\_COLOR}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{RTC\_BG\_COLOR}{RTC\_BG\_COLOR}}
+{\footnotesize\ttfamily \#define RTC\+\_\+\+BG\+\_\+\+COLOR~0x00000000}
+
+\Hypertarget{hud_8c_acb12089462b8b1e382fe93ad9ea070d8}\label{hud_8c_acb12089462b8b1e382fe93ad9ea070d8} 
+\index{hud.c@{hud.c}!RTC\_BG\_PAD@{RTC\_BG\_PAD}}
+\index{RTC\_BG\_PAD@{RTC\_BG\_PAD}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{RTC\_BG\_PAD}{RTC\_BG\_PAD}}
+{\footnotesize\ttfamily \#define RTC\+\_\+\+BG\+\_\+\+PAD~4}
+
+\Hypertarget{hud_8c_a2dc1fe30dd8ed8205e5b75a977dbf912}\label{hud_8c_a2dc1fe30dd8ed8205e5b75a977dbf912} 
+\index{hud.c@{hud.c}!RTC\_FONT\_H@{RTC\_FONT\_H}}
+\index{RTC\_FONT\_H@{RTC\_FONT\_H}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{RTC\_FONT\_H}{RTC\_FONT\_H}}
+{\footnotesize\ttfamily \#define RTC\+\_\+\+FONT\+\_\+H~14}
+
+\Hypertarget{hud_8c_a00484a1326c24fd824f61098f4443055}\label{hud_8c_a00484a1326c24fd824f61098f4443055} 
+\index{hud.c@{hud.c}!RTC\_STR\_MAX\_LEN@{RTC\_STR\_MAX\_LEN}}
+\index{RTC\_STR\_MAX\_LEN@{RTC\_STR\_MAX\_LEN}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{RTC\_STR\_MAX\_LEN}{RTC\_STR\_MAX\_LEN}}
+{\footnotesize\ttfamily \#define RTC\+\_\+\+STR\+\_\+\+MAX\+\_\+\+LEN~64}
+
+\Hypertarget{hud_8c_ae8832bc43bc1815c4b73dfb92d5eb7b9}\label{hud_8c_ae8832bc43bc1815c4b73dfb92d5eb7b9} 
+\index{hud.c@{hud.c}!RTC\_TEXT\_COLOR@{RTC\_TEXT\_COLOR}}
+\index{RTC\_TEXT\_COLOR@{RTC\_TEXT\_COLOR}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{RTC\_TEXT\_COLOR}{RTC\_TEXT\_COLOR}}
+{\footnotesize\ttfamily \#define RTC\+\_\+\+TEXT\+\_\+\+COLOR~0x00\+FFFFFF}
+
+\Hypertarget{hud_8c_ae11b3fb1c901612bf26415d9503e749a}\label{hud_8c_ae11b3fb1c901612bf26415d9503e749a} 
+\index{hud.c@{hud.c}!RTC\_UI\_PAD\_X@{RTC\_UI\_PAD\_X}}
+\index{RTC\_UI\_PAD\_X@{RTC\_UI\_PAD\_X}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{RTC\_UI\_PAD\_X}{RTC\_UI\_PAD\_X}}
+{\footnotesize\ttfamily \#define RTC\+\_\+\+UI\+\_\+\+PAD\+\_\+X~10}
+
+\Hypertarget{hud_8c_a7249af88ff56c94754a7737ad9e53c0d}\label{hud_8c_a7249af88ff56c94754a7737ad9e53c0d} 
+\index{hud.c@{hud.c}!RTC\_UI\_PAD\_Y@{RTC\_UI\_PAD\_Y}}
+\index{RTC\_UI\_PAD\_Y@{RTC\_UI\_PAD\_Y}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{RTC\_UI\_PAD\_Y}{RTC\_UI\_PAD\_Y}}
+{\footnotesize\ttfamily \#define RTC\+\_\+\+UI\+\_\+\+PAD\+\_\+Y~30}
+
+\Hypertarget{hud_8c_a1f9b18dd76cc149e782b0773fe6d35c1}\label{hud_8c_a1f9b18dd76cc149e782b0773fe6d35c1} 
+\index{hud.c@{hud.c}!STR\_BUF\_LONG@{STR\_BUF\_LONG}}
+\index{STR\_BUF\_LONG@{STR\_BUF\_LONG}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{STR\_BUF\_LONG}{STR\_BUF\_LONG}}
+{\footnotesize\ttfamily \#define STR\+\_\+\+BUF\+\_\+\+LONG~32}
+
+\Hypertarget{hud_8c_a1f676b97eef43aeb0dd540f8be2298b0}\label{hud_8c_a1f676b97eef43aeb0dd540f8be2298b0} 
+\index{hud.c@{hud.c}!STR\_BUF\_SHORT@{STR\_BUF\_SHORT}}
+\index{STR\_BUF\_SHORT@{STR\_BUF\_SHORT}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{STR\_BUF\_SHORT}{STR\_BUF\_SHORT}}
+{\footnotesize\ttfamily \#define STR\+\_\+\+BUF\+\_\+\+SHORT~16}
+
+\Hypertarget{hud_8c_aac2a71f0d0e9e266dd983f9959837e49}\label{hud_8c_aac2a71f0d0e9e266dd983f9959837e49} 
+\index{hud.c@{hud.c}!UI\_HP\_COLOR\_BG@{UI\_HP\_COLOR\_BG}}
+\index{UI\_HP\_COLOR\_BG@{UI\_HP\_COLOR\_BG}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{UI\_HP\_COLOR\_BG}{UI\_HP\_COLOR\_BG}}
+{\footnotesize\ttfamily \#define UI\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+BG~0x00\+FF0000}
+
+\Hypertarget{hud_8c_a42b65396a0239f449f683e02b300ada5}\label{hud_8c_a42b65396a0239f449f683e02b300ada5} 
+\index{hud.c@{hud.c}!UI\_HP\_COLOR\_BORDER@{UI\_HP\_COLOR\_BORDER}}
+\index{UI\_HP\_COLOR\_BORDER@{UI\_HP\_COLOR\_BORDER}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{UI\_HP\_COLOR\_BORDER}{UI\_HP\_COLOR\_BORDER}}
+{\footnotesize\ttfamily \#define UI\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+BORDER~0x00000000}
+
+\Hypertarget{hud_8c_a0a44a059857707fd094ce4fd3fe43807}\label{hud_8c_a0a44a059857707fd094ce4fd3fe43807} 
+\index{hud.c@{hud.c}!UI\_HP\_COLOR\_GOOD@{UI\_HP\_COLOR\_GOOD}}
+\index{UI\_HP\_COLOR\_GOOD@{UI\_HP\_COLOR\_GOOD}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{UI\_HP\_COLOR\_GOOD}{UI\_HP\_COLOR\_GOOD}}
+{\footnotesize\ttfamily \#define UI\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+GOOD~0x0000\+FF00}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{hud_8c_ad58b97eb39ad9f465d5e14ce6b871482}\label{hud_8c_ad58b97eb39ad9f465d5e14ce6b871482} 
+\index{hud.c@{hud.c}!draw\_hp\_bar@{draw\_hp\_bar}}
+\index{draw\_hp\_bar@{draw\_hp\_bar}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{draw\_hp\_bar()}{draw\_hp\_bar()}}
+{\footnotesize\ttfamily void draw\+\_\+hp\+\_\+bar (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{int}]{current,  }\item[{int}]{max,  }\item[{uint32\+\_\+t}]{color\+\_\+good,  }\item[{uint32\+\_\+t}]{color\+\_\+bg,  }\item[{uint32\+\_\+t}]{color\+\_\+border }\end{DoxyParamCaption})}
+
+
+
+Draws a filled HP bar with a coloured fill and border. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Left edge of the bar in screen pixels. \\
+\hline
+{\em y} & Top edge of the bar in screen pixels. \\
+\hline
+{\em width} & Total width of the bar in pixels. \\
+\hline
+{\em height} & Total height of the bar in pixels. \\
+\hline
+{\em current} & Current HP value (determines fill fraction). \\
+\hline
+{\em max} & Maximum HP value. \\
+\hline
+{\em color\+\_\+good} & Fill colour in AARRGGBB format. \\
+\hline
+{\em color\+\_\+bg} & Background colour for the empty portion. \\
+\hline
+{\em color\+\_\+border} & Border colour drawn around the bar. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{hud_8c_a459b9eb9fca4da9caf56eb224060d09a}\label{hud_8c_a459b9eb9fca4da9caf56eb224060d09a} 
+\index{hud.c@{hud.c}!hud\_draw@{hud\_draw}}
+\index{hud\_draw@{hud\_draw}!hud.c@{hud.c}}
+\doxysubsubsection{\texorpdfstring{hud\_draw()}{hud\_draw()}}
+{\footnotesize\ttfamily void hud\+\_\+draw (\begin{DoxyParamCaption}\item[{rtc\+\_\+date \texorpdfstring{$\ast$}{*}}]{start\+\_\+time }\end{DoxyParamCaption})}
+
+
+
+Draws all HUD elements for the current frame. 
+
+Renders lives, score, gold, wave number, and the time of the match start.
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+\_\+time} & Pointer to the RTC timestamp recorded at game start. \\
+\hline
+\end{DoxyParams}

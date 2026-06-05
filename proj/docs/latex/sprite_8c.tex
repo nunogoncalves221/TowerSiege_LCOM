@@ -1,0 +1,107 @@
+\doxysection{src/sprite/sprite.c File Reference}
+\hypertarget{sprite_8c}{}\label{sprite_8c}\index{src/sprite/sprite.c@{src/sprite/sprite.c}}
+{\ttfamily \#include "{}sprite.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+Include dependency graph for sprite.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{sprite_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{sprite_8c_a10e894e2f5da44efc4b2461bbdb81a32}{create\+\_\+sprite}} (xpm\+\_\+map\+\_\+t xpm)
+\begin{DoxyCompactList}\small\item\em Allocates memory and loads an XPM image into a new sprite. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sprite_8c_ab78b0b42532b8c0b5322ddf0e1ed85e1}{destroy\+\_\+sprite}} (\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*}sp)
+\begin{DoxyCompactList}\small\item\em Frees all memory associated with a sprite. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sprite_8c_ab69715c9dc48079eaa7d113efd53488a}{draw\+\_\+sprite}} (\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*}sp, int16\+\_\+t x, int16\+\_\+t y)
+\begin{DoxyCompactList}\small\item\em Draws the sprite at the given screen coordinates. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sprite_8c_a79c8aaca44defe89fcf99d035abb1f0e}{draw\+\_\+sprite\+\_\+flipped}} (\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*}sp, int16\+\_\+t x, int16\+\_\+t y)
+\begin{DoxyCompactList}\small\item\em Draws the sprite mirrored horizontally. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sprite_8c_a10e894e2f5da44efc4b2461bbdb81a32}\label{sprite_8c_a10e894e2f5da44efc4b2461bbdb81a32} 
+\index{sprite.c@{sprite.c}!create\_sprite@{create\_sprite}}
+\index{create\_sprite@{create\_sprite}!sprite.c@{sprite.c}}
+\doxysubsubsection{\texorpdfstring{create\_sprite()}{create\_sprite()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*} create\+\_\+sprite (\begin{DoxyParamCaption}\item[{xpm\+\_\+map\+\_\+t}]{xpm }\end{DoxyParamCaption})}
+
+
+
+Allocates memory and loads an XPM image into a new sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xpm} & XPM map describing the image to load. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the newly allocated \doxylink{structsprite__t}{sprite\+\_\+t}, or NULL on failure. 
+\end{DoxyReturn}
+\Hypertarget{sprite_8c_ab78b0b42532b8c0b5322ddf0e1ed85e1}\label{sprite_8c_ab78b0b42532b8c0b5322ddf0e1ed85e1} 
+\index{sprite.c@{sprite.c}!destroy\_sprite@{destroy\_sprite}}
+\index{destroy\_sprite@{destroy\_sprite}!sprite.c@{sprite.c}}
+\doxysubsubsection{\texorpdfstring{destroy\_sprite()}{destroy\_sprite()}}
+{\footnotesize\ttfamily void destroy\+\_\+sprite (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sp }\end{DoxyParamCaption})}
+
+
+
+Frees all memory associated with a sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sp} & Pointer to the sprite to destroy. May be NULL (no-\/op). \\
+\hline
+\end{DoxyParams}
+\Hypertarget{sprite_8c_ab69715c9dc48079eaa7d113efd53488a}\label{sprite_8c_ab69715c9dc48079eaa7d113efd53488a} 
+\index{sprite.c@{sprite.c}!draw\_sprite@{draw\_sprite}}
+\index{draw\_sprite@{draw\_sprite}!sprite.c@{sprite.c}}
+\doxysubsubsection{\texorpdfstring{draw\_sprite()}{draw\_sprite()}}
+{\footnotesize\ttfamily int draw\+\_\+sprite (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sp,  }\item[{int16\+\_\+t}]{x,  }\item[{int16\+\_\+t}]{y }\end{DoxyParamCaption})}
+
+
+
+Draws the sprite at the given screen coordinates. 
+
+Transparent pixels (colour 0x00000000) are skipped.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sp} & Sprite to draw. \\
+\hline
+{\em x} & Horizontal screen coordinate of the top-\/left corner. \\
+\hline
+{\em y} & Vertical screen coordinate of the top-\/left corner. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, non-\/zero on error. 
+\end{DoxyReturn}
+\Hypertarget{sprite_8c_a79c8aaca44defe89fcf99d035abb1f0e}\label{sprite_8c_a79c8aaca44defe89fcf99d035abb1f0e} 
+\index{sprite.c@{sprite.c}!draw\_sprite\_flipped@{draw\_sprite\_flipped}}
+\index{draw\_sprite\_flipped@{draw\_sprite\_flipped}!sprite.c@{sprite.c}}
+\doxysubsubsection{\texorpdfstring{draw\_sprite\_flipped()}{draw\_sprite\_flipped()}}
+{\footnotesize\ttfamily int draw\+\_\+sprite\+\_\+flipped (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sp,  }\item[{int16\+\_\+t}]{x,  }\item[{int16\+\_\+t}]{y }\end{DoxyParamCaption})}
+
+
+
+Draws the sprite mirrored horizontally. 
+
+Useful when a character is facing right but only a left-\/facing sprite asset exists.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sp} & Sprite to draw flipped. \\
+\hline
+{\em x} & Horizontal screen coordinate of the top-\/left corner. \\
+\hline
+{\em y} & Vertical screen coordinate of the top-\/left corner. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, non-\/zero on error. 
+\end{DoxyReturn}

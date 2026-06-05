@@ -1,0 +1,20 @@
+<map id="src/menu/high_scores.c" name="src/menu/high_scores.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="215,5,389,31"/>
+<area shape="rect" id="Node000002" href="$high__scores_8h.html" title="Persistent high&#45;score table with up to ten entries." alt="" coords="132,79,243,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="285,33,219,74,216,69,282,28"/>
+<area shape="rect" id="Node000006" href="$font_8h.html" title="Bitmap font rendering and string&#45;width measurement." alt="" coords="5,79,108,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="263,33,110,77,109,72,262,28"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="267,79,337,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="305,31,305,65,299,65,299,31"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="361,79,432,104"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="319,29,372,68,369,72,316,33"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="457,79,523,104"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="333,28,447,71,446,76,331,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="36,152,107,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="170,106,103,147,101,142,167,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="138,152,221,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="189,105,185,139,179,138,183,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="245,152,295,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="202,102,248,141,244,145,199,106"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="62,104,69,138,64,139,56,105"/>
+</map>

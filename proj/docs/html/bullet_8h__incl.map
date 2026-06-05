@@ -1,0 +1,12 @@
+<map id="src/tower/bullet.h" name="src/tower/bullet.h">
+<area shape="rect" id="Node000001" title="Projectile system for tower attacks." alt="" coords="5,5,140,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="43,225,129,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,32,55,58,42,95,35,136,36,156,41,176,51,196,65,213,60,217,46,199,35,178,31,157,30,136,37,93,50,56,64,30"/>
+<area shape="rect" id="Node000003" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="51,152,121,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="76,31,86,138,81,139,71,31"/>
+<area shape="rect" id="Node000004" href="$enemy_8h.html" title="Enemy entity definition and per&#45;enemy lifecycle functions." alt="" coords="110,79,187,104"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="87,29,128,67,124,71,83,33"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="89,178,89,212,83,212,83,178"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="151,104,147,138,135,178,109,217,105,214,130,176,142,137,146,104"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="140,106,107,143,103,140,136,103"/>
+</map>

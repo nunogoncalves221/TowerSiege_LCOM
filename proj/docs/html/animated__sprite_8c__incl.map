@@ -1,0 +1,14 @@
+<map id="src/sprite/animated_sprite.c" name="src/sprite/animated_sprite.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="35,5,183,45"/>
+<area shape="rect" id="Node000002" href="$animated__sprite_8h.html" title="Multi&#45;frame animated sprite with tick&#45;based playback control." alt="" coords="39,93,179,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,46,111,79,106,79,106,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="79,240,165,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,121,49,134,24,150,9,170,8,180,12,191,37,216,68,233,65,238,33,220,8,193,3,180,5,168,20,146,46,129,74,116"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="23,167,93,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="103,121,76,157,72,154,98,117"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="118,167,201,192"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="119,117,145,154,141,157,115,121"/>
+<area shape="rect" id="Node000006" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="225,167,296,192"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="134,116,225,158,223,163,132,121"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="240,194,158,236,156,231,237,190"/>
+</map>

@@ -1,0 +1,99 @@
+\doxysection{enemy\+\_\+t Struct Reference}
+\hypertarget{structenemy__t}{}\label{structenemy__t}\index{enemy\_t@{enemy\_t}}
+
+
+Represents a single active enemy on the map.  
+
+
+
+
+{\ttfamily \#include $<$enemy.\+h$>$}
+
+
+
+Collaboration diagram for enemy\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=139pt]{structenemy__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int16\+\_\+t \mbox{\hyperlink{structenemy__t_a40a664a8ed7546ddd516ca2a70d81aa2}{x}}
+\item 
+int16\+\_\+t \mbox{\hyperlink{structenemy__t_a69975c58469b7812c37e18b38346f862}{y}}
+\item 
+int16\+\_\+t \mbox{\hyperlink{structenemy__t_a998fb3dbef421deb79bc7e2fa51a891e}{speed}}
+\item 
+int16\+\_\+t \mbox{\hyperlink{structenemy__t_a9c36fbd0553252671bbb84fe833d3c99}{hp}}
+\item 
+int \mbox{\hyperlink{structenemy__t_a2eb7c73b458a24e5c1399717176f4d2b}{gold\+\_\+value}}
+\item 
+\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structenemy__t_ae44b0527cb3024bf750ea407939ce946}{sp}}
+\item 
+bool \mbox{\hyperlink{structenemy__t_a744304df896b0e9a0f33dfebf54c7d79}{active}}
+\item 
+\mbox{\hyperlink{enemy_8h_ae9ae980041e438eed7a3af43ce4e9f6b}{direction\+\_\+t}} \mbox{\hyperlink{structenemy__t_a493e636b8bc433b441618186089c87e9}{dir}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a single active enemy on the map. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structenemy__t_a744304df896b0e9a0f33dfebf54c7d79}\label{structenemy__t_a744304df896b0e9a0f33dfebf54c7d79} 
+\index{enemy\_t@{enemy\_t}!active@{active}}
+\index{active@{active}!enemy\_t@{enemy\_t}}
+\doxysubsubsection{\texorpdfstring{active}{active}}
+{\footnotesize\ttfamily bool enemy\+\_\+t\+::active}
+
+false when dead or after reaching the base. \Hypertarget{structenemy__t_a493e636b8bc433b441618186089c87e9}\label{structenemy__t_a493e636b8bc433b441618186089c87e9} 
+\index{enemy\_t@{enemy\_t}!dir@{dir}}
+\index{dir@{dir}!enemy\_t@{enemy\_t}}
+\doxysubsubsection{\texorpdfstring{dir}{dir}}
+{\footnotesize\ttfamily \mbox{\hyperlink{enemy_8h_ae9ae980041e438eed7a3af43ce4e9f6b}{direction\+\_\+t}} enemy\+\_\+t\+::dir}
+
+Direction the enemy is currently travelling. \Hypertarget{structenemy__t_a2eb7c73b458a24e5c1399717176f4d2b}\label{structenemy__t_a2eb7c73b458a24e5c1399717176f4d2b} 
+\index{enemy\_t@{enemy\_t}!gold\_value@{gold\_value}}
+\index{gold\_value@{gold\_value}!enemy\_t@{enemy\_t}}
+\doxysubsubsection{\texorpdfstring{gold\_value}{gold\_value}}
+{\footnotesize\ttfamily int enemy\+\_\+t\+::gold\+\_\+value}
+
+Gold awarded to the player upon killing this enemy. \Hypertarget{structenemy__t_a9c36fbd0553252671bbb84fe833d3c99}\label{structenemy__t_a9c36fbd0553252671bbb84fe833d3c99} 
+\index{enemy\_t@{enemy\_t}!hp@{hp}}
+\index{hp@{hp}!enemy\_t@{enemy\_t}}
+\doxysubsubsection{\texorpdfstring{hp}{hp}}
+{\footnotesize\ttfamily int16\+\_\+t enemy\+\_\+t\+::hp}
+
+Remaining hit points. \Hypertarget{structenemy__t_ae44b0527cb3024bf750ea407939ce946}\label{structenemy__t_ae44b0527cb3024bf750ea407939ce946} 
+\index{enemy\_t@{enemy\_t}!sp@{sp}}
+\index{sp@{sp}!enemy\_t@{enemy\_t}}
+\doxysubsubsection{\texorpdfstring{sp}{sp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}}\texorpdfstring{$\ast$}{*} enemy\+\_\+t\+::sp}
+
+Visual representation of the enemy. \Hypertarget{structenemy__t_a998fb3dbef421deb79bc7e2fa51a891e}\label{structenemy__t_a998fb3dbef421deb79bc7e2fa51a891e} 
+\index{enemy\_t@{enemy\_t}!speed@{speed}}
+\index{speed@{speed}!enemy\_t@{enemy\_t}}
+\doxysubsubsection{\texorpdfstring{speed}{speed}}
+{\footnotesize\ttfamily int16\+\_\+t enemy\+\_\+t\+::speed}
+
+Movement speed in pixels per game tick. \Hypertarget{structenemy__t_a40a664a8ed7546ddd516ca2a70d81aa2}\label{structenemy__t_a40a664a8ed7546ddd516ca2a70d81aa2} 
+\index{enemy\_t@{enemy\_t}!x@{x}}
+\index{x@{x}!enemy\_t@{enemy\_t}}
+\doxysubsubsection{\texorpdfstring{x}{x}}
+{\footnotesize\ttfamily int16\+\_\+t enemy\+\_\+t\+::x}
+
+Current horizontal position in screen pixels. \Hypertarget{structenemy__t_a69975c58469b7812c37e18b38346f862}\label{structenemy__t_a69975c58469b7812c37e18b38346f862} 
+\index{enemy\_t@{enemy\_t}!y@{y}}
+\index{y@{y}!enemy\_t@{enemy\_t}}
+\doxysubsubsection{\texorpdfstring{y}{y}}
+{\footnotesize\ttfamily int16\+\_\+t enemy\+\_\+t\+::y}
+
+Current vertical position in screen pixels. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/enemy/\mbox{\hyperlink{enemy_8h}{enemy.\+h}}\end{DoxyCompactItemize}

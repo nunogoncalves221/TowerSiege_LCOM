@@ -1,0 +1,83 @@
+\doxysection{Anim\+Sprite Struct Reference}
+\hypertarget{structAnimSprite}{}\label{structAnimSprite}\index{AnimSprite@{AnimSprite}}
+
+
+Animated sprite composed of multiple frames.  
+
+
+
+
+{\ttfamily \#include $<$animated\+\_\+sprite.\+h$>$}
+
+
+
+Collaboration diagram for Anim\+Sprite\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=151pt]{structAnimSprite__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structAnimSprite_aefd403f2a229f78777b0f8a04a9f4c34}{sp}}
+\item 
+int \mbox{\hyperlink{structAnimSprite_aa9c28937b964c0e3a65bf5eb3f4be172}{aspeed}}
+\item 
+int \mbox{\hyperlink{structAnimSprite_a3206cf4225f5833fca57857b8a52dd2f}{cur\+\_\+aspeed}}
+\item 
+int \mbox{\hyperlink{structAnimSprite_a245ddba935a16902ed5227a596087277}{num\+\_\+fig}}
+\item 
+int \mbox{\hyperlink{structAnimSprite_a1d1b9580302ed9fc1c0dde40feb6038e}{cur\+\_\+fig}}
+\item 
+uint32\+\_\+t \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structAnimSprite_af962a758828045798b8f65e637a31c7a}{map}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Animated sprite composed of multiple frames. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structAnimSprite_aa9c28937b964c0e3a65bf5eb3f4be172}\label{structAnimSprite_aa9c28937b964c0e3a65bf5eb3f4be172} 
+\index{AnimSprite@{AnimSprite}!aspeed@{aspeed}}
+\index{aspeed@{aspeed}!AnimSprite@{AnimSprite}}
+\doxysubsubsection{\texorpdfstring{aspeed}{aspeed}}
+{\footnotesize\ttfamily int Anim\+Sprite\+::aspeed}
+
+Game ticks that must pass per animation frame. \Hypertarget{structAnimSprite_a3206cf4225f5833fca57857b8a52dd2f}\label{structAnimSprite_a3206cf4225f5833fca57857b8a52dd2f} 
+\index{AnimSprite@{AnimSprite}!cur\_aspeed@{cur\_aspeed}}
+\index{cur\_aspeed@{cur\_aspeed}!AnimSprite@{AnimSprite}}
+\doxysubsubsection{\texorpdfstring{cur\_aspeed}{cur\_aspeed}}
+{\footnotesize\ttfamily int Anim\+Sprite\+::cur\+\_\+aspeed}
+
+Ticks remaining until the next frame switch. \Hypertarget{structAnimSprite_a1d1b9580302ed9fc1c0dde40feb6038e}\label{structAnimSprite_a1d1b9580302ed9fc1c0dde40feb6038e} 
+\index{AnimSprite@{AnimSprite}!cur\_fig@{cur\_fig}}
+\index{cur\_fig@{cur\_fig}!AnimSprite@{AnimSprite}}
+\doxysubsubsection{\texorpdfstring{cur\_fig}{cur\_fig}}
+{\footnotesize\ttfamily int Anim\+Sprite\+::cur\+\_\+fig}
+
+Index of the frame currently being displayed. \Hypertarget{structAnimSprite_af962a758828045798b8f65e637a31c7a}\label{structAnimSprite_af962a758828045798b8f65e637a31c7a} 
+\index{AnimSprite@{AnimSprite}!map@{map}}
+\index{map@{map}!AnimSprite@{AnimSprite}}
+\doxysubsubsection{\texorpdfstring{map}{map}}
+{\footnotesize\ttfamily uint32\+\_\+t\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} Anim\+Sprite\+::map}
+
+Array of pixel maps, one entry per frame. \Hypertarget{structAnimSprite_a245ddba935a16902ed5227a596087277}\label{structAnimSprite_a245ddba935a16902ed5227a596087277} 
+\index{AnimSprite@{AnimSprite}!num\_fig@{num\_fig}}
+\index{num\_fig@{num\_fig}!AnimSprite@{AnimSprite}}
+\doxysubsubsection{\texorpdfstring{num\_fig}{num\_fig}}
+{\footnotesize\ttfamily int Anim\+Sprite\+::num\+\_\+fig}
+
+Total number of frames in the animation. \Hypertarget{structAnimSprite_aefd403f2a229f78777b0f8a04a9f4c34}\label{structAnimSprite_aefd403f2a229f78777b0f8a04a9f4c34} 
+\index{AnimSprite@{AnimSprite}!sp@{sp}}
+\index{sp@{sp}!AnimSprite@{AnimSprite}}
+\doxysubsubsection{\texorpdfstring{sp}{sp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}}\texorpdfstring{$\ast$}{*} Anim\+Sprite\+::sp}
+
+Base sprite used for dimensions and drawing. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/sprite/\mbox{\hyperlink{animated__sprite_8h}{animated\+\_\+sprite.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,136 @@
+\doxysection{src/menu/pause.h File Reference}
+\hypertarget{pause_8h}{}\label{pause_8h}\index{src/menu/pause.h@{src/menu/pause.h}}
+
+
+In-\/game pause overlay with continue, retry, and quit options.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+Include dependency graph for pause.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=214pt]{pause_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=268pt]{pause_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}{pause\+\_\+option\+\_\+t}} \{ \mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828da09c73650434c51be46ea6344b2e7c7b6}{PAUSE\+\_\+\+CONTINUE}} = 0
+, \mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828da25b23f14176e2b13f6952e0aa2b41e88}{PAUSE\+\_\+\+RETRY}}
+, \mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828dafda2f074627da7084188297e51bea8f5}{PAUSE\+\_\+\+QUIT}}
+, \mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828da8fb97e3a5f20cfc5bfb29488f96c73a8}{PAUSE\+\_\+\+OPTION\+\_\+\+COUNT}}
+ \}
+\begin{DoxyCompactList}\small\item\em Options available in the pause overlay. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{pause_8h_a847bc036baaab15e4e5cd8ed3d8ab76c}{pause\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Resets the highlighted option back to PAUSE\+\_\+\+CONTINUE. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}{pause\+\_\+option\+\_\+t}} \mbox{\hyperlink{pause_8h_a6975b195adb9ce0593db0a0885f0c375}{pause\+\_\+get\+\_\+selected}} (void)
+\begin{DoxyCompactList}\small\item\em Returns the option the player currently has highlighted. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{pause_8h_ad7ba69d484c7e1b33957b010b3e5d720}{pause\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode and updates the highlighted option. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{pause_8h_a1f31c5a93d25d54c7e69b79241b61feb}{pause\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the pause overlay on top of the current frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+In-\/game pause overlay with continue, retry, and quit options. 
+
+Rendered on top of the frozen game frame. The application state machine acts on the confirmed selection to resume play, restart, or exit to menu. 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}\label{pause_8h_ac5c8dd0301352abe51cf030e64f8828d} 
+\index{pause.h@{pause.h}!pause\_option\_t@{pause\_option\_t}}
+\index{pause\_option\_t@{pause\_option\_t}!pause.h@{pause.h}}
+\doxysubsubsection{\texorpdfstring{pause\_option\_t}{pause\_option\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}{pause\+\_\+option\+\_\+t}}}
+
+
+
+Options available in the pause overlay. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PAUSE\_CONTINUE@{PAUSE\_CONTINUE}!pause.h@{pause.h}}\index{pause.h@{pause.h}!PAUSE\_CONTINUE@{PAUSE\_CONTINUE}}}\Hypertarget{pause_8h_ac5c8dd0301352abe51cf030e64f8828da09c73650434c51be46ea6344b2e7c7b6}\label{pause_8h_ac5c8dd0301352abe51cf030e64f8828da09c73650434c51be46ea6344b2e7c7b6} 
+PAUSE\+\_\+\+CONTINUE&Resume the current game. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PAUSE\_RETRY@{PAUSE\_RETRY}!pause.h@{pause.h}}\index{pause.h@{pause.h}!PAUSE\_RETRY@{PAUSE\_RETRY}}}\Hypertarget{pause_8h_ac5c8dd0301352abe51cf030e64f8828da25b23f14176e2b13f6952e0aa2b41e88}\label{pause_8h_ac5c8dd0301352abe51cf030e64f8828da25b23f14176e2b13f6952e0aa2b41e88} 
+PAUSE\+\_\+\+RETRY&Restart the game from wave 1. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PAUSE\_QUIT@{PAUSE\_QUIT}!pause.h@{pause.h}}\index{pause.h@{pause.h}!PAUSE\_QUIT@{PAUSE\_QUIT}}}\Hypertarget{pause_8h_ac5c8dd0301352abe51cf030e64f8828dafda2f074627da7084188297e51bea8f5}\label{pause_8h_ac5c8dd0301352abe51cf030e64f8828dafda2f074627da7084188297e51bea8f5} 
+PAUSE\+\_\+\+QUIT&Return to the main menu. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PAUSE\_OPTION\_COUNT@{PAUSE\_OPTION\_COUNT}!pause.h@{pause.h}}\index{pause.h@{pause.h}!PAUSE\_OPTION\_COUNT@{PAUSE\_OPTION\_COUNT}}}\Hypertarget{pause_8h_ac5c8dd0301352abe51cf030e64f8828da8fb97e3a5f20cfc5bfb29488f96c73a8}\label{pause_8h_ac5c8dd0301352abe51cf030e64f8828da8fb97e3a5f20cfc5bfb29488f96c73a8} 
+PAUSE\+\_\+\+OPTION\+\_\+\+COUNT&Number of selectable options. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{pause_8h_a1f31c5a93d25d54c7e69b79241b61feb}\label{pause_8h_a1f31c5a93d25d54c7e69b79241b61feb} 
+\index{pause.h@{pause.h}!pause\_draw@{pause\_draw}}
+\index{pause\_draw@{pause\_draw}!pause.h@{pause.h}}
+\doxysubsubsection{\texorpdfstring{pause\_draw()}{pause\_draw()}}
+{\footnotesize\ttfamily void pause\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the pause overlay on top of the current frame. 
+
+\Hypertarget{pause_8h_a6975b195adb9ce0593db0a0885f0c375}\label{pause_8h_a6975b195adb9ce0593db0a0885f0c375} 
+\index{pause.h@{pause.h}!pause\_get\_selected@{pause\_get\_selected}}
+\index{pause\_get\_selected@{pause\_get\_selected}!pause.h@{pause.h}}
+\doxysubsubsection{\texorpdfstring{pause\_get\_selected()}{pause\_get\_selected()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}{pause\+\_\+option\+\_\+t}} pause\+\_\+get\+\_\+selected (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns the option the player currently has highlighted. 
+
+\begin{DoxyReturn}{Returns}
+The currently selected \doxylink{pause_8h_ac5c8dd0301352abe51cf030e64f8828d}{pause\+\_\+option\+\_\+t} value. 
+\end{DoxyReturn}
+\Hypertarget{pause_8h_ad7ba69d484c7e1b33957b010b3e5d720}\label{pause_8h_ad7ba69d484c7e1b33957b010b3e5d720} 
+\index{pause.h@{pause.h}!pause\_handle\_key@{pause\_handle\_key}}
+\index{pause\_handle\_key@{pause\_handle\_key}!pause.h@{pause.h}}
+\doxysubsubsection{\texorpdfstring{pause\_handle\_key()}{pause\_handle\_key()}}
+{\footnotesize\ttfamily bool pause\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode and updates the highlighted option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode (set 1 make code). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the player pressed Enter to confirm the selection. 
+\end{DoxyReturn}
+\Hypertarget{pause_8h_a847bc036baaab15e4e5cd8ed3d8ab76c}\label{pause_8h_a847bc036baaab15e4e5cd8ed3d8ab76c} 
+\index{pause.h@{pause.h}!pause\_reset@{pause\_reset}}
+\index{pause\_reset@{pause\_reset}!pause.h@{pause.h}}
+\doxysubsubsection{\texorpdfstring{pause\_reset()}{pause\_reset()}}
+{\footnotesize\ttfamily void pause\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Resets the highlighted option back to PAUSE\+\_\+\+CONTINUE. 
+
+Should be called when the pause overlay is opened. 

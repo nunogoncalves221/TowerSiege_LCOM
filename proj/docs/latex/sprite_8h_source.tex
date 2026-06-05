@@ -1,0 +1,27 @@
+\doxysection{sprite.\+h}
+\hypertarget{sprite_8h_source}{}\label{sprite_8h_source}\index{src/sprite/sprite.h@{src/sprite/sprite.h}}
+\mbox{\hyperlink{sprite_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ SPRITE\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ SPRITE\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <lcom/lcf.h>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00020\ \ \ \ \ uint16\_t\ \ \mbox{\hyperlink{structsprite__t_a8d0f5ca9dc069850fc604107eb0f085d}{width}};\ \ }
+\DoxyCodeLine{00021\ \ \ \ \ uint16\_t\ \ \mbox{\hyperlink{structsprite__t_a0ac6b5fe9c9aba02b62e2f1fb873dfeb}{height}};\ }
+\DoxyCodeLine{00022\ \ \ \ \ uint32\_t\ *\mbox{\hyperlink{structsprite__t_adbae664f7a49ff476aac7301610fba0c}{map}};\ \ \ \ }
+\DoxyCodeLine{00023\ \}\ \mbox{\hyperlink{structsprite__t}{sprite\_t}};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00031\ \mbox{\hyperlink{structsprite__t}{sprite\_t}}\ *\mbox{\hyperlink{sprite_8h_a10e894e2f5da44efc4b2461bbdb81a32}{create\_sprite}}(xpm\_map\_t\ xpm);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{sprite_8h_ab78b0b42532b8c0b5322ddf0e1ed85e1}{destroy\_sprite}}(\mbox{\hyperlink{structsprite__t}{sprite\_t}}\ *sp);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sprite_8h_ab69715c9dc48079eaa7d113efd53488a}{draw\_sprite}}(\mbox{\hyperlink{structsprite__t}{sprite\_t}}\ *sp,\ int16\_t\ x,\ int16\_t\ y);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00063\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{sprite_8h_a79c8aaca44defe89fcf99d035abb1f0e}{draw\_sprite\_flipped}}(\mbox{\hyperlink{structsprite__t}{sprite\_t}}\ *sp,\ int16\_t\ x,\ int16\_t\ y);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ SPRITE\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

@@ -1,0 +1,113 @@
+\doxysection{src/font/nameentry.c File Reference}
+\hypertarget{nameentry_8c}{}\label{nameentry_8c}\index{src/font/nameentry.c@{src/font/nameentry.c}}
+{\ttfamily \#include "{}nameentry.\+h"{}}\newline
+{\ttfamily \#include "{}font.\+h"{}}\newline
+{\ttfamily \#include "{}high\+\_\+scores.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+Include dependency graph for nameentry.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{nameentry_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{nameentry_8c_aa4d0387bfe4d331d36d8317ab0cc5e2f}{SC\+\_\+\+ENTER}}~0x1C
+\item 
+\#define \mbox{\hyperlink{nameentry_8c_aba9467d58765789a16f6d03c593ce884}{SC\+\_\+\+BACKSPACE}}~0x0E
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{nameentry_8c_a4368b8eeb4997a6ceec59706ba72acd2}{nameentry\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Clears the name buffer and resets cursor position. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{nameentry_8c_adf66db6c0de44aef7ae5c0870a7d3c8b}{nameentry\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode and updates the name buffer. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{nameentry_8c_a4d6679f79aec91098eb9240456363e3a}{nameentry\+\_\+get\+\_\+name}} (void)
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the current null-\/terminated name string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nameentry_8c_ad44933b4e3a68d3cb6c2e267e3e462f2}{nameentry\+\_\+draw}} (uint16\+\_\+t x, uint16\+\_\+t y, uint32\+\_\+t color)
+\begin{DoxyCompactList}\small\item\em Draws the name being typed at the given screen position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{nameentry_8c_aba9467d58765789a16f6d03c593ce884}\label{nameentry_8c_aba9467d58765789a16f6d03c593ce884} 
+\index{nameentry.c@{nameentry.c}!SC\_BACKSPACE@{SC\_BACKSPACE}}
+\index{SC\_BACKSPACE@{SC\_BACKSPACE}!nameentry.c@{nameentry.c}}
+\doxysubsubsection{\texorpdfstring{SC\_BACKSPACE}{SC\_BACKSPACE}}
+{\footnotesize\ttfamily \#define SC\+\_\+\+BACKSPACE~0x0E}
+
+\Hypertarget{nameentry_8c_aa4d0387bfe4d331d36d8317ab0cc5e2f}\label{nameentry_8c_aa4d0387bfe4d331d36d8317ab0cc5e2f} 
+\index{nameentry.c@{nameentry.c}!SC\_ENTER@{SC\_ENTER}}
+\index{SC\_ENTER@{SC\_ENTER}!nameentry.c@{nameentry.c}}
+\doxysubsubsection{\texorpdfstring{SC\_ENTER}{SC\_ENTER}}
+{\footnotesize\ttfamily \#define SC\+\_\+\+ENTER~0x1C}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{nameentry_8c_ad44933b4e3a68d3cb6c2e267e3e462f2}\label{nameentry_8c_ad44933b4e3a68d3cb6c2e267e3e462f2} 
+\index{nameentry.c@{nameentry.c}!nameentry\_draw@{nameentry\_draw}}
+\index{nameentry\_draw@{nameentry\_draw}!nameentry.c@{nameentry.c}}
+\doxysubsubsection{\texorpdfstring{nameentry\_draw()}{nameentry\_draw()}}
+{\footnotesize\ttfamily void nameentry\+\_\+draw (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{x,  }\item[{uint16\+\_\+t}]{y,  }\item[{uint32\+\_\+t}]{color }\end{DoxyParamCaption})}
+
+
+
+Draws the name being typed at the given screen position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Left edge of the text in screen pixels. \\
+\hline
+{\em y} & Top edge of the text in screen pixels. \\
+\hline
+{\em color} & Text colour in AARRGGBB format. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{nameentry_8c_a4d6679f79aec91098eb9240456363e3a}\label{nameentry_8c_a4d6679f79aec91098eb9240456363e3a} 
+\index{nameentry.c@{nameentry.c}!nameentry\_get\_name@{nameentry\_get\_name}}
+\index{nameentry\_get\_name@{nameentry\_get\_name}!nameentry.c@{nameentry.c}}
+\doxysubsubsection{\texorpdfstring{nameentry\_get\_name()}{nameentry\_get\_name()}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} nameentry\+\_\+get\+\_\+name (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns a pointer to the current null-\/terminated name string. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the internal name buffer. Valid until the next call to \doxylink{nameentry_8h_a4368b8eeb4997a6ceec59706ba72acd2}{nameentry\+\_\+reset()}. 
+\end{DoxyReturn}
+\Hypertarget{nameentry_8c_adf66db6c0de44aef7ae5c0870a7d3c8b}\label{nameentry_8c_adf66db6c0de44aef7ae5c0870a7d3c8b} 
+\index{nameentry.c@{nameentry.c}!nameentry\_handle\_key@{nameentry\_handle\_key}}
+\index{nameentry\_handle\_key@{nameentry\_handle\_key}!nameentry.c@{nameentry.c}}
+\doxysubsubsection{\texorpdfstring{nameentry\_handle\_key()}{nameentry\_handle\_key()}}
+{\footnotesize\ttfamily bool nameentry\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode and updates the name buffer. 
+
+Handles letter keys, Backspace, and Enter. All other scancodes are ignored.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode (set 1 make code). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true when the player presses Enter to confirm the name. 
+\end{DoxyReturn}
+\Hypertarget{nameentry_8c_a4368b8eeb4997a6ceec59706ba72acd2}\label{nameentry_8c_a4368b8eeb4997a6ceec59706ba72acd2} 
+\index{nameentry.c@{nameentry.c}!nameentry\_reset@{nameentry\_reset}}
+\index{nameentry\_reset@{nameentry\_reset}!nameentry.c@{nameentry.c}}
+\doxysubsubsection{\texorpdfstring{nameentry\_reset()}{nameentry\_reset()}}
+{\footnotesize\ttfamily void nameentry\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Clears the name buffer and resets cursor position. 
+
+Must be called before showing the name-\/entry screen. 

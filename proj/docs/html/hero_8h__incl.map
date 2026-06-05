@@ -1,0 +1,12 @@
+<map id="src/hero/hero.h" name="src/hero/hero.h">
+<area shape="rect" id="Node000001" title="Player&#45;controlled hero character." alt="" coords="39,5,158,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,88,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,33,65,69,61,66,88,29"/>
+<area shape="rect" id="Node000003" href="$enemy_8h.html" title="Enemy entity definition and per&#45;enemy lifecycle functions." alt="" coords="112,79,189,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="109,29,136,66,132,69,105,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="107,225,192,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="147,105,136,127,128,152,129,184,139,212,134,214,124,185,123,152,131,125,142,103"/>
+<area shape="rect" id="Node000005" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="138,152,262,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="161,103,186,139,182,142,157,106"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="194,179,168,216,163,213,189,176"/>
+</map>

@@ -1,0 +1,29 @@
+<map id="src/enemy/enemy_manager.c" name="src/enemy/enemy_manager.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="141,5,356,31"/>
+<area shape="rect" id="Node000002" href="$enemy__manager_8h.html" title="Batch update and draw for all active enemies." alt="" coords="112,79,255,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="240,33,205,70,201,67,236,29"/>
+<area shape="rect" id="Node000007" href="$player_8h.html" title="Player resource management (gold, lives, score)." alt="" coords="13,79,87,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="218,33,96,76,95,71,216,28"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="279,79,349,104"/>
+<area shape="poly" id="edge12_Node000001_Node000010" title=" " alt="" coords="261,29,296,67,292,70,257,33"/>
+<area shape="rect" id="Node000011" href="$bullet_8h.html" title="Projectile system for tower attacks." alt="" coords="373,79,444,104"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="275,28,371,71,369,75,273,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="101,225,183,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="183,105,152,213,146,211,177,104"/>
+<area shape="rect" id="Node000004" href="$enemy_8h.html" title="Enemy entity definition and per&#45;enemy lifecycle functions." alt="" coords="253,152,330,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="202,102,264,142,261,147,199,106"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="301,299,386,324"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="286,179,270,212,267,231,271,250,288,272,310,289,306,294,284,276,266,252,262,231,265,210,281,176"/>
+<area shape="rect" id="Node000006" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="281,225,405,251"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="302,176,329,213,325,216,298,179"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="346,251,346,285,341,285,341,251"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="65,102,87,124,108,151,125,181,137,211,132,213,120,184,104,153,83,127,62,106"/>
+<area shape="rect" id="Node000008" href="$difficulty_8h.html" title="Difficulty selection screen and difficulty type definition." alt="" coords="5,152,95,177"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="53,104,53,138,47,138,47,104"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="66,175,118,215,115,219,63,179"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="5,225,76,251"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="51,178,47,212,41,211,46,177"/>
+<area shape="poly" id="edge16_Node000011_Node000004" title=" " alt="" coords="391,106,324,147,321,142,388,102"/>
+<area shape="poly" id="edge14_Node000011_Node000005" title=" " alt="" coords="415,103,423,131,430,169,430,211,419,252,402,276,380,293,376,289,398,272,414,250,425,210,424,169,418,132,410,105"/>
+<area shape="poly" id="edge15_Node000011_Node000006" title=" " alt="" coords="406,106,357,214,352,212,401,103"/>
+</map>

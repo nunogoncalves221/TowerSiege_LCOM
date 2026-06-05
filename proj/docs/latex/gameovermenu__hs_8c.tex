@@ -1,0 +1,104 @@
+\doxysection{src/menu/gameovermenu\+\_\+hs.c File Reference}
+\hypertarget{gameovermenu__hs_8c}{}\label{gameovermenu__hs_8c}\index{src/menu/gameovermenu\_hs.c@{src/menu/gameovermenu\_hs.c}}
+{\ttfamily \#include "{}gameovermenu\+\_\+hs.\+h"{}}\newline
+{\ttfamily \#include "{}nameentry.\+h"{}}\newline
+{\ttfamily \#include "{}menu\+\_\+nav.\+h"{}}\newline
+{\ttfamily \#include "{}../font/font.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include "{}high\+\_\+scores.\+h"{}}\newline
+Include dependency graph for gameovermenu\+\_\+hs.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{gameovermenu__hs_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{gameovermenu__hs_8c_a739625a2e78aa663e5d91048f8cd3b59}{COLOR\+\_\+\+BG}}~0x\+FF000000
+\item 
+\#define \mbox{\hyperlink{gameovermenu__hs_8c_a9f4dfe30a7d1c96f6d4438c0b2019cd6}{COLOR\+\_\+\+TEXT}}~0x\+FFB0\+B0\+C0
+\item 
+\#define \mbox{\hyperlink{gameovermenu__hs_8c_a76578aa19ef7a41c746249e508ce89ef}{COLOR\+\_\+\+TITLE}}~0x\+FFE94560
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{gameovermenu__hs_8c_a38acfd53c808b8bab3b71f779728e38e}{gameover\+\_\+hs\+\_\+reset}} (void)
+\begin{DoxyCompactList}\small\item\em Resets the name-\/entry state for a new high-\/score submission. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{gameovermenu__hs_8c_a6cb27b244616561b333f600501159a9e}{gameover\+\_\+hs\+\_\+handle\+\_\+key}} (uint8\+\_\+t scancode)
+\begin{DoxyCompactList}\small\item\em Processes one keyboard scancode for the name-\/entry widget. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{gameovermenu__hs_8c_af5758c77d9dd06a0846bd4f3f7b3ed65}{gameover\+\_\+hs\+\_\+draw}} (int score)
+\begin{DoxyCompactList}\small\item\em Draws the high-\/score game-\/over screen with the name-\/entry widget. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{gameovermenu__hs_8c_a739625a2e78aa663e5d91048f8cd3b59}\label{gameovermenu__hs_8c_a739625a2e78aa663e5d91048f8cd3b59} 
+\index{gameovermenu\_hs.c@{gameovermenu\_hs.c}!COLOR\_BG@{COLOR\_BG}}
+\index{COLOR\_BG@{COLOR\_BG}!gameovermenu\_hs.c@{gameovermenu\_hs.c}}
+\doxysubsubsection{\texorpdfstring{COLOR\_BG}{COLOR\_BG}}
+{\footnotesize\ttfamily \#define COLOR\+\_\+\+BG~0x\+FF000000}
+
+\Hypertarget{gameovermenu__hs_8c_a9f4dfe30a7d1c96f6d4438c0b2019cd6}\label{gameovermenu__hs_8c_a9f4dfe30a7d1c96f6d4438c0b2019cd6} 
+\index{gameovermenu\_hs.c@{gameovermenu\_hs.c}!COLOR\_TEXT@{COLOR\_TEXT}}
+\index{COLOR\_TEXT@{COLOR\_TEXT}!gameovermenu\_hs.c@{gameovermenu\_hs.c}}
+\doxysubsubsection{\texorpdfstring{COLOR\_TEXT}{COLOR\_TEXT}}
+{\footnotesize\ttfamily \#define COLOR\+\_\+\+TEXT~0x\+FFB0\+B0\+C0}
+
+\Hypertarget{gameovermenu__hs_8c_a76578aa19ef7a41c746249e508ce89ef}\label{gameovermenu__hs_8c_a76578aa19ef7a41c746249e508ce89ef} 
+\index{gameovermenu\_hs.c@{gameovermenu\_hs.c}!COLOR\_TITLE@{COLOR\_TITLE}}
+\index{COLOR\_TITLE@{COLOR\_TITLE}!gameovermenu\_hs.c@{gameovermenu\_hs.c}}
+\doxysubsubsection{\texorpdfstring{COLOR\_TITLE}{COLOR\_TITLE}}
+{\footnotesize\ttfamily \#define COLOR\+\_\+\+TITLE~0x\+FFE94560}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{gameovermenu__hs_8c_af5758c77d9dd06a0846bd4f3f7b3ed65}\label{gameovermenu__hs_8c_af5758c77d9dd06a0846bd4f3f7b3ed65} 
+\index{gameovermenu\_hs.c@{gameovermenu\_hs.c}!gameover\_hs\_draw@{gameover\_hs\_draw}}
+\index{gameover\_hs\_draw@{gameover\_hs\_draw}!gameovermenu\_hs.c@{gameovermenu\_hs.c}}
+\doxysubsubsection{\texorpdfstring{gameover\_hs\_draw()}{gameover\_hs\_draw()}}
+{\footnotesize\ttfamily void gameover\+\_\+hs\+\_\+draw (\begin{DoxyParamCaption}\item[{int}]{score }\end{DoxyParamCaption})}
+
+
+
+Draws the high-\/score game-\/over screen with the name-\/entry widget. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em score} & Final score to display and submit. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{gameovermenu__hs_8c_a6cb27b244616561b333f600501159a9e}\label{gameovermenu__hs_8c_a6cb27b244616561b333f600501159a9e} 
+\index{gameovermenu\_hs.c@{gameovermenu\_hs.c}!gameover\_hs\_handle\_key@{gameover\_hs\_handle\_key}}
+\index{gameover\_hs\_handle\_key@{gameover\_hs\_handle\_key}!gameovermenu\_hs.c@{gameovermenu\_hs.c}}
+\doxysubsubsection{\texorpdfstring{gameover\_hs\_handle\_key()}{gameover\_hs\_handle\_key()}}
+{\footnotesize\ttfamily bool gameover\+\_\+hs\+\_\+handle\+\_\+key (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{scancode }\end{DoxyParamCaption})}
+
+
+
+Processes one keyboard scancode for the name-\/entry widget. 
+
+Forwards the scancode to the nameentry module. Once the player confirms with Enter, the score is saved to the high-\/score table.
+
+
+\begin{DoxyParams}{Parameters}
+{\em scancode} & Raw keyboard scancode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true when the player confirms the name and the score has been saved. 
+\end{DoxyReturn}
+\Hypertarget{gameovermenu__hs_8c_a38acfd53c808b8bab3b71f779728e38e}\label{gameovermenu__hs_8c_a38acfd53c808b8bab3b71f779728e38e} 
+\index{gameovermenu\_hs.c@{gameovermenu\_hs.c}!gameover\_hs\_reset@{gameover\_hs\_reset}}
+\index{gameover\_hs\_reset@{gameover\_hs\_reset}!gameovermenu\_hs.c@{gameovermenu\_hs.c}}
+\doxysubsubsection{\texorpdfstring{gameover\_hs\_reset()}{gameover\_hs\_reset()}}
+{\footnotesize\ttfamily void gameover\+\_\+hs\+\_\+reset (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Resets the name-\/entry state for a new high-\/score submission. 
+
+Should be called when entering this screen. 

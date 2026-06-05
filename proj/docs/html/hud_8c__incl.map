@@ -1,0 +1,35 @@
+<map id="src/hud/hud.c" name="src/hud/hud.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="167,5,275,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,72,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="193,33,82,76,80,71,191,28"/>
+<area shape="rect" id="Node000003" href="$hud_8h.html" title="Heads&#45;up display rendering for in&#45;game UI elements." alt="" coords="147,79,205,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,32,193,69,188,66,212,30"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="422,79,493,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="260,28,410,73,408,78,258,33"/>
+<area shape="rect" id="Node000007" href="$font_8h.html" title="Bitmap font rendering and string&#45;width measurement." alt="" coords="30,152,90,177"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="203,33,171,54,136,81,105,112,79,143,75,139,101,108,133,77,168,50,200,29"/>
+<area shape="rect" id="Node000008" href="$player_8h.html" title="Player resource management (gold, lives, score)." alt="" coords="229,79,304,104"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="231,30,254,66,250,69,227,32"/>
+<area shape="rect" id="Node000011" href="$wave_8h.html" title="Enemy wave spawning logic." alt="" coords="328,79,397,104"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="245,28,329,70,326,75,243,33"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,225,163,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="174,105,156,153,137,213,132,211,151,151,169,103"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="165,152,216,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="181,104,188,138,183,139,176,105"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="73,176,109,213,105,217,69,180"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="253,225,336,251"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="270,104,281,177,290,211,285,213,276,178,265,105"/>
+<area shape="rect" id="Node000010" href="$difficulty_8h.html" title="Difficulty selection screen and difficulty type definition." alt="" coords="291,152,381,177"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="280,102,317,140,313,144,276,106"/>
+<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="303,180,176,223,174,218,302,175"/>
+<area shape="poly" id="edge12_Node000010_Node000009" title=" " alt="" coords="331,179,311,215,306,212,327,176"/>
+<area shape="poly" id="edge19_Node000011_Node000010" title=" " alt="" coords="361,105,348,140,343,138,356,103"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="427,299,512,324"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="371,103,394,151,460,285,455,287,390,153,366,105"/>
+<area shape="rect" id="Node000013" href="$enemy_8h.html" title="Enemy entity definition and per&#45;enemy lifecycle functions." alt="" coords="456,152,533,177"/>
+<area shape="poly" id="edge15_Node000011_Node000013" title=" " alt="" coords="385,102,462,143,460,148,383,106"/>
+<area shape="poly" id="edge16_Node000013_Node000012" title=" " alt="" coords="495,178,476,285,471,285,490,177"/>
+<area shape="rect" id="Node000014" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="507,225,631,251"/>
+<area shape="poly" id="edge17_Node000013_Node000014" title=" " alt="" coords="508,175,549,214,545,218,505,179"/>
+<area shape="poly" id="edge18_Node000014_Node000012" title=" " alt="" coords="555,253,498,293,495,288,552,249"/>
+</map>

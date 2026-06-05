@@ -1,0 +1,131 @@
+\doxysection{src/tower/bullet.c File Reference}
+\hypertarget{bullet_8c}{}\label{bullet_8c}\index{src/tower/bullet.c@{src/tower/bullet.c}}
+{\ttfamily \#include "{}bullet.\+h"{}}\newline
+{\ttfamily \#include "{}sprite.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include "{}game.\+h"{}}\newline
+{\ttfamily \#include "{}player.\+h"{}}\newline
+Include dependency graph for bullet.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bullet_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structbullet__t}{bullet\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{bullet_8c_a4331843c2698da5ccb18562eb1485681}{MAX\+\_\+\+BULLETS}}~16
+\item 
+\#define \mbox{\hyperlink{bullet_8c_a70b3e643b533b8f785b7912e69434161}{BULLET\+\_\+\+SPEED}}~10
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{bullet_8c_a62903b9e0bdde025632527093e3704af}{bullet\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Initialises the bullet pool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bullet_8c_a495b3b02053f027a5781f6371c2e45f5}{bullet\+\_\+fire}} (int16\+\_\+t from\+\_\+x, int16\+\_\+t from\+\_\+y, \mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}target, int damage, \mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*}sp)
+\begin{DoxyCompactList}\small\item\em Spawns a new bullet aimed at the given enemy. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bullet_8c_a7ba6bebbaf709e3c088a6ef41ed77cd0}{bullet\+\_\+invalidate\+\_\+target}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}e)
+\begin{DoxyCompactList}\small\item\em Removes all references to a destroyed enemy from the bullet pool. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bullet_8c_a457800e1a53f9a31e71ebc9358087ca8}{bullet\+\_\+tick}} (void)
+\begin{DoxyCompactList}\small\item\em Advances all in-\/flight bullets by one tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bullet_8c_acaf2660e450af3be0f14127e9365b10f}{bullet\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws all in-\/flight bullets. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{bullet_8c_a70b3e643b533b8f785b7912e69434161}\label{bullet_8c_a70b3e643b533b8f785b7912e69434161} 
+\index{bullet.c@{bullet.c}!BULLET\_SPEED@{BULLET\_SPEED}}
+\index{BULLET\_SPEED@{BULLET\_SPEED}!bullet.c@{bullet.c}}
+\doxysubsubsection{\texorpdfstring{BULLET\_SPEED}{BULLET\_SPEED}}
+{\footnotesize\ttfamily \#define BULLET\+\_\+\+SPEED~10}
+
+\Hypertarget{bullet_8c_a4331843c2698da5ccb18562eb1485681}\label{bullet_8c_a4331843c2698da5ccb18562eb1485681} 
+\index{bullet.c@{bullet.c}!MAX\_BULLETS@{MAX\_BULLETS}}
+\index{MAX\_BULLETS@{MAX\_BULLETS}!bullet.c@{bullet.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_BULLETS}{MAX\_BULLETS}}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+BULLETS~16}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{bullet_8c_acaf2660e450af3be0f14127e9365b10f}\label{bullet_8c_acaf2660e450af3be0f14127e9365b10f} 
+\index{bullet.c@{bullet.c}!bullet\_draw@{bullet\_draw}}
+\index{bullet\_draw@{bullet\_draw}!bullet.c@{bullet.c}}
+\doxysubsubsection{\texorpdfstring{bullet\_draw()}{bullet\_draw()}}
+{\footnotesize\ttfamily void bullet\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws all in-\/flight bullets. 
+
+\Hypertarget{bullet_8c_a495b3b02053f027a5781f6371c2e45f5}\label{bullet_8c_a495b3b02053f027a5781f6371c2e45f5} 
+\index{bullet.c@{bullet.c}!bullet\_fire@{bullet\_fire}}
+\index{bullet\_fire@{bullet\_fire}!bullet.c@{bullet.c}}
+\doxysubsubsection{\texorpdfstring{bullet\_fire()}{bullet\_fire()}}
+{\footnotesize\ttfamily void bullet\+\_\+fire (\begin{DoxyParamCaption}\item[{int16\+\_\+t}]{from\+\_\+x,  }\item[{int16\+\_\+t}]{from\+\_\+y,  }\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{target,  }\item[{int}]{damage,  }\item[{\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{sp }\end{DoxyParamCaption})}
+
+
+
+Spawns a new bullet aimed at the given enemy. 
+
+If the pool is exhausted, the fire request is silently dropped.
+
+
+\begin{DoxyParams}{Parameters}
+{\em from\+\_\+x} & Origin X position in screen pixels (tower centre). \\
+\hline
+{\em from\+\_\+y} & Origin Y position in screen pixels (tower centre). \\
+\hline
+{\em target} & Pointer to the enemy this bullet will track. \\
+\hline
+{\em damage} & Hit points to remove from the target on impact. \\
+\hline
+{\em sp} & Sprite used to render the bullet. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{bullet_8c_a62903b9e0bdde025632527093e3704af}\label{bullet_8c_a62903b9e0bdde025632527093e3704af} 
+\index{bullet.c@{bullet.c}!bullet\_init@{bullet\_init}}
+\index{bullet\_init@{bullet\_init}!bullet.c@{bullet.c}}
+\doxysubsubsection{\texorpdfstring{bullet\_init()}{bullet\_init()}}
+{\footnotesize\ttfamily void bullet\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialises the bullet pool. 
+
+Must be called once before any other bullet function. \Hypertarget{bullet_8c_a7ba6bebbaf709e3c088a6ef41ed77cd0}\label{bullet_8c_a7ba6bebbaf709e3c088a6ef41ed77cd0} 
+\index{bullet.c@{bullet.c}!bullet\_invalidate\_target@{bullet\_invalidate\_target}}
+\index{bullet\_invalidate\_target@{bullet\_invalidate\_target}!bullet.c@{bullet.c}}
+\doxysubsubsection{\texorpdfstring{bullet\_invalidate\_target()}{bullet\_invalidate\_target()}}
+{\footnotesize\ttfamily void bullet\+\_\+invalidate\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{e }\end{DoxyParamCaption})}
+
+
+
+Removes all references to a destroyed enemy from the bullet pool. 
+
+Must be called whenever an enemy is removed so that in-\/flight bullets targeting it do not dereference a dangling pointer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em e} & Enemy that has just been removed. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{bullet_8c_a457800e1a53f9a31e71ebc9358087ca8}\label{bullet_8c_a457800e1a53f9a31e71ebc9358087ca8} 
+\index{bullet.c@{bullet.c}!bullet\_tick@{bullet\_tick}}
+\index{bullet\_tick@{bullet\_tick}!bullet.c@{bullet.c}}
+\doxysubsubsection{\texorpdfstring{bullet\_tick()}{bullet\_tick()}}
+{\footnotesize\ttfamily void bullet\+\_\+tick (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Advances all in-\/flight bullets by one tick. 
+
+Moves each bullet toward its target and applies damage on impact. 

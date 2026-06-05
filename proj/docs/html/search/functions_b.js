@@ -1,0 +1,18 @@
+var searchData=
+[
+  ['pause_5fdraw_0',['pause_draw',['../pause_8h.html#a1f31c5a93d25d54c7e69b79241b61feb',1,'pause_draw(void):&#160;pause.c'],['../pause_8c.html#a1f31c5a93d25d54c7e69b79241b61feb',1,'pause_draw(void):&#160;pause.c']]],
+  ['pause_5fget_5fselected_1',['pause_get_selected',['../pause_8c.html#a6975b195adb9ce0593db0a0885f0c375',1,'pause_get_selected(void):&#160;pause.c'],['../pause_8h.html#a6975b195adb9ce0593db0a0885f0c375',1,'pause_get_selected(void):&#160;pause.c']]],
+  ['pause_5fhandle_5fkey_2',['pause_handle_key',['../pause_8c.html#ad7ba69d484c7e1b33957b010b3e5d720',1,'pause_handle_key(uint8_t scancode):&#160;pause.c'],['../pause_8h.html#ad7ba69d484c7e1b33957b010b3e5d720',1,'pause_handle_key(uint8_t scancode):&#160;pause.c']]],
+  ['pause_5freset_3',['pause_reset',['../pause_8c.html#a847bc036baaab15e4e5cd8ed3d8ab76c',1,'pause_reset(void):&#160;pause.c'],['../pause_8h.html#a847bc036baaab15e4e5cd8ed3d8ab76c',1,'pause_reset(void):&#160;pause.c']]],
+  ['player_5fadd_5fgold_4',['player_add_gold',['../player_8c.html#a6c48a846cf9c93282966903d6d2c0fda',1,'player_add_gold(int amount):&#160;player.c'],['../player_8h.html#a6c48a846cf9c93282966903d6d2c0fda',1,'player_add_gold(int amount):&#160;player.c']]],
+  ['player_5fadd_5fscore_5',['player_add_score',['../player_8c.html#ae7255cf432b4fdb22c05df96a9e14cd3',1,'player_add_score(int amount):&#160;player.c'],['../player_8h.html#ae7255cf432b4fdb22c05df96a9e14cd3',1,'player_add_score(int amount):&#160;player.c']]],
+  ['player_5fget_5fgold_6',['player_get_gold',['../player_8c.html#ab8f692925fb2e087c086a51d972d60ca',1,'player_get_gold(void):&#160;player.c'],['../player_8h.html#ab8f692925fb2e087c086a51d972d60ca',1,'player_get_gold(void):&#160;player.c']]],
+  ['player_5fget_5flives_7',['player_get_lives',['../player_8c.html#a104b658a519c5095f0485450e10c7f1b',1,'player_get_lives(void):&#160;player.c'],['../player_8h.html#a104b658a519c5095f0485450e10c7f1b',1,'player_get_lives(void):&#160;player.c']]],
+  ['player_5fget_5fmax_5flives_8',['player_get_max_lives',['../player_8c.html#a45e5b71b3ebb7af4d8c7da62eb5e2eec',1,'player_get_max_lives(void):&#160;player.c'],['../player_8h.html#a45e5b71b3ebb7af4d8c7da62eb5e2eec',1,'player_get_max_lives(void):&#160;player.c']]],
+  ['player_5fget_5fscore_9',['player_get_score',['../player_8c.html#a87c1c789f1ec9900b1b68422d7bfa938',1,'player_get_score(void):&#160;player.c'],['../player_8h.html#a87c1c789f1ec9900b1b68422d7bfa938',1,'player_get_score(void):&#160;player.c']]],
+  ['player_5finit_10',['player_init',['../player_8c.html#acee959685db3737ad7bab102c7977ba8',1,'player_init(difficulty_t diff):&#160;player.c'],['../player_8h.html#acee959685db3737ad7bab102c7977ba8',1,'player_init(difficulty_t diff):&#160;player.c']]],
+  ['player_5fis_5fdead_11',['player_is_dead',['../player_8c.html#a28aa784994b028e628a37faf9618c9f8',1,'player_is_dead(void):&#160;player.c'],['../player_8h.html#a28aa784994b028e628a37faf9618c9f8',1,'player_is_dead(void):&#160;player.c']]],
+  ['player_5fspend_5fgold_12',['player_spend_gold',['../player_8c.html#a3892c119614db0e9e8897b2a1106b658',1,'player_spend_gold(int amount):&#160;player.c'],['../player_8h.html#a3892c119614db0e9e8897b2a1106b658',1,'player_spend_gold(int amount):&#160;player.c']]],
+  ['player_5ftake_5fdamage_13',['player_take_damage',['../player_8c.html#a7341b6b32773c8296803bf4d53f73883',1,'player_take_damage(int amount):&#160;player.c'],['../player_8h.html#a7341b6b32773c8296803bf4d53f73883',1,'player_take_damage(int amount):&#160;player.c']]],
+  ['proj_5fmain_5floop_14',['proj_main_loop',['../main_8c.html#a2a16f651eccbd248e1ad3b3b924b143b',1,'main.c']]]
+];

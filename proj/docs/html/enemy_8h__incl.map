@@ -1,0 +1,8 @@
+<map id="src/enemy/enemy.h" name="src/enemy/enemy.h">
+<area shape="rect" id="Node000001" title="Enemy entity definition and per&#45;enemy lifecycle functions." alt="" coords="5,5,155,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="37,152,123,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,32,67,53,60,79,61,110,70,139,65,140,56,111,55,78,62,52,72,30"/>
+<area shape="rect" id="Node000003" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="69,79,193,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="91,29,117,66,112,69,86,33"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="124,106,98,142,94,139,120,103"/>
+</map>

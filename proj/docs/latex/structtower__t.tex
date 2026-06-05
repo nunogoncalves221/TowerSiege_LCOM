@@ -1,0 +1,115 @@
+\doxysection{tower\+\_\+t Struct Reference}
+\hypertarget{structtower__t}{}\label{structtower__t}\index{tower\_t@{tower\_t}}
+
+
+Represents a single placed tower and all its combat stats.  
+
+
+
+
+{\ttfamily \#include $<$tower.\+h$>$}
+
+
+
+Collaboration diagram for tower\+\_\+t\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=133pt]{structtower__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506a}{tower\+\_\+type\+\_\+t}} \mbox{\hyperlink{structtower__t_a7cd6b9a0f008d39f37fbf3e64e3dc20f}{type}}
+\item 
+int \mbox{\hyperlink{structtower__t_a2ba3726740f8442e8ae0841dfe863323}{level}}
+\item 
+\mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structtower__t_a81341a0015c799df402907dae744be6a}{sp}}
+\item 
+int \mbox{\hyperlink{structtower__t_a834c511773b5f9451b28467742c481b6}{col}}
+\item 
+int \mbox{\hyperlink{structtower__t_a5661f45e4919e63275328fed74801d24}{row}}
+\item 
+int \mbox{\hyperlink{structtower__t_a9bbd6e671a01820f3141f27829179687}{range}}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{structtower__t_adf5873606dd1080a253eb12c5f7a3e16}{range\+\_\+sq}}
+\item 
+int \mbox{\hyperlink{structtower__t_af89eb149b695d0e794b985c2d1ab5c22}{damage}}
+\item 
+int \mbox{\hyperlink{structtower__t_a81d99dae2d38d4ec8ba475903570bf0a}{attack\+\_\+cooldown}}
+\item 
+int \mbox{\hyperlink{structtower__t_aa83936c9a17e2a137991a4a918796b14}{attack\+\_\+timer}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a single placed tower and all its combat stats. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structtower__t_a81d99dae2d38d4ec8ba475903570bf0a}\label{structtower__t_a81d99dae2d38d4ec8ba475903570bf0a} 
+\index{tower\_t@{tower\_t}!attack\_cooldown@{attack\_cooldown}}
+\index{attack\_cooldown@{attack\_cooldown}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{attack\_cooldown}{attack\_cooldown}}
+{\footnotesize\ttfamily int tower\+\_\+t\+::attack\+\_\+cooldown}
+
+Ticks between consecutive shots. \Hypertarget{structtower__t_aa83936c9a17e2a137991a4a918796b14}\label{structtower__t_aa83936c9a17e2a137991a4a918796b14} 
+\index{tower\_t@{tower\_t}!attack\_timer@{attack\_timer}}
+\index{attack\_timer@{attack\_timer}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{attack\_timer}{attack\_timer}}
+{\footnotesize\ttfamily int tower\+\_\+t\+::attack\+\_\+timer}
+
+Ticks remaining until the next shot. \Hypertarget{structtower__t_a834c511773b5f9451b28467742c481b6}\label{structtower__t_a834c511773b5f9451b28467742c481b6} 
+\index{tower\_t@{tower\_t}!col@{col}}
+\index{col@{col}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{col}{col}}
+{\footnotesize\ttfamily int tower\+\_\+t\+::col}
+
+\Hypertarget{structtower__t_af89eb149b695d0e794b985c2d1ab5c22}\label{structtower__t_af89eb149b695d0e794b985c2d1ab5c22} 
+\index{tower\_t@{tower\_t}!damage@{damage}}
+\index{damage@{damage}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{damage}{damage}}
+{\footnotesize\ttfamily int tower\+\_\+t\+::damage}
+
+Damage dealt per bullet. \Hypertarget{structtower__t_a2ba3726740f8442e8ae0841dfe863323}\label{structtower__t_a2ba3726740f8442e8ae0841dfe863323} 
+\index{tower\_t@{tower\_t}!level@{level}}
+\index{level@{level}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{level}{level}}
+{\footnotesize\ttfamily int tower\+\_\+t\+::level}
+
+Current upgrade level (1 = base, 2 = upgraded). \Hypertarget{structtower__t_a9bbd6e671a01820f3141f27829179687}\label{structtower__t_a9bbd6e671a01820f3141f27829179687} 
+\index{tower\_t@{tower\_t}!range@{range}}
+\index{range@{range}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{range}{range}}
+{\footnotesize\ttfamily int tower\+\_\+t\+::range}
+
+Attack range radius in pixels. \Hypertarget{structtower__t_adf5873606dd1080a253eb12c5f7a3e16}\label{structtower__t_adf5873606dd1080a253eb12c5f7a3e16} 
+\index{tower\_t@{tower\_t}!range\_sq@{range\_sq}}
+\index{range\_sq@{range\_sq}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{range\_sq}{range\_sq}}
+{\footnotesize\ttfamily uint32\+\_\+t tower\+\_\+t\+::range\+\_\+sq}
+
+Squared range, used for fast distance checks. \Hypertarget{structtower__t_a5661f45e4919e63275328fed74801d24}\label{structtower__t_a5661f45e4919e63275328fed74801d24} 
+\index{tower\_t@{tower\_t}!row@{row}}
+\index{row@{row}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{row}{row}}
+{\footnotesize\ttfamily int tower\+\_\+t\+::row}
+
+Grid coordinates of the tile the tower occupies. \Hypertarget{structtower__t_a81341a0015c799df402907dae744be6a}\label{structtower__t_a81341a0015c799df402907dae744be6a} 
+\index{tower\_t@{tower\_t}!sp@{sp}}
+\index{sp@{sp}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{sp}{sp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structsprite__t}{sprite\+\_\+t}}\texorpdfstring{$\ast$}{*} tower\+\_\+t\+::sp}
+
+Sprite used to render the tower. \Hypertarget{structtower__t_a7cd6b9a0f008d39f37fbf3e64e3dc20f}\label{structtower__t_a7cd6b9a0f008d39f37fbf3e64e3dc20f} 
+\index{tower\_t@{tower\_t}!type@{type}}
+\index{type@{type}!tower\_t@{tower\_t}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{tower_8h_a716ad8fa30cb811b6c8b76b9fda1506a}{tower\+\_\+type\+\_\+t}} tower\+\_\+t\+::type}
+
+Which kind of tower this is. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/tower/\mbox{\hyperlink{tower_8h}{tower.\+h}}\end{DoxyCompactItemize}

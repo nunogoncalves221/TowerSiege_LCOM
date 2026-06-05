@@ -1,0 +1,18 @@
+<map id="src/menu/gameovermenu.c" name="src/menu/gameovermenu.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="173,5,373,31"/>
+<area shape="rect" id="Node000002" href="$gameovermenu_8h.html" title="Game&#45;over screen for runs that do not qualify for the high&#45;score table." alt="" coords="132,79,269,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="263,33,224,71,220,67,259,29"/>
+<area shape="rect" id="Node000005" href="$menu__nav_8h.html" title="Reusable keyboard navigation and item rendering for all menus." alt="" coords="294,79,395,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="286,29,325,67,321,71,283,33"/>
+<area shape="rect" id="Node000006" href="$font_8h.html" title="Bitmap font rendering and string&#45;width measurement." alt="" coords="5,79,108,104"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="239,33,105,77,104,72,237,28"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="420,79,491,104"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="303,28,414,71,412,76,301,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="165,152,236,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="203,104,203,138,198,138,198,104"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="282,152,365,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="222,102,293,143,290,147,219,106"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="323,106,238,148,235,143,320,102"/>
+<area shape="poly" id="edge6_Node000005_Node000004" title=" " alt="" coords="344,105,333,140,328,138,339,104"/>
+<area shape="poly" id="edge8_Node000006_Node000003" title=" " alt="" coords="81,102,166,143,164,148,79,106"/>
+</map>

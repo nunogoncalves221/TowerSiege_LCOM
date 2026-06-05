@@ -1,0 +1,82 @@
+\doxysection{src/states.h File Reference}
+\hypertarget{states_8h}{}\label{states_8h}\index{src/states.h@{src/states.h}}
+
+
+Application state machine enumeration.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=153pt]{states_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bb}{app\+\_\+state\+\_\+t}} \{ \newline
+\mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bba8211ee7ceda72b3c0e9b4a547acb471b}{STATE\+\_\+\+MENU}}
+, \mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bba729f9e89a5538fdd60acee4f30583da6}{STATE\+\_\+\+DIFFICULTY}}
+, \mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bbadd58fbaa83b0bc3973bc4adad84a5d88}{STATE\+\_\+\+GAME}}
+, \mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bba499befd644d29b7940f5d95ed90a83c3}{STATE\+\_\+\+GAMEOVER}}
+, \newline
+\mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bbaaf8dfc2ee0c1d615ac43d10027062033}{STATE\+\_\+\+INSTRUCTIONS}}
+, \mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bbaea8a8da15a2fe0f9364de2fea14bf947}{STATE\+\_\+\+PAUSE}}
+, \mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bbaa1d74116e80ae3b8b8a533adbd76eb7e}{STATE\+\_\+\+HIGH\+\_\+\+SCORES}}
+, \mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bba10aa07a8da54624d34ff7aab80902c7e}{STATE\+\_\+\+GAMEOVER\+\_\+\+HS}}
+ \}
+\begin{DoxyCompactList}\small\item\em Top-\/level application states. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Application state machine enumeration. 
+
+Defines all possible high-\/level states that the application can be in. The main loop in {\ttfamily \doxylink{main_8c}{main.\+c}} reads the current state each iteration and dispatches input, update, and draw calls to the appropriate module. 
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bb}\label{states_8h_a5bb27460721cc90620d197fabf50d4bb} 
+\index{states.h@{states.h}!app\_state\_t@{app\_state\_t}}
+\index{app\_state\_t@{app\_state\_t}!states.h@{states.h}}
+\doxysubsubsection{\texorpdfstring{app\_state\_t}{app\_state\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{states_8h_a5bb27460721cc90620d197fabf50d4bb}{app\+\_\+state\+\_\+t}}}
+
+
+
+Top-\/level application states. 
+
+Transitions between states are driven by user input (menu selections, pause key, game-\/over condition, etc.). \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATE\_MENU@{STATE\_MENU}!states.h@{states.h}}\index{states.h@{states.h}!STATE\_MENU@{STATE\_MENU}}}\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bba8211ee7ceda72b3c0e9b4a547acb471b}\label{states_8h_a5bb27460721cc90620d197fabf50d4bba8211ee7ceda72b3c0e9b4a547acb471b} 
+STATE\+\_\+\+MENU&Main menu is being displayed. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATE\_DIFFICULTY@{STATE\_DIFFICULTY}!states.h@{states.h}}\index{states.h@{states.h}!STATE\_DIFFICULTY@{STATE\_DIFFICULTY}}}\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bba729f9e89a5538fdd60acee4f30583da6}\label{states_8h_a5bb27460721cc90620d197fabf50d4bba729f9e89a5538fdd60acee4f30583da6} 
+STATE\+\_\+\+DIFFICULTY&Difficulty selection screen. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATE\_GAME@{STATE\_GAME}!states.h@{states.h}}\index{states.h@{states.h}!STATE\_GAME@{STATE\_GAME}}}\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bbadd58fbaa83b0bc3973bc4adad84a5d88}\label{states_8h_a5bb27460721cc90620d197fabf50d4bbadd58fbaa83b0bc3973bc4adad84a5d88} 
+STATE\+\_\+\+GAME&Active gameplay loop. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATE\_GAMEOVER@{STATE\_GAMEOVER}!states.h@{states.h}}\index{states.h@{states.h}!STATE\_GAMEOVER@{STATE\_GAMEOVER}}}\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bba499befd644d29b7940f5d95ed90a83c3}\label{states_8h_a5bb27460721cc90620d197fabf50d4bba499befd644d29b7940f5d95ed90a83c3} 
+STATE\+\_\+\+GAMEOVER&Game-\/over screen (no high-\/score entry). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATE\_INSTRUCTIONS@{STATE\_INSTRUCTIONS}!states.h@{states.h}}\index{states.h@{states.h}!STATE\_INSTRUCTIONS@{STATE\_INSTRUCTIONS}}}\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bbaaf8dfc2ee0c1d615ac43d10027062033}\label{states_8h_a5bb27460721cc90620d197fabf50d4bbaaf8dfc2ee0c1d615ac43d10027062033} 
+STATE\+\_\+\+INSTRUCTIONS&How-\/to-\/play / instructions screen. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATE\_PAUSE@{STATE\_PAUSE}!states.h@{states.h}}\index{states.h@{states.h}!STATE\_PAUSE@{STATE\_PAUSE}}}\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bbaea8a8da15a2fe0f9364de2fea14bf947}\label{states_8h_a5bb27460721cc90620d197fabf50d4bbaea8a8da15a2fe0f9364de2fea14bf947} 
+STATE\+\_\+\+PAUSE&In-\/game pause overlay. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATE\_HIGH\_SCORES@{STATE\_HIGH\_SCORES}!states.h@{states.h}}\index{states.h@{states.h}!STATE\_HIGH\_SCORES@{STATE\_HIGH\_SCORES}}}\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bbaa1d74116e80ae3b8b8a533adbd76eb7e}\label{states_8h_a5bb27460721cc90620d197fabf50d4bbaa1d74116e80ae3b8b8a533adbd76eb7e} 
+STATE\+\_\+\+HIGH\+\_\+\+SCORES&High-\/score leaderboard view. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STATE\_GAMEOVER\_HS@{STATE\_GAMEOVER\_HS}!states.h@{states.h}}\index{states.h@{states.h}!STATE\_GAMEOVER\_HS@{STATE\_GAMEOVER\_HS}}}\Hypertarget{states_8h_a5bb27460721cc90620d197fabf50d4bba10aa07a8da54624d34ff7aab80902c7e}\label{states_8h_a5bb27460721cc90620d197fabf50d4bba10aa07a8da54624d34ff7aab80902c7e} 
+STATE\+\_\+\+GAMEOVER\+\_\+\+HS&Game-\/over screen with high-\/score entry form. \\
+\hline
+
+\end{DoxyEnumFields}

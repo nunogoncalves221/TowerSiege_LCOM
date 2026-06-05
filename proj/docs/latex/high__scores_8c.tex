@@ -1,0 +1,154 @@
+\doxysection{src/menu/high\+\_\+scores.c File Reference}
+\hypertarget{high__scores_8c}{}\label{high__scores_8c}\index{src/menu/high\_scores.c@{src/menu/high\_scores.c}}
+{\ttfamily \#include "{}high\+\_\+scores.\+h"{}}\newline
+{\ttfamily \#include "{}../font/font.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+Include dependency graph for high\+\_\+scores.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{high__scores_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{high__scores_8c_a739625a2e78aa663e5d91048f8cd3b59}{COLOR\+\_\+\+BG}}~0x\+FF000000
+\item 
+\#define \mbox{\hyperlink{high__scores_8c_a9f4dfe30a7d1c96f6d4438c0b2019cd6}{COLOR\+\_\+\+TEXT}}~0x\+FFB0\+B0\+C0
+\item 
+\#define \mbox{\hyperlink{high__scores_8c_a76578aa19ef7a41c746249e508ce89ef}{COLOR\+\_\+\+TITLE}}~0x\+FFE94560
+\item 
+\#define \mbox{\hyperlink{high__scores_8c_a9ae1cdc758f8a73904949e4195e0796d}{SAVE\+\_\+\+PATH}}~"{}/home/lcom/labs/grupo\+\_\+2leic16\+\_\+2/proj/highscores.\+bin"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{high__scores_8c_a5451de2c48b991d8e07291b42e09fbfa}{hs\+\_\+load}} (void)
+\begin{DoxyCompactList}\small\item\em Loads the high-\/score table from disk. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{high__scores_8c_aa4dad1df979dafc6d6382c4e0d2f77b8}{hs\+\_\+save}} (void)
+\begin{DoxyCompactList}\small\item\em Writes the current high-\/score table to disk. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{high__scores_8c_a53eb43262251bb403e5eaccb545318ff}{hs\+\_\+qualifies}} (int score)
+\begin{DoxyCompactList}\small\item\em Returns whether the given score would enter the top-\/ten table. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{high__scores_8c_a71e91559542a520be188053ed1bc4c43}{hs\+\_\+insert}} (const char \texorpdfstring{$\ast$}{*}name, int score, rtc\+\_\+date date)
+\begin{DoxyCompactList}\small\item\em Inserts a new entry into the high-\/score table and re-\/sorts it. \end{DoxyCompactList}\item 
+const \mbox{\hyperlink{strucths__entry__t}{hs\+\_\+entry\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{high__scores_8c_aace9fe126984e0e7391d679b936e856f}{hs\+\_\+get\+\_\+entries}} (void)
+\begin{DoxyCompactList}\small\item\em Returns a pointer to the sorted array of high-\/score entries. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{high__scores_8c_aea1547d87306c98b683879ed01adb056}{hs\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the high-\/score leaderboard screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{high__scores_8c_a739625a2e78aa663e5d91048f8cd3b59}\label{high__scores_8c_a739625a2e78aa663e5d91048f8cd3b59} 
+\index{high\_scores.c@{high\_scores.c}!COLOR\_BG@{COLOR\_BG}}
+\index{COLOR\_BG@{COLOR\_BG}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{COLOR\_BG}{COLOR\_BG}}
+{\footnotesize\ttfamily \#define COLOR\+\_\+\+BG~0x\+FF000000}
+
+\Hypertarget{high__scores_8c_a9f4dfe30a7d1c96f6d4438c0b2019cd6}\label{high__scores_8c_a9f4dfe30a7d1c96f6d4438c0b2019cd6} 
+\index{high\_scores.c@{high\_scores.c}!COLOR\_TEXT@{COLOR\_TEXT}}
+\index{COLOR\_TEXT@{COLOR\_TEXT}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{COLOR\_TEXT}{COLOR\_TEXT}}
+{\footnotesize\ttfamily \#define COLOR\+\_\+\+TEXT~0x\+FFB0\+B0\+C0}
+
+\Hypertarget{high__scores_8c_a76578aa19ef7a41c746249e508ce89ef}\label{high__scores_8c_a76578aa19ef7a41c746249e508ce89ef} 
+\index{high\_scores.c@{high\_scores.c}!COLOR\_TITLE@{COLOR\_TITLE}}
+\index{COLOR\_TITLE@{COLOR\_TITLE}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{COLOR\_TITLE}{COLOR\_TITLE}}
+{\footnotesize\ttfamily \#define COLOR\+\_\+\+TITLE~0x\+FFE94560}
+
+\Hypertarget{high__scores_8c_a9ae1cdc758f8a73904949e4195e0796d}\label{high__scores_8c_a9ae1cdc758f8a73904949e4195e0796d} 
+\index{high\_scores.c@{high\_scores.c}!SAVE\_PATH@{SAVE\_PATH}}
+\index{SAVE\_PATH@{SAVE\_PATH}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{SAVE\_PATH}{SAVE\_PATH}}
+{\footnotesize\ttfamily \#define SAVE\+\_\+\+PATH~"{}/home/lcom/labs/grupo\+\_\+2leic16\+\_\+2/proj/highscores.\+bin"{}}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{high__scores_8c_aea1547d87306c98b683879ed01adb056}\label{high__scores_8c_aea1547d87306c98b683879ed01adb056} 
+\index{high\_scores.c@{high\_scores.c}!hs\_draw@{hs\_draw}}
+\index{hs\_draw@{hs\_draw}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{hs\_draw()}{hs\_draw()}}
+{\footnotesize\ttfamily void hs\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the high-\/score leaderboard screen. 
+
+\Hypertarget{high__scores_8c_aace9fe126984e0e7391d679b936e856f}\label{high__scores_8c_aace9fe126984e0e7391d679b936e856f} 
+\index{high\_scores.c@{high\_scores.c}!hs\_get\_entries@{hs\_get\_entries}}
+\index{hs\_get\_entries@{hs\_get\_entries}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{hs\_get\_entries()}{hs\_get\_entries()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{strucths__entry__t}{hs\+\_\+entry\+\_\+t}} \texorpdfstring{$\ast$}{*} hs\+\_\+get\+\_\+entries (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns a pointer to the sorted array of high-\/score entries. 
+
+\begin{DoxyReturn}{Returns}
+Read-\/only pointer to the internal array of \doxylink{strucths__entry__t}{hs\+\_\+entry\+\_\+t}. The array has at most \doxylink{high__scores_8h_a578cad27369de2799b711acaad3cc3c3}{HS\+\_\+\+MAX\+\_\+\+ENTRIES} valid entries. 
+\end{DoxyReturn}
+\Hypertarget{high__scores_8c_a71e91559542a520be188053ed1bc4c43}\label{high__scores_8c_a71e91559542a520be188053ed1bc4c43} 
+\index{high\_scores.c@{high\_scores.c}!hs\_insert@{hs\_insert}}
+\index{hs\_insert@{hs\_insert}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{hs\_insert()}{hs\_insert()}}
+{\footnotesize\ttfamily void hs\+\_\+insert (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{int}]{score,  }\item[{rtc\+\_\+date}]{date }\end{DoxyParamCaption})}
+
+
+
+Inserts a new entry into the high-\/score table and re-\/sorts it. 
+
+If the table is already full, the lowest-\/scoring entry is evicted.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & Player name (at most \doxylink{high__scores_8h_a8af2b8f50581d3e8f348a6962f5eb184}{HS\+\_\+\+MAX\+\_\+\+NAME\+\_\+\+LEN} characters). \\
+\hline
+{\em score} & Score achieved. \\
+\hline
+{\em date} & RTC date of the completed run. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{high__scores_8c_a5451de2c48b991d8e07291b42e09fbfa}\label{high__scores_8c_a5451de2c48b991d8e07291b42e09fbfa} 
+\index{high\_scores.c@{high\_scores.c}!hs\_load@{hs\_load}}
+\index{hs\_load@{hs\_load}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{hs\_load()}{hs\_load()}}
+{\footnotesize\ttfamily void hs\+\_\+load (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Loads the high-\/score table from disk. 
+
+Must be called once at application startup before any other hs\+\_\+ function. If the file does not exist, the table starts empty. \Hypertarget{high__scores_8c_a53eb43262251bb403e5eaccb545318ff}\label{high__scores_8c_a53eb43262251bb403e5eaccb545318ff} 
+\index{high\_scores.c@{high\_scores.c}!hs\_qualifies@{hs\_qualifies}}
+\index{hs\_qualifies@{hs\_qualifies}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{hs\_qualifies()}{hs\_qualifies()}}
+{\footnotesize\ttfamily bool hs\+\_\+qualifies (\begin{DoxyParamCaption}\item[{int}]{score }\end{DoxyParamCaption})}
+
+
+
+Returns whether the given score would enter the top-\/ten table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em score} & Score to test. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the table has fewer than \doxylink{high__scores_8h_a578cad27369de2799b711acaad3cc3c3}{HS\+\_\+\+MAX\+\_\+\+ENTRIES} entries, or if {\ttfamily score} is strictly greater than the lowest existing entry. 
+\end{DoxyReturn}
+\Hypertarget{high__scores_8c_aa4dad1df979dafc6d6382c4e0d2f77b8}\label{high__scores_8c_aa4dad1df979dafc6d6382c4e0d2f77b8} 
+\index{high\_scores.c@{high\_scores.c}!hs\_save@{hs\_save}}
+\index{hs\_save@{hs\_save}!high\_scores.c@{high\_scores.c}}
+\doxysubsubsection{\texorpdfstring{hs\_save()}{hs\_save()}}
+{\footnotesize\ttfamily void hs\+\_\+save (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Writes the current high-\/score table to disk. 
+
+Should be called after \doxylink{high__scores_8h_a71e91559542a520be188053ed1bc4c43}{hs\+\_\+insert()} to persist the new entry. 

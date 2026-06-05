@@ -1,0 +1,9 @@
+<map id="src/font/nameentry.h" name="src/font/nameentry.h">
+<area shape="rect" id="Node000001" title="Single&#45;line name input widget for the high&#45;score entry screen." alt="" coords="151,5,307,31"/>
+<area shape="rect" id="Node000002" href="$nameentry_8c.html" title=" " alt="" coords="5,79,160,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,39,108,81,106,76,193,34"/>
+<area shape="rect" id="Node000003" href="$main_8c.html" title=" " alt="" coords="185,79,274,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="232,44,232,79,227,79,227,44"/>
+<area shape="rect" id="Node000004" href="$gameovermenu__hs_8c.html" title=" " alt="" coords="298,79,521,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="272,33,381,76,379,81,270,38"/>
+</map>

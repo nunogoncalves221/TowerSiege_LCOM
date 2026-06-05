@@ -1,0 +1,41 @@
+\doxysection{animated\+\_\+sprite.\+h}
+\hypertarget{animated__sprite_8h_source}{}\label{animated__sprite_8h_source}\index{src/sprite/animated\_sprite.h@{src/sprite/animated\_sprite.h}}
+\mbox{\hyperlink{animated__sprite_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ \_\_ANIMATED\_SPRITE\_H\_\_}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ \_\_ANIMATED\_SPRITE\_H\_\_}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <lcom/lcf.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{sprite_8h}{sprite.h}}"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{structsprite__t}{sprite\_t}}\ \ *\mbox{\hyperlink{structAnimSprite_aefd403f2a229f78777b0f8a04a9f4c34}{sp}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structAnimSprite_aa9c28937b964c0e3a65bf5eb3f4be172}{aspeed}};\ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structAnimSprite_a3206cf4225f5833fca57857b8a52dd2f}{cur\_aspeed}};\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structAnimSprite_a245ddba935a16902ed5227a596087277}{num\_fig}};\ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structAnimSprite_a1d1b9580302ed9fc1c0dde40feb6038e}{cur\_fig}};\ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ uint32\_t\ **\mbox{\hyperlink{structAnimSprite_af962a758828045798b8f65e637a31c7a}{map}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \}\ \mbox{\hyperlink{structAnimSprite}{AnimSprite}};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00039\ \mbox{\hyperlink{structAnimSprite}{AnimSprite}}\ *\mbox{\hyperlink{animated__sprite_8h_abff27595c391742537dff31e1a714419}{create\_animated\_sprite}}(xpm\_map\_t\ *xpm\_array,\ uint8\_t\ no\_pic,\ \textcolor{keywordtype}{int}\ aspeed);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{animated__sprite_8h_a6cccb5be7c06e0806a0e65b3c74110af}{destroy\_animated\_sprite}}(\mbox{\hyperlink{structAnimSprite}{AnimSprite}}\ *as);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{animated__sprite_8h_afb7045a9bac7a76e1a33462865b3dd4a}{draw\_animated\_sprite}}(\mbox{\hyperlink{structAnimSprite}{AnimSprite}}\ *as,\ uint16\_t\ x,\ uint16\_t\ y);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00066\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{animated__sprite_8h_ab0152b006cd6097debaf2eb3adb0d1e2}{draw\_animated\_sprite\_flipped}}(\mbox{\hyperlink{structAnimSprite}{AnimSprite}}\ *as,\ uint16\_t\ x,\ uint16\_t\ y);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{animated__sprite_8h_a04399fc9eea15e8df1571b5a26797435}{animate\_sprite\_once}}(\mbox{\hyperlink{structAnimSprite}{AnimSprite}}\ *as);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00085\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{animated__sprite_8h_a56b888e1711ae8f80ee3bd055fc05acb}{animate\_sprite\_loop}}(\mbox{\hyperlink{structAnimSprite}{AnimSprite}}\ *as);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00093\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{animated__sprite_8h_a435147b777a3c7a27420131fd7cbfbe8}{animated\_sprite\_finished}}(\mbox{\hyperlink{structAnimSprite}{AnimSprite}}\ *as);}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00100\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{animated__sprite_8h_a20e664f8864f2cb1cd4c83d8929f5718}{reset\_animated\_sprite}}(\mbox{\hyperlink{structAnimSprite}{AnimSprite}}\ *as);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_\_ANIMATED\_SPRITE\_H\_\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

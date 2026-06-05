@@ -1,0 +1,28 @@
+<map id="src/map/map.c" name="src/map/map.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="387,5,506,31"/>
+<area shape="rect" id="Node000002" href="$map_8h.html" title="Tile&#45;based game map definition and rendering." alt="" coords="107,79,170,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="395,33,184,81,183,76,393,28"/>
+<area shape="rect" id="Node000007" href="$sprite_8h.html" title="Static sprite representation and drawing utilities." alt="" coords="13,79,83,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="387,31,258,52,97,81,96,76,257,46,386,26"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="194,79,265,104"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="413,33,278,77,277,72,411,28"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="289,79,437,104"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="435,33,389,72,385,67,431,29"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="461,79,603,104"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="462,29,509,68,506,72,459,33"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="628,79,777,104"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="489,28,649,72,648,78,487,33"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="802,79,971,104"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="506,26,803,74,802,79,506,31"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="996,79,1161,104"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="507,23,982,76,982,81,506,28"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,91,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="126,106,75,145,72,141,122,102"/>
+<area shape="rect" id="Node000004" href="$difficulty_8h.html" title="Difficulty selection screen and difficulty type definition." alt="" coords="115,152,205,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="145,104,155,138,150,140,140,105"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="74,225,145,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="154,179,128,216,123,213,149,176"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="169,225,252,251"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="171,176,197,213,192,216,166,179"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="51,104,51,138,45,138,45,104"/>
+</map>

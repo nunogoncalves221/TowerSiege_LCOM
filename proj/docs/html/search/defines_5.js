@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['hero_5fattack_5fcooldown_0',['HERO_ATTACK_COOLDOWN',['../hero_8c.html#aafa598bde11b498c24e8d3352bcd74f0',1,'hero.c']]],
+  ['hero_5fbase_5fx_1',['HERO_BASE_X',['../game_8h.html#a0c9d5b62b05eb0c7a50b3d31c6223697',1,'game.h']]],
+  ['hero_5fbase_5fy_2',['HERO_BASE_Y',['../game_8h.html#a3db0ed471b0ab3e495eaa88baab35c33',1,'game.h']]],
+  ['hero_5fhp_5fbar_5fheight_3',['HERO_HP_BAR_HEIGHT',['../hero_8c.html#abaf0868f1ac451d3c6560ddb97c0887f',1,'hero.c']]],
+  ['hero_5fhp_5fbar_5fwidth_4',['HERO_HP_BAR_WIDTH',['../hero_8c.html#aefc3e9086cdd03aec8152c876f80dd72',1,'hero.c']]],
+  ['hero_5fhp_5fbar_5fy_5foffset_5',['HERO_HP_BAR_Y_OFFSET',['../hero_8c.html#a8116a29dd4041759696e3b5a655e6e6e',1,'hero.c']]],
+  ['hero_5fhp_5fcolor_5fbg_6',['HERO_HP_COLOR_BG',['../hero_8c.html#aef59a1637e8c4800f09a6490bb147073',1,'hero.c']]],
+  ['hero_5fhp_5fcolor_5fborder_7',['HERO_HP_COLOR_BORDER',['../hero_8c.html#ae7d4379fb06f46c08c43b1dbeb718c27',1,'hero.c']]],
+  ['hero_5fhp_5fcolor_5fgood_8',['HERO_HP_COLOR_GOOD',['../hero_8c.html#a83ff09408ead98767576d7e14b35697d',1,'hero.c']]],
+  ['hero_5fmax_5fhp_9',['HERO_MAX_HP',['../hero_8c.html#a0d92e6431fcbaf0d9b0086ff376b51a1',1,'hero.c']]],
+  ['hero_5frespawn_5fticks_10',['HERO_RESPAWN_TICKS',['../hero_8c.html#a5cff0e0337150dfcf0d8410e3847cc94',1,'hero.c']]],
+  ['hero_5fspeed_11',['hero_speed',['../game_8h.html#a34859c9cfebe7753ae2ec94624236bea',1,'HERO_SPEED:&#160;game.h'],['../hero_8c.html#a34859c9cfebe7753ae2ec94624236bea',1,'HERO_SPEED:&#160;hero.c']]],
+  ['hs_5fmax_5fentries_12',['HS_MAX_ENTRIES',['../high__scores_8h.html#a578cad27369de2799b711acaad3cc3c3',1,'high_scores.h']]],
+  ['hs_5fmax_5fname_5flen_13',['HS_MAX_NAME_LEN',['../high__scores_8h.html#a8af2b8f50581d3e8f348a6962f5eb184',1,'high_scores.h']]],
+  ['hud_5fcolor_5fgold_14',['HUD_COLOR_GOLD',['../hud_8c.html#acf76c6136597bf8d1ac89b869fc0265c',1,'hud.c']]],
+  ['hud_5fcolor_5ftext_15',['HUD_COLOR_TEXT',['../hud_8c.html#a4c1aef9c6da54ed06421c9dd5e3da09c',1,'hud.c']]],
+  ['hud_5fpad_5fx_16',['HUD_PAD_X',['../hud_8c.html#a651a85b93dd96e2f27561fa569790fd4',1,'hud.c']]],
+  ['hud_5fpad_5fy_17',['HUD_PAD_Y',['../hud_8c.html#a0efd4fb910dd13f1f32cae84124c4f0f',1,'hud.c']]],
+  ['hud_5fwave_5fy_18',['HUD_WAVE_Y',['../hud_8c.html#a890c91dd3d6131fe9627e3a932fa485d',1,'hud.c']]]
+];

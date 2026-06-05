@@ -1,0 +1,226 @@
+\doxysection{src/hero/hero.c File Reference}
+\hypertarget{hero_8c}{}\label{hero_8c}\index{src/hero/hero.c@{src/hero/hero.c}}
+{\ttfamily \#include "{}hero.\+h"{}}\newline
+{\ttfamily \#include "{}game.\+h"{}}\newline
+{\ttfamily \#include "{}player.\+h"{}}\newline
+{\ttfamily \#include "{}video.\+h"{}}\newline
+{\ttfamily \#include "{}hud.\+h"{}}\newline
+{\ttfamily \#include "{}animated\+\_\+sprite.\+h"{}}\newline
+{\ttfamily \#include "{}../assets/hero.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/hero\+\_\+walk\+\_\+1.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/hero\+\_\+walk\+\_\+2.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/hero\+\_\+atk\+\_\+1.\+xpm"{}}\newline
+{\ttfamily \#include "{}../assets/hero\+\_\+atk\+\_\+2.\+xpm"{}}\newline
+Include dependency graph for hero.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{hero_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{hero_8c_a0d92e6431fcbaf0d9b0086ff376b51a1}{HERO\+\_\+\+MAX\+\_\+\+HP}}~100
+\item 
+\#define \mbox{\hyperlink{hero_8c_a5cff0e0337150dfcf0d8410e3847cc94}{HERO\+\_\+\+RESPAWN\+\_\+\+TICKS}}~180
+\item 
+\#define \mbox{\hyperlink{hero_8c_a34859c9cfebe7753ae2ec94624236bea}{HERO\+\_\+\+SPEED}}~3
+\item 
+\#define \mbox{\hyperlink{hero_8c_aafa598bde11b498c24e8d3352bcd74f0}{HERO\+\_\+\+ATTACK\+\_\+\+COOLDOWN}}~40
+\item 
+\#define \mbox{\hyperlink{hero_8c_aefc3e9086cdd03aec8152c876f80dd72}{HERO\+\_\+\+HP\+\_\+\+BAR\+\_\+\+WIDTH}}~40
+\item 
+\#define \mbox{\hyperlink{hero_8c_abaf0868f1ac451d3c6560ddb97c0887f}{HERO\+\_\+\+HP\+\_\+\+BAR\+\_\+\+HEIGHT}}~4
+\item 
+\#define \mbox{\hyperlink{hero_8c_a8116a29dd4041759696e3b5a655e6e6e}{HERO\+\_\+\+HP\+\_\+\+BAR\+\_\+\+Y\+\_\+\+OFFSET}}~10
+\item 
+\#define \mbox{\hyperlink{hero_8c_a83ff09408ead98767576d7e14b35697d}{HERO\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+GOOD}}~0x0000\+FF00
+\item 
+\#define \mbox{\hyperlink{hero_8c_aef59a1637e8c4800f09a6490bb147073}{HERO\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+BG}}~0x00\+FF0000
+\item 
+\#define \mbox{\hyperlink{hero_8c_ae7d4379fb06f46c08c43b1dbeb718c27}{HERO\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+BORDER}}~0x00000000
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{hero_8c_ac8aec5639f7e56fb409adee9d52a1279}{hero\+\_\+state\+\_\+t}} \{ \mbox{\hyperlink{hero_8c_ac8aec5639f7e56fb409adee9d52a1279a50889ab84213d86c70f5e47de762e27d}{HERO\+\_\+\+IDLE}}
+, \mbox{\hyperlink{hero_8c_ac8aec5639f7e56fb409adee9d52a1279a7a16d6e4c1130b7463bc3e8cb355d5fa}{HERO\+\_\+\+WALK}}
+, \mbox{\hyperlink{hero_8c_ac8aec5639f7e56fb409adee9d52a1279af761fe30a4a41591face05c4230c7bb8}{HERO\+\_\+\+ATTACK}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{hero_8c_a1fa1ae06866726e07636b1868975453e}{hero\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Sets up the hero\textquotesingle{}s initial position, health, and animations. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hero_8c_a397fc7e54f01ac535495a5df2484d9d1}{hero\+\_\+destroy}} (void)
+\begin{DoxyCompactList}\small\item\em Frees all memory owned by the hero. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hero_8c_ab7eb37b7c3fcef5476873047a972ae68}{hero\+\_\+update\+\_\+input}} (bool w, bool a, bool s, bool d, bool f)
+\begin{DoxyCompactList}\small\item\em Passes the current keyboard state to the hero for the next tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hero_8c_a10e1989996dc60bfb17e92268dd2ad01}{hero\+\_\+tick}} (\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}enemies, int enemy\+\_\+count)
+\begin{DoxyCompactList}\small\item\em Advances the hero simulation by one tick. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hero_8c_af0027ba5c194454ca60805bc289bda6d}{hero\+\_\+draw}} (void)
+\begin{DoxyCompactList}\small\item\em Draws the hero sprite and his floating HP bar. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{hero_8c_aafa598bde11b498c24e8d3352bcd74f0}\label{hero_8c_aafa598bde11b498c24e8d3352bcd74f0} 
+\index{hero.c@{hero.c}!HERO\_ATTACK\_COOLDOWN@{HERO\_ATTACK\_COOLDOWN}}
+\index{HERO\_ATTACK\_COOLDOWN@{HERO\_ATTACK\_COOLDOWN}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_ATTACK\_COOLDOWN}{HERO\_ATTACK\_COOLDOWN}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+ATTACK\+\_\+\+COOLDOWN~40}
+
+\Hypertarget{hero_8c_abaf0868f1ac451d3c6560ddb97c0887f}\label{hero_8c_abaf0868f1ac451d3c6560ddb97c0887f} 
+\index{hero.c@{hero.c}!HERO\_HP\_BAR\_HEIGHT@{HERO\_HP\_BAR\_HEIGHT}}
+\index{HERO\_HP\_BAR\_HEIGHT@{HERO\_HP\_BAR\_HEIGHT}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_HP\_BAR\_HEIGHT}{HERO\_HP\_BAR\_HEIGHT}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+HP\+\_\+\+BAR\+\_\+\+HEIGHT~4}
+
+\Hypertarget{hero_8c_aefc3e9086cdd03aec8152c876f80dd72}\label{hero_8c_aefc3e9086cdd03aec8152c876f80dd72} 
+\index{hero.c@{hero.c}!HERO\_HP\_BAR\_WIDTH@{HERO\_HP\_BAR\_WIDTH}}
+\index{HERO\_HP\_BAR\_WIDTH@{HERO\_HP\_BAR\_WIDTH}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_HP\_BAR\_WIDTH}{HERO\_HP\_BAR\_WIDTH}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+HP\+\_\+\+BAR\+\_\+\+WIDTH~40}
+
+\Hypertarget{hero_8c_a8116a29dd4041759696e3b5a655e6e6e}\label{hero_8c_a8116a29dd4041759696e3b5a655e6e6e} 
+\index{hero.c@{hero.c}!HERO\_HP\_BAR\_Y\_OFFSET@{HERO\_HP\_BAR\_Y\_OFFSET}}
+\index{HERO\_HP\_BAR\_Y\_OFFSET@{HERO\_HP\_BAR\_Y\_OFFSET}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_HP\_BAR\_Y\_OFFSET}{HERO\_HP\_BAR\_Y\_OFFSET}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+HP\+\_\+\+BAR\+\_\+\+Y\+\_\+\+OFFSET~10}
+
+\Hypertarget{hero_8c_aef59a1637e8c4800f09a6490bb147073}\label{hero_8c_aef59a1637e8c4800f09a6490bb147073} 
+\index{hero.c@{hero.c}!HERO\_HP\_COLOR\_BG@{HERO\_HP\_COLOR\_BG}}
+\index{HERO\_HP\_COLOR\_BG@{HERO\_HP\_COLOR\_BG}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_HP\_COLOR\_BG}{HERO\_HP\_COLOR\_BG}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+BG~0x00\+FF0000}
+
+\Hypertarget{hero_8c_ae7d4379fb06f46c08c43b1dbeb718c27}\label{hero_8c_ae7d4379fb06f46c08c43b1dbeb718c27} 
+\index{hero.c@{hero.c}!HERO\_HP\_COLOR\_BORDER@{HERO\_HP\_COLOR\_BORDER}}
+\index{HERO\_HP\_COLOR\_BORDER@{HERO\_HP\_COLOR\_BORDER}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_HP\_COLOR\_BORDER}{HERO\_HP\_COLOR\_BORDER}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+BORDER~0x00000000}
+
+\Hypertarget{hero_8c_a83ff09408ead98767576d7e14b35697d}\label{hero_8c_a83ff09408ead98767576d7e14b35697d} 
+\index{hero.c@{hero.c}!HERO\_HP\_COLOR\_GOOD@{HERO\_HP\_COLOR\_GOOD}}
+\index{HERO\_HP\_COLOR\_GOOD@{HERO\_HP\_COLOR\_GOOD}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_HP\_COLOR\_GOOD}{HERO\_HP\_COLOR\_GOOD}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+HP\+\_\+\+COLOR\+\_\+\+GOOD~0x0000\+FF00}
+
+\Hypertarget{hero_8c_a0d92e6431fcbaf0d9b0086ff376b51a1}\label{hero_8c_a0d92e6431fcbaf0d9b0086ff376b51a1} 
+\index{hero.c@{hero.c}!HERO\_MAX\_HP@{HERO\_MAX\_HP}}
+\index{HERO\_MAX\_HP@{HERO\_MAX\_HP}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_MAX\_HP}{HERO\_MAX\_HP}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+MAX\+\_\+\+HP~100}
+
+\Hypertarget{hero_8c_a5cff0e0337150dfcf0d8410e3847cc94}\label{hero_8c_a5cff0e0337150dfcf0d8410e3847cc94} 
+\index{hero.c@{hero.c}!HERO\_RESPAWN\_TICKS@{HERO\_RESPAWN\_TICKS}}
+\index{HERO\_RESPAWN\_TICKS@{HERO\_RESPAWN\_TICKS}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_RESPAWN\_TICKS}{HERO\_RESPAWN\_TICKS}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+RESPAWN\+\_\+\+TICKS~180}
+
+\Hypertarget{hero_8c_a34859c9cfebe7753ae2ec94624236bea}\label{hero_8c_a34859c9cfebe7753ae2ec94624236bea} 
+\index{hero.c@{hero.c}!HERO\_SPEED@{HERO\_SPEED}}
+\index{HERO\_SPEED@{HERO\_SPEED}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{HERO\_SPEED}{HERO\_SPEED}}
+{\footnotesize\ttfamily \#define HERO\+\_\+\+SPEED~3}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{hero_8c_ac8aec5639f7e56fb409adee9d52a1279}\label{hero_8c_ac8aec5639f7e56fb409adee9d52a1279} 
+\index{hero.c@{hero.c}!hero\_state\_t@{hero\_state\_t}}
+\index{hero\_state\_t@{hero\_state\_t}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{hero\_state\_t}{hero\_state\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{hero_8c_ac8aec5639f7e56fb409adee9d52a1279}{hero\+\_\+state\+\_\+t}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HERO\_IDLE@{HERO\_IDLE}!hero.c@{hero.c}}\index{hero.c@{hero.c}!HERO\_IDLE@{HERO\_IDLE}}}\Hypertarget{hero_8c_ac8aec5639f7e56fb409adee9d52a1279a50889ab84213d86c70f5e47de762e27d}\label{hero_8c_ac8aec5639f7e56fb409adee9d52a1279a50889ab84213d86c70f5e47de762e27d} 
+HERO\+\_\+\+IDLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HERO\_WALK@{HERO\_WALK}!hero.c@{hero.c}}\index{hero.c@{hero.c}!HERO\_WALK@{HERO\_WALK}}}\Hypertarget{hero_8c_ac8aec5639f7e56fb409adee9d52a1279a7a16d6e4c1130b7463bc3e8cb355d5fa}\label{hero_8c_ac8aec5639f7e56fb409adee9d52a1279a7a16d6e4c1130b7463bc3e8cb355d5fa} 
+HERO\+\_\+\+WALK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HERO\_ATTACK@{HERO\_ATTACK}!hero.c@{hero.c}}\index{hero.c@{hero.c}!HERO\_ATTACK@{HERO\_ATTACK}}}\Hypertarget{hero_8c_ac8aec5639f7e56fb409adee9d52a1279af761fe30a4a41591face05c4230c7bb8}\label{hero_8c_ac8aec5639f7e56fb409adee9d52a1279af761fe30a4a41591face05c4230c7bb8} 
+HERO\+\_\+\+ATTACK&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{hero_8c_a397fc7e54f01ac535495a5df2484d9d1}\label{hero_8c_a397fc7e54f01ac535495a5df2484d9d1} 
+\index{hero.c@{hero.c}!hero\_destroy@{hero\_destroy}}
+\index{hero\_destroy@{hero\_destroy}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{hero\_destroy()}{hero\_destroy()}}
+{\footnotesize\ttfamily void hero\+\_\+destroy (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Frees all memory owned by the hero. 
+
+Call when the game is reset or the game state is exited. \Hypertarget{hero_8c_af0027ba5c194454ca60805bc289bda6d}\label{hero_8c_af0027ba5c194454ca60805bc289bda6d} 
+\index{hero.c@{hero.c}!hero\_draw@{hero\_draw}}
+\index{hero\_draw@{hero\_draw}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{hero\_draw()}{hero\_draw()}}
+{\footnotesize\ttfamily void hero\+\_\+draw (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Draws the hero sprite and his floating HP bar. 
+
+\Hypertarget{hero_8c_a1fa1ae06866726e07636b1868975453e}\label{hero_8c_a1fa1ae06866726e07636b1868975453e} 
+\index{hero.c@{hero.c}!hero\_init@{hero\_init}}
+\index{hero\_init@{hero\_init}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{hero\_init()}{hero\_init()}}
+{\footnotesize\ttfamily void hero\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Sets up the hero\textquotesingle{}s initial position, health, and animations. 
+
+Must be called once during game initialisation before any other hero function. \Hypertarget{hero_8c_a10e1989996dc60bfb17e92268dd2ad01}\label{hero_8c_a10e1989996dc60bfb17e92268dd2ad01} 
+\index{hero.c@{hero.c}!hero\_tick@{hero\_tick}}
+\index{hero\_tick@{hero\_tick}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{hero\_tick()}{hero\_tick()}}
+{\footnotesize\ttfamily void hero\+\_\+tick (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structenemy__t}{enemy\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{enemies,  }\item[{int}]{enemy\+\_\+count }\end{DoxyParamCaption})}
+
+
+
+Advances the hero simulation by one tick. 
+
+Applies movement, advances the attack state machine, and checks melee collisions against the active enemies.
+
+
+\begin{DoxyParams}{Parameters}
+{\em enemies} & Array of active enemy pointers. \\
+\hline
+{\em enemy\+\_\+count} & Number of active enemies in the array. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{hero_8c_ab7eb37b7c3fcef5476873047a972ae68}\label{hero_8c_ab7eb37b7c3fcef5476873047a972ae68} 
+\index{hero.c@{hero.c}!hero\_update\_input@{hero\_update\_input}}
+\index{hero\_update\_input@{hero\_update\_input}!hero.c@{hero.c}}
+\doxysubsubsection{\texorpdfstring{hero\_update\_input()}{hero\_update\_input()}}
+{\footnotesize\ttfamily void hero\+\_\+update\+\_\+input (\begin{DoxyParamCaption}\item[{bool}]{w,  }\item[{bool}]{a,  }\item[{bool}]{s,  }\item[{bool}]{d,  }\item[{bool}]{f }\end{DoxyParamCaption})}
+
+
+
+Passes the current keyboard state to the hero for the next tick. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em w} & true while the W key is held (move up). \\
+\hline
+{\em a} & true while the A key is held (move left). \\
+\hline
+{\em s} & true while the S key is held (move down). \\
+\hline
+{\em d} & true while the D key is held (move right). \\
+\hline
+{\em f} & true while the Space key is held (attack). \\
+\hline
+\end{DoxyParams}

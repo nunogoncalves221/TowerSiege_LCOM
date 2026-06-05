@@ -1,0 +1,7 @@
+<map id="src/menu/gameovermenu_hs.h" name="src/menu/gameovermenu_hs.h">
+<area shape="rect" id="Node000001" title="Game&#45;over screen with high&#45;score name entry." alt="" coords="28,5,251,31"/>
+<area shape="rect" id="Node000002" href="$main_8c.html" title=" " alt="" coords="5,79,95,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,41,66,81,63,76,113,37"/>
+<area shape="rect" id="Node000003" href="$gameovermenu__hs_8c.html" title=" " alt="" coords="119,79,341,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="166,37,217,76,214,81,163,41"/>
+</map>

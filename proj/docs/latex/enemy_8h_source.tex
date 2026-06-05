@@ -1,0 +1,40 @@
+\doxysection{enemy.\+h}
+\hypertarget{enemy_8h_source}{}\label{enemy_8h_source}\index{src/enemy/enemy.h@{src/enemy/enemy.h}}
+\mbox{\hyperlink{enemy_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ ENEMY\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ ENEMY\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <lcom/lcf.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}../sprite/sprite.h"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{enemy_8h_ae9ae980041e438eed7a3af43ce4e9f6ba0b76fb863426c07c6c997a8d9523257b}{DIR\_UP}},\ \ \ \ }
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{enemy_8h_ae9ae980041e438eed7a3af43ce4e9f6bab1bf68da897d09488069dd40e54f442d}{DIR\_DOWN}},\ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{enemy_8h_ae9ae980041e438eed7a3af43ce4e9f6ba1307dc42d06472935155dcbe283bc660}{DIR\_LEFT}},\ \ }
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{enemy_8h_ae9ae980041e438eed7a3af43ce4e9f6ba5dd21ef3d450f62c44082756cab8f6f8}{DIR\_RIGHT}}\ \ }
+\DoxyCodeLine{00023\ \}\ \mbox{\hyperlink{enemy_8h_ae9ae980041e438eed7a3af43ce4e9f6b}{direction\_t}};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00027\ \ \ \ \ int16\_t\ \ \ \ \ \mbox{\hyperlink{structenemy__t_a40a664a8ed7546ddd516ca2a70d81aa2}{x}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ int16\_t\ \ \ \ \ \mbox{\hyperlink{structenemy__t_a69975c58469b7812c37e18b38346f862}{y}};\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ int16\_t\ \ \ \ \ \mbox{\hyperlink{structenemy__t_a998fb3dbef421deb79bc7e2fa51a891e}{speed}};\ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ int16\_t\ \ \ \ \ \mbox{\hyperlink{structenemy__t_a9c36fbd0553252671bbb84fe833d3c99}{hp}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structenemy__t_a2eb7c73b458a24e5c1399717176f4d2b}{gold\_value}};\ }
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{structsprite__t}{sprite\_t}}\ \ \ *\mbox{\hyperlink{structenemy__t_ae44b0527cb3024bf750ea407939ce946}{sp}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \mbox{\hyperlink{structenemy__t_a744304df896b0e9a0f33dfebf54c7d79}{active}};\ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{enemy_8h_ae9ae980041e438eed7a3af43ce4e9f6b}{direction\_t}}\ \mbox{\hyperlink{structenemy__t_a493e636b8bc433b441618186089c87e9}{dir}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00035\ \}\ \mbox{\hyperlink{structenemy__t}{enemy\_t}};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00047\ \mbox{\hyperlink{structenemy__t}{enemy\_t}}\ *\mbox{\hyperlink{enemy_8h_a2868126683ce0db9c3867bb46b10945f}{enemy\_create}}(xpm\_map\_t\ xpm,\ int16\_t\ start\_x,\ int16\_t\ start\_y,\ int16\_t\ hp,\ int16\_t\ speed);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{enemy_8h_a7baaa37dabdffe0e0fc16b55bbabfb9b}{enemy\_destroy}}(\mbox{\hyperlink{structenemy__t}{enemy\_t}}\ *e);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00063\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{enemy_8h_a6279af2a46427e7a3b804eb217643058}{enemy\_update}}(\mbox{\hyperlink{structenemy__t}{enemy\_t}}\ *e);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{enemy_8h_adf9ffda3a57700e2dec6d23014df1bbf}{enemy\_draw}}(\mbox{\hyperlink{structenemy__t}{enemy\_t}}\ *e);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ ENEMY\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}
