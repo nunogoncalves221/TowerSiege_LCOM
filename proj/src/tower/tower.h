@@ -4,7 +4,7 @@
  *
  * Manages all placed towers on the map. Each tower scans for enemies in
  * range every tick and fires a bullet at the closest one. A click-driven
- * popup lets the player place or upgrade towers on grass tiles.
+ * popup lets the player remove or upgrade towers on blank tiles.
  */
 
 #ifndef TOWER_H
@@ -19,8 +19,8 @@
 /** @brief Type of tower occupying a grid slot. */
 typedef enum {
     TOWER_NONE,   /**< Slot is empty (no tower placed). */
-    TOWER_ARCHER, /**< Archer tower — fast, low damage, long range. */
-    TOWER_MAGE    /**< Mage tower — slow, high damage, short range. */
+    TOWER_ARCHER, /**< Archer tower */
+    TOWER_MAGE    /**< Mage tower */
 } tower_type_t;
 
 #define TOWER_ARCHER_COST     200
@@ -74,7 +74,7 @@ void tower_init(difficulty_t diff);
 /**
  * @brief Handles a left-click at the given pixel coordinates.
  *
- * If the click lands on a grass tile that has no tower, opens the placement
+ * If the click lands on a blank tile that has no tower, opens the placement
  * popup. If a tower is already there, opens the upgrade popup instead.
  *
  * @param px Click X position in screen pixels.

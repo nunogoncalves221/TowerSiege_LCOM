@@ -20,10 +20,6 @@
  */
 void player_init(difficulty_t diff);
 
-/* ------------------------------------------------------------------ */
-/** @name Gold management */
-/**@{*/
-
 /**
  * @brief Returns the player's current gold balance.
  * @return Gold amount (>= 0).
@@ -49,11 +45,6 @@ void player_add_gold(int amount);
  *         false if the balance was insufficient (balance unchanged).
  */
 bool player_spend_gold(int amount);
-
-/**@}*/
-/* ------------------------------------------------------------------ */
-/** @name Lives management */
-/**@{*/
 
 /**
  * @brief Returns the player's current life count.
@@ -82,10 +73,6 @@ void player_take_damage(int amount);
  */
 bool player_is_dead(void);
 
-/**@}*/
-/** @name Score management */
-/**@{*/
-
 /**
  * @brief Returns the player's current score.
  * @return Score (>= 0).
@@ -98,7 +85,5 @@ int  player_get_score(void);
  * @param amount Positive point value to add.
  */
 void player_add_score(int amount);
-
-/**@}*/
 
 #endif /* _PLAYER_H_ */
