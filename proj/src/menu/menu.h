@@ -16,7 +16,6 @@
 typedef enum {
     MENU_PLAY = 0,    /**< Start a new game (goes to difficulty selection). */
     MENU_INSTRUCTIONS,/**< Show the how-to-play screen. */
-    MENU_SETTINGS,    /**< Open the settings screen. */
     MENU_HIGH_SCORES, /**< Show the high-score leaderboard. */
     MENU_QUIT,        /**< Exit the application. */
     MENU_OPTION_COUNT /**< Number of selectable options. */

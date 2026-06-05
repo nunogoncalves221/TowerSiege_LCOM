@@ -13,7 +13,6 @@ static sprite_t *logo_sprite  = NULL;
 static const char *option_labels[MENU_OPTION_COUNT] = {
     "play",
     "instructions",
-    "settings",
     "high scores",
     "quit"
 };
