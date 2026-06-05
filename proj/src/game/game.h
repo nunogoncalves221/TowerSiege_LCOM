@@ -41,8 +41,8 @@
 #define KEY_DOWN_MAKE  0x50
 #define KEY_ENTER_MAKE 0x1C
 
-#define KEY_F_MAKE  0x21
-#define KEY_F_BREAK 0xA1
+#define KEY_SPACE_MAKE  0x39
+#define KEY_SPACE_BREAK 0xB9
 
 
 /**

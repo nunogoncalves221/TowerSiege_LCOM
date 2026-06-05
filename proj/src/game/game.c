@@ -28,12 +28,12 @@ static int16_t cursor_y = 0;
 static enemy_t *enemies[MAX_ENEMIES];
 static int enemy_count = 0;
 
-// keyboard state (added f for attacking)
+// keyboard state
 static bool key_w = false;
 static bool key_a = false;
 static bool key_s = false;
 static bool key_d = false;
-static bool key_f = false;
+static bool key_space = false;
 
 // core game state
 static bool game_over = false;
@@ -63,7 +63,7 @@ void game_reset(void) {
 
     game_over = false;
     wave_init(diff);
-    key_w = key_a = key_s = key_d = key_f = false;
+    key_w = key_a = key_s = key_d = key_space = false;
 
     // read the exact time the match started
     rtc_read_date(&start_time);
@@ -81,13 +81,13 @@ void game_handle_key(uint8_t scancode) {
         case KEY_S_BREAK: key_s = false; break;
         case KEY_D_MAKE:  key_d = true;  break;
         case KEY_D_BREAK: key_d = false; break;
-        case KEY_F_MAKE: key_f = true; break;
-        case KEY_F_BREAK: key_f = false; break; 
+        case KEY_SPACE_MAKE:  key_space = true;  break;
+        case KEY_SPACE_BREAK: key_space = false; break;
 
         default: break;
     }
 
-    hero_update_input(key_w, key_a, key_s, key_d, key_f);
+    hero_update_input(key_w, key_a, key_s, key_d, key_space);
 }
 
 void game_tick(void) {

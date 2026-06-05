@@ -34,7 +34,7 @@ void hero_destroy(void);
  * @param a true while the A key is held (move left).
  * @param s true while the S key is held (move down).
  * @param d true while the D key is held (move right).
- * @param f true while the F key is held (attack).
+ * @param f true while the Space key is held (attack).
  */
 void hero_update_input(bool w, bool a, bool s, bool d, bool f);
 
