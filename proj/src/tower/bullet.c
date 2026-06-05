@@ -4,13 +4,13 @@
 #include "game.h"
 #include "player.h"
 
-#define MAX_BULLETS  64
+#define MAX_BULLETS  16
 #define BULLET_SPEED 10
 
 typedef struct {
     float    x, y;
     float    vx, vy;
-    enemy_t  *target;  // enemy this bullet is heading to
+    enemy_t  *target;  // enemy the bullet is heading to
     int      damage;
     sprite_t *sp;
     bool     active;
@@ -25,21 +25,31 @@ void bullet_init(void) {
 
 void bullet_fire(int16_t from_x, int16_t from_y, enemy_t *target, int damage, sprite_t *sp) {
     if (target == NULL) return;
+    // where bullet aims (center of enemy sprite)
     int to_x = target->x + target->sp->width  / 2;
     int to_y = target->y + target->sp->height / 2;
-    int dx   = to_x - from_x;
-    int dy   = to_y - from_y;
-    int adx  = dx < 0 ? -dx : dx;
-    int ady  = dy < 0 ? -dy : dy;
-    int maxd = adx > ady ? adx : ady;
+
+    // vector from tower to enemy
+    int dx = to_x - from_x;
+    int dy = to_y - from_y;
+
+    // absolute values
+    int adx = dx < 0 ? -dx : dx;
+    int ady = dy < 0 ? -dy : dy;
+    int maxd = adx > ady ? adx : ady; // max to calculate speed
     if (maxd == 0) return;
 
     for (int i = 0; i < MAX_BULLETS; i++) {
         if (bullets[i].active) continue;
+        // bullet start position (tower)
         bullets[i].x      = (float)from_x;
         bullets[i].y      = (float)from_y;
+
+        //velocity of bullet
         bullets[i].vx     = (float)(dx * BULLET_SPEED) / maxd;
         bullets[i].vy     = (float)(dy * BULLET_SPEED) / maxd;
+
+        // bullet data
         bullets[i].target = target;
         bullets[i].damage = damage;
         bullets[i].sp     = sp;
@@ -50,18 +60,20 @@ void bullet_fire(int16_t from_x, int16_t from_y, enemy_t *target, int damage, sp
 
 void bullet_invalidate_target(enemy_t *e) {
     for (int i = 0; i < MAX_BULLETS; i++)
+        // if enemy that the bullet was aiming at is destroyed, the bullet flies off-screen
         if (bullets[i].active && bullets[i].target == e)
             bullets[i].target = NULL;
 }
 
 void bullet_tick(void) {
+    // screen dimensions
     int sw = (int)vg_get_x_res();
     int sh = (int)vg_get_y_res();
 
     for (int i = 0; i < MAX_BULLETS; i++) {
         if (!bullets[i].active) continue;
 
-        // if target was freed (invalidated) or already dead, let bullet fade off-screen
+        // if target was invalidated, bullet flies off-screen
         if (bullets[i].target == NULL || !bullets[i].target->active) {
             bullets[i].x += bullets[i].vx;
             bullets[i].y += bullets[i].vy;
@@ -82,16 +94,16 @@ void bullet_tick(void) {
         int maxd = adx > ady ? adx : ady;
 
         if (maxd <= BULLET_SPEED) {
-            // close enough — apply damage and remove bullet
-            bullets[i].target->hp -= bullets[i].damage;
+            bullets[i].target->hp -= bullets[i].damage; // apply damage to enemy
             if (bullets[i].target->hp <= 0) {
-                bullets[i].target->active = false;
-                player_add_gold(bullets[i].target->gold_value);
+                bullets[i].target->active = false; // mark enemy as dead
+                player_add_gold(bullets[i].target->gold_value); 
             }
-            bullets[i].active = false;
+            bullets[i].active = false; // remove bullet
             continue;
         }
 
+        // update velocity on moving target
         bullets[i].vx = (float)(dx * BULLET_SPEED) / maxd;
         bullets[i].vy = (float)(dy * BULLET_SPEED) / maxd;
         bullets[i].x += bullets[i].vx;
@@ -102,6 +114,7 @@ void bullet_tick(void) {
 void bullet_draw(void) {
     for (int i = 0; i < MAX_BULLETS; i++) {
         if (!bullets[i].active || bullets[i].sp == NULL) continue;
+        // calculate center of bullet sprite
         int16_t hw = (int16_t)(bullets[i].sp->width  / 2);
         int16_t hh = (int16_t)(bullets[i].sp->height / 2);
         draw_sprite(bullets[i].sp,
