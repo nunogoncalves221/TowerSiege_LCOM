@@ -37,6 +37,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
 
   uint8_t timer_bit, kbd_bit, mouse_bit;
 
+  // subscribe to all the interrupts we need
   if (timer_subscribe_int(&timer_bit) != 0) {
     vg_exit();
     return 1;
@@ -81,155 +82,171 @@ int(proj_main_loop)(int argc, char* argv[]) {
       switch (_ENDPOINT_P(msg.m_source)) {
         case HARDWARE:
 
-          // Timer
+          // --- timer interrupts ---
           if (msg.m_notify.interrupts & timer_irq) {
             timer_int_handler();
 
+            // update the screen at the requested fps
             if (get_timer_counter() % (TIMER_FREQ / FPS) == 0) {
               vg_clear_buffer();
 
-              if (state == STATE_MENU) {
-                menu_draw();
-              } else if (state == STATE_DIFFICULTY) { 
-                diff_draw();
-              } else if (state == STATE_GAME) {
-                game_tick();
-                if (game_is_over()) {
-                  if (hs_qualifies(game_get_score())) {
-                    state = STATE_GAMEOVER_HS;
-                    gameover_hs_reset();
+              switch (state) {
+                case STATE_MENU:
+                  menu_draw();
+                  break;
+                case STATE_DIFFICULTY:
+                  diff_draw();
+                  break;
+                case STATE_GAME:
+                  game_tick();
+                  // check if we died this tick
+                  if (game_is_over()) {
+                    if (hs_qualifies(game_get_score())) {
+                      state = STATE_GAMEOVER_HS;
+                      gameover_hs_reset();
+                    } else {
+                      state = STATE_GAMEOVER;
+                      gameover_reset();
+                    }
                   } else {
-                    state = STATE_GAMEOVER;
-                    gameover_reset();
+                    game_draw();
                   }
-                } else {
-                  game_draw();
-                }
-              } else if (state == STATE_GAMEOVER) {
-                gameover_draw(game_get_score());
-              } else if (state == STATE_GAMEOVER_HS) {
-                gameover_hs_draw(game_get_score());
-              } else if (state == STATE_INSTRUCTIONS) {
-                instructions_draw();
-              } else if (state == STATE_HIGH_SCORES) {
-                hs_draw();
-              } else if (state == STATE_PAUSE) {
-                game_draw();
-                pause_draw();
+                  break;
+                case STATE_GAMEOVER:
+                  gameover_draw(game_get_score());
+                  break;
+                case STATE_GAMEOVER_HS:
+                  gameover_hs_draw(game_get_score());
+                  break;
+                case STATE_INSTRUCTIONS:
+                  instructions_draw();
+                  break;
+                case STATE_HIGH_SCORES:
+                  hs_draw();
+                  break;
+                case STATE_PAUSE:
+                  game_draw(); // draw game in background
+                  pause_draw(); // overlay pause menu
+                  break;
               }
 
               vg_refresh();
             }
           }
 
-          // Keyboard
+          // --- keyboard interrupts ---
           if (msg.m_notify.interrupts & kbd_irq) {
             kbc_ih();
 
             if (!kbc_error) {
-
-              if (state == STATE_MENU) {
-                if (menu_handle_key(scancode_byte)) {
-                  switch (menu_get_selected()) {
-                    case MENU_PLAY:
-                      state = STATE_DIFFICULTY;
-                      diff_reset();
-                      break;
-                    case MENU_QUIT:
-                      running = false;
-                      break;
-                    case MENU_INSTRUCTIONS:
-                      state = STATE_INSTRUCTIONS;
-                      break;
-                    case MENU_HIGH_SCORES:
-                      state = STATE_HIGH_SCORES;
-                      break;
-                    default:
-                      break;
+              switch (state) {
+                case STATE_MENU:
+                  if (menu_handle_key(scancode_byte)) {
+                    switch (menu_get_selected()) {
+                      case MENU_PLAY:
+                        state = STATE_DIFFICULTY;
+                        diff_reset();
+                        break;
+                      case MENU_QUIT:
+                        running = false;
+                        break;
+                      case MENU_INSTRUCTIONS:
+                        state = STATE_INSTRUCTIONS;
+                        break;
+                      case MENU_HIGH_SCORES:
+                        state = STATE_HIGH_SCORES;
+                        break;
+                      default: break;
+                    }
                   }
-                }
+                  break;
 
-              } else if (state == STATE_DIFFICULTY) {
-                if (scancode_byte == ESC_BREAKCODE) {
-                  state = STATE_MENU;
-                  menu_reset();
-                } else if (diff_handle_key(scancode_byte)) {
-                  game_reset();
-                  state = STATE_GAME;
-                }
-
-              } else if (state == STATE_GAME) {
-                game_handle_key(scancode_byte);
-                if (scancode_byte == ESC_BREAKCODE) {
-                  state = STATE_PAUSE;
-                  pause_reset();
-                }
-
-              } else if (state == STATE_PAUSE) {
-                if (pause_handle_key(scancode_byte)) {
-                  switch (pause_get_selected()) {
-                    case PAUSE_CONTINUE:
-                      state = STATE_GAME;
-                      break;
-                    case PAUSE_RETRY:
-                      game_reset();
-                      state = STATE_GAME;
-                      break;
-                    case PAUSE_QUIT:
-                      state = STATE_MENU;
-                      menu_reset();
-                      break;
-                    default:
-                      break;
-                  }
-                  pause_reset();
-                }
-
-              } else if (state == STATE_HIGH_SCORES) {
-                if (scancode_byte == ESC_BREAKCODE) {
-                  state = STATE_MENU;
-                  menu_reset();
-                }
-
-              } else if (state == STATE_GAMEOVER_HS) {
-                if (scancode_byte == ESC_BREAKCODE) {
-                  state = STATE_MENU;
-                  menu_reset();
-                } else if (gameover_hs_handle_key(scancode_byte)) {
-                  hs_insert(nameentry_get_name(), game_get_score(), game_get_start_time());
-                  state = STATE_HIGH_SCORES;
-                }
-
-              } else if (state == STATE_INSTRUCTIONS) {
-                if (scancode_byte == ESC_BREAKCODE) {
-                  state = STATE_MENU;
-                  menu_reset();
-                }
-
-              } else if (state == STATE_GAMEOVER) {
-                if (scancode_byte == ESC_BREAKCODE) {
-                  state = STATE_MENU;
-                  menu_reset();
-                } else if (gameover_handle_key(scancode_byte)) {
-                  if (gameover_get_selected() == GAMEOVER_RETRY) {
+                case STATE_DIFFICULTY:
+                  if (scancode_byte == ESC_BREAKCODE) {
+                    state = STATE_MENU;
+                    menu_reset();
+                  } else if (diff_handle_key(scancode_byte)) {
                     game_reset();
                     state = STATE_GAME;
-                  } else {
+                  }
+                  break;
+
+                case STATE_GAME:
+                  game_handle_key(scancode_byte);
+                  // hit esc to pause the game
+                  if (scancode_byte == ESC_BREAKCODE) {
+                    state = STATE_PAUSE;
+                    pause_reset();
+                  }
+                  break;
+
+                case STATE_PAUSE:
+                  if (pause_handle_key(scancode_byte)) {
+                    switch (pause_get_selected()) {
+                      case PAUSE_CONTINUE:
+                        state = STATE_GAME;
+                        break;
+                      case PAUSE_RETRY:
+                        game_reset();
+                        state = STATE_GAME;
+                        break;
+                      case PAUSE_QUIT:
+                        state = STATE_MENU;
+                        menu_reset();
+                        break;
+                      default: break;
+                    }
+                    pause_reset(); // clean up pause state
+                  }
+                  break;
+
+                case STATE_HIGH_SCORES:
+                case STATE_INSTRUCTIONS:
+                  // both just need esc to go back to main menu
+                  if (scancode_byte == ESC_BREAKCODE) {
                     state = STATE_MENU;
                     menu_reset();
                   }
-                }
+                  break;
+
+                case STATE_GAMEOVER_HS:
+                  if (scancode_byte == ESC_BREAKCODE) {
+                    state = STATE_MENU;
+                    menu_reset();
+                  } else if (gameover_hs_handle_key(scancode_byte)) {
+                    // user submitted their name, save it and jump to high scores
+                    hs_insert(nameentry_get_name(), game_get_score(), game_get_start_time());
+                    state = STATE_HIGH_SCORES;
+                  }
+                  break;
+
+                case STATE_GAMEOVER:
+                  if (scancode_byte == ESC_BREAKCODE) {
+                    state = STATE_MENU;
+                    menu_reset();
+                  } else if (gameover_handle_key(scancode_byte)) {
+                    if (gameover_get_selected() == GAMEOVER_RETRY) {
+                      game_reset();
+                      state = STATE_GAME;
+                    } else {
+                      state = STATE_MENU;
+                      menu_reset();
+                    }
+                  }
+                  break;
               }
             }
           }
 
-          // Mouse
+          // --- mouse interrupts ---
           if (msg.m_notify.interrupts & mouse_irq) {
             mouse_ih();
             if (valid_byte && mouse_process_packet_byte()) {
               struct packet pp;
               parse_mouse_packet(&pp);
+              
               static bool lb_prev = false;
+              // check for a fresh left click
               if (pp.lb && !lb_prev) {
                 if (state == STATE_GAME) {
                   game_handle_click();
@@ -247,7 +264,7 @@ int(proj_main_loop)(int argc, char* argv[]) {
     }
   }
 
-  // Cleanup
+  // cleanup everything before exiting
   vg_free();
   mouse_unsubscribe_int();
   mouse_write_command(DISABLE_DATA_REPORTING);
